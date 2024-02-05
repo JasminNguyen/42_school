@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:22:20 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/03 13:40:28 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/05 17:35:17 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 	game->image.background = mlx_xpm_file_to_image(game->mlx, "img/Grass2.xpm", &width, &height);
 	game->image.wall = mlx_xpm_file_to_image(game->mlx, "img/Wall.xpm", &width, &height);
 	game->image.player = mlx_xpm_file_to_image(game->mlx, "img/Snail_Player.xpm", &width, &height);
+	game->image.collectible = mlx_xpm_file_to_image(game->mlx, "img/Apple.xpm", &width, &height);
 
 	if(game->image.background == NULL || game->image.wall == NULL)
 	{
@@ -85,6 +86,10 @@ void    put_tile(t_game *game, int width, int height)//puts the right tile
 	else if (game->map[height][width] == '0')
 	{
 		mlx_put_image_to_window(game->mlx, game->mlx_win, game->image.background, width * 48, height * 48);
+	}
+	else if (game->map[height][width] == 'C')
+	{
+		mlx_put_image_to_window(game->mlx, game->mlx_win, game->image.collectible, width * 48, height * 48);
 	}
 	else if (game->map[height][width] == 'P')
 	{
