@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:50:27 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/05 18:47:10 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/06 14:27:03 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,77 @@
 
 int is_rectangular(t_game *game)
 {
-	int column = 0;
-	int column_first_row = 0;
+	int colums = 0;
+	int colums_in_first_row = 0;
 	int i = 0;
 
+
 	
-	while (game->map[0][column_first_row] != '\0')
+	while (game->map[0][colums_in_first_row] != '\n' && game->map[0][colums_in_first_row] != '\0')
 	{
-		column_first_row++;
+		colums_in_first_row++;
 	}
-	//printf("colums first row:%d\n", column_first_row);
+	//printf("colums first row:%d\n", colums_in_first_row);
 	
 	while( i < game->map_height)
 	{
-		column = 0;
-		while(game->map[i][column] != '\0')
+		colums = 0;
+		while(game->map[i][colums] != '\n' && game->map[i][colums] != '\0')
 		{
-			column++;
+			colums++;
 			
 		}
-		if(column != column_first_row)
+		if(colums != colums_in_first_row)
 		{
 			return(0); //invalid
 		}
 		i++;
-		//printf("colums in %i row: %d\n", i, column);
-	}
-	return(1);//valid
+	}  
+	
+	// Check for extra characters beyond the defined height of the map
+    while (i < game->map_height)
+    {
+        if (game->map[i][0] != '\n')
+        {
+            return 0; // Not rectangular
+        }
+        i++;
+    }
+		
+		// printf("colums in %i row: %d\n", i, colums);
+	return(1);
+
 }
+
+int is_valid_char(t_game *game)
+{
+	int i = 0;
+	int j = 0;
+	while(i < game->map_height)
+	{
+		j = 0;
+		while(j < game->map_width)
+		{
+			
+			if(!(game->map[i][j] == '0' || game->map[i][j] == '1' || game->map[i][j] == 'P' || game->map[i][j] == 'E' || game->map[i][j] == 'C'))
+			{
+				return (0);
+			}
+			j++;
+		}
+		i++;
+	}
+	return(1);
+}
+
+
+
 
 
 int map_check(t_game *game)
 {
 	
-	if(!(is_rectangular(game)))
+	if(!(is_rectangular(game)) || !(is_valid_char(game)))
 	{
 		ft_printf("Invalid map!");
 		return(0);

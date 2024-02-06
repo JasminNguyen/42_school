@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:22:20 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/05 17:35:17 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/06 14:34:26 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 	game->image.wall = mlx_xpm_file_to_image(game->mlx, "img/Wall.xpm", &width, &height);
 	game->image.player = mlx_xpm_file_to_image(game->mlx, "img/Snail_Player.xpm", &width, &height);
 	game->image.collectible = mlx_xpm_file_to_image(game->mlx, "img/Apple.xpm", &width, &height);
+	game->image.exit = mlx_xpm_file_to_image(game->mlx, "img/closed_door48.xpm", &width, &height);
 
 	if(game->image.background == NULL || game->image.wall == NULL)
 	{
@@ -100,9 +101,14 @@ void    put_tile(t_game *game, int width, int height)//puts the right tile
 		//saving the players position??
 		mlx_put_image_to_window(game->mlx, game->mlx_win, game->image.player, width * 48, height * 48);
 	}
-	else 
+	else if (game->map[height][width] == 'E')
+	{
+		mlx_put_image_to_window(game->mlx, game->mlx_win, game->image.exit, width * 48, height * 48);
+	}
+
+/* 	else 
 	{
 		mlx_put_image_to_window(game->mlx, game->mlx_win, game->image.background, width * 48, height * 48);
-	}
+	} */
  				
 }
