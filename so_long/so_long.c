@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 16:13:26 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/06 10:43:02 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/06 18:43:31 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	main(int argc, char *argv[])
 {
-	if(argc == 2)
+	if(argc == 2 && is_ber_file(argv[1]))
 	{
 	t_game *game;
 
@@ -33,6 +33,16 @@ int	main(int argc, char *argv[])
 	
 	}
 	else
-	ft_printf("Invalid number of arguments!");
+	{
+		if(argc != 2)
+		{
+			ft_printf("Error\nInvalid number of arguments!");
+		}
+		else if(!(is_ber_file(argv[1])))
+		{
+			ft_printf("Error\nNot a .ber file!");
+		}
+	}
+	
 
 }

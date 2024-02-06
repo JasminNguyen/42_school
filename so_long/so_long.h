@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 16:14:21 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/06 15:15:41 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/06 17:12:43 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	load_img(t_game *game);
 void	iterate_through_map(t_game *game);
 void    put_tile(t_game *game, int width, int height);
 int		map_check(t_game *game);
-
+int		is_ber_file(const char *filename);
 
 void move_player(int keycode, t_game *game);
 #endif

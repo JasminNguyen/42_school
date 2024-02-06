@@ -6,11 +6,25 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:50:27 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/06 16:37:15 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/06 18:38:32 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
+
+int	is_ber_file(const char *filename)
+{
+	int file_len = ft_strlen(filename);
+	if(file_len >= 4)
+	{
+		if(ft_strncmp(filename + file_len - 4, ".ber", 4) == 0)
+		{
+			return(1); //valid
+		}
+	}
+	return(0);
+}
+
 
 int is_rectangular(t_game *game)
 {
@@ -140,11 +154,10 @@ int element_check(t_game *game)
 	return(0);
 }
 
-
 int map_check(t_game *game)
 {
 	
-	if(!(is_rectangular(game)) || !(is_valid_char(game)) || !(is_surrounded_by_walls(game))  || !(element_check(game)) )
+	if(!(is_rectangular(game)) || !(is_valid_char(game)) || !(is_surrounded_by_walls(game))  || !(element_check(game)))
 	{
 		ft_printf("Error\nInvalid map!");
 		return(0);
