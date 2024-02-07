@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 16:14:21 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/07 14:00:11 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/07 14:26:06 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ typedef struct s_image{
 	void *background;
 	void *wall;
 	void *player;
-	void *exit;
+	void *exit_closed;
+	void *exit_open;
 	void *collectible;
 }				t_image;
 
@@ -46,6 +47,8 @@ typedef struct	s_game {
 	char **map;
 	int player_x;
 	int player_y;
+	int exit_x;
+	int exit_y;
 	int fd;
 	int moves;
 	int collectibles_collected;
