@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 16:14:21 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/06 17:12:43 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/07 11:54:39 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct	s_game {
 	int player_x;
 	int player_y;
 	int fd;
+	int moves;
 
 }				t_game;
 
