@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 16:14:21 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/07 11:54:39 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/07 14:00:11 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ typedef struct	s_game {
 	int player_y;
 	int fd;
 	int moves;
+	int collectibles_collected;
+	int collectibes_nbr;
 
 }				t_game;
 
@@ -68,4 +70,5 @@ int		map_check(t_game *game);
 int		is_ber_file(const char *filename);
 
 void move_player(int keycode, t_game *game);
+void open_exit(t_game *game);
 #endif

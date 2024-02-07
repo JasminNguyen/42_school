@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 11:04:22 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/07 11:54:28 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/07 13:33:49 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void open_window(t_game *game)
 }
 
 
-int moves = 0;
 int handle_key_press(int keycode, t_game *game)
 {	
 	if(keycode == 65307)
