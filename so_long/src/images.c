@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:22:20 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/07 17:29:10 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/07 17:47:30 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,5 +119,9 @@ void open_exit(t_game *game)
 		mlx_put_image_to_window(game->mlx, game->mlx_win, game->image.exit_open, game->exit_x * 48, game->exit_y * 48);
 		//printf("exit width: %d\n", game->exit_x);
 		//printf("exit height: %d\n", game->exit_y);
+		if(game->player_x == game->exit_x && game->player_y == game->exit_y)
+		{
+			close_window(game);
+		}
 	}
 }
