@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:22:20 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/07 14:38:54 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/07 17:29:10 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ void open_exit(t_game *game)
 
 	int i = 0;
 	int j = 0;
-	
 
 	while(i < game->map_height)
 	{
@@ -114,11 +113,11 @@ void open_exit(t_game *game)
 		}
 		i++;
 	}
-	printf("collectibles_nbr: %d\n", game->collectibes_nbr);
+	//printf("collectibles_nbr: %d\n", game->collectibes_nbr);
 	if (game->collectibes_nbr == game->collectibles_collected)
 	{
-		game->map[game->exit_y][game->exit_x] = mlx_put_image_to_window(game->mlx, game->mlx_win, game->image.exit_open, 48, 48);
-		printf("exit width: %d\n", game->exit_x);
-		printf("exit height: %d\n", game->exit_y);
+		mlx_put_image_to_window(game->mlx, game->mlx_win, game->image.exit_open, game->exit_x * 48, game->exit_y * 48);
+		//printf("exit width: %d\n", game->exit_x);
+		//printf("exit height: %d\n", game->exit_y);
 	}
 }
