@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:22:20 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/07 17:47:30 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/08 11:33:58 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,14 @@ void    put_tile(t_game *game, int width, int height)//puts the right tile
 	else if (game->map[height][width] == 'C')
 	{
 		mlx_put_image_to_window(game->mlx, game->mlx_win, game->image.collectible, width * 48, height * 48);
-		(game->collectibes_nbr)++;
+		(game->collectibles_nbr)++;
 	}
 	else if (game->map[height][width] == 'P')
 	{
 		game->player_y = height;
 		game->player_x = width;
-		printf("x: %d\n", game->player_x);
-		printf("y: %d\n", game->player_y);
+		//printf("x: %d\n", game->player_x);
+		//printf("y: %d\n", game->player_y);
 		//saving the players position??
 		mlx_put_image_to_window(game->mlx, game->mlx_win, game->image.player, width * 48, height * 48);
 	}
@@ -81,8 +81,8 @@ void    put_tile(t_game *game, int width, int height)//puts the right tile
 		mlx_put_image_to_window(game->mlx, game->mlx_win, game->image.exit_closed, width * 48, height * 48);
 		game->exit_y = height;
 		game->exit_x = width;
-		printf("exit width: %d\n", game->exit_x);
-		printf("exit height: %d\n", game->exit_y);
+		//printf("exit width: %d\n", game->exit_x);
+		//printf("exit height: %d\n", game->exit_y);
 		//saving the exits position to later change the tile to an open door
 	}
 
@@ -98,6 +98,7 @@ void open_exit(t_game *game)
 
 	int i = 0;
 	int j = 0;
+	//game->exit_accessible = 1;
 
 	while(i < game->map_height)
 	{
@@ -107,18 +108,20 @@ void open_exit(t_game *game)
 			
 			if(game->map[i][j] == 'C')
 			{
-				(game->collectibes_nbr)++;
+				(game->collectibles_nbr)++;
 			}
 			j++;
 		}
 		i++;
 	}
 	//printf("collectibles_nbr: %d\n", game->collectibes_nbr);
-	if (game->collectibes_nbr == game->collectibles_collected)
-	{
+	if (game->collectibles_nbr == game->collectibles_collected)
+	{	
+		game->exit_accessible = 1;
 		mlx_put_image_to_window(game->mlx, game->mlx_win, game->image.exit_open, game->exit_x * 48, game->exit_y * 48);
 		//printf("exit width: %d\n", game->exit_x);
 		//printf("exit height: %d\n", game->exit_y);
+		/* move_player_to_exit(game); */
 		if(game->player_x == game->exit_x && game->player_y == game->exit_y)
 		{
 			close_window(game);

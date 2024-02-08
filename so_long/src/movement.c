@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 17:29:15 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/07 17:29:56 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/08 11:36:10 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,17 @@ void move_player(int keycode, t_game *game)
     // Check if the new position is within bounds and not hitting a wall
     if (new_player_position_x >= 0 && new_player_position_x < game->map_width &&
         new_player_position_y >= 0 && new_player_position_y < game->map_height &&
-        game->map[new_player_position_y][new_player_position_x] != '1')
+        game->map[new_player_position_y][new_player_position_x] != '1' /* && game->map[new_player_position_y][new_player_position_x] != 'E' */)
     {
-		if(game->map[new_player_position_y][new_player_position_x] == 'C')
+		if(game->map[new_player_position_y][new_player_position_x] != 'E' || game->exit_accessible == 1)
+		{
+				if(game->map[new_player_position_y][new_player_position_x] == 'C')// counts collected collectibles
 		{
 			(game->collectibles_collected)++;
-			ft_printf("Collectibles collected: %d/%d\n", game->collectibles_collected, game->collectibes_nbr);
+			game->map[new_player_position_y][new_player_position_x] = '0';
+			ft_printf("Collectibles collected: %d/%d\n", game->collectibles_collected, game->collectibles_nbr);
 		}
+		
 		mlx_put_image_to_window(game->mlx, game->mlx_win, game->image.background, game->player_x * 48, game->player_y * 48); // background
         game->player_x = new_player_position_x;
         game->player_y = new_player_position_y;
@@ -58,7 +62,17 @@ void move_player(int keycode, t_game *game)
 		(game->moves)++;
 		ft_printf("Moves: %d\n", game->moves);
 		open_exit(game);
+		}
+	
     }
+}
+
+void move_player_to_exit(t_game *game)
+{
+	if(game->exit_accessible == 1)
+	{
+		
+	}
 }
 
 
