@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 17:29:15 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/08 11:36:10 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/09 19:25:29 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void move_player(int keycode, t_game *game)
 		{
 			(game->collectibles_collected)++;
 			game->map[new_player_position_y][new_player_position_x] = '0';
-			ft_printf("Collectibles collected: %d/%d\n", game->collectibles_collected, game->collectibles_nbr);
+			//ft_printf("Collectibles collected: %d/%d\n", game->collectibles_collected, game->collectibles_nbr);
 		}
 		
 		mlx_put_image_to_window(game->mlx, game->mlx_win, game->image.background, game->player_x * 48, game->player_y * 48); // background
