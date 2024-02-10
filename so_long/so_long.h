@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 16:14:21 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/08 11:34:07 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/10 17:45:20 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ typedef struct	s_game {
 	char **map;
 	int player_x;
 	int player_y;
+	int player_pos_x;//for the path check
+	int player_pos_y;//for the path check
 	int exit_x;
 	int exit_y;
 	int fd;
@@ -54,6 +56,8 @@ typedef struct	s_game {
 	int collectibles_collected;
 	int collectibles_nbr;
 	int exit_accessible;
+	int flooded_collectibles;
+	int flooded_exit;
 
 }				t_game;
 
@@ -66,7 +70,7 @@ void free_sprites(t_game *game);
 
 void calculate_map_dimensions(const char *filename, t_game *game);
 void read_map(const char *filename, t_game *game);
-//void dispay_img(t_game *game);
+void find_player(t_game *game);
 void	load_img(t_game *game);
 void	iterate_through_map(t_game *game);
 void    put_tile(t_game *game, int width, int height);
@@ -75,5 +79,6 @@ int		is_ber_file(const char *filename);
 
 void move_player(int keycode, t_game *game);
 void open_exit(t_game *game);
-/* void move_player_to_exit(t_game *game); */
+int check_valid_path(t_game *game);
+
 #endif

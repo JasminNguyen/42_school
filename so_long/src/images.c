@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:22:20 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/08 11:33:58 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/10 17:06:37 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ void    put_tile(t_game *game, int width, int height)//puts the right tile
 	{
 		game->player_y = height;
 		game->player_x = width;
-		//printf("x: %d\n", game->player_x);
-		//printf("y: %d\n", game->player_y);
+		printf("x: %d\n", game->player_x);
+		printf("y: %d\n", game->player_y);
 		//saving the players position??
 		mlx_put_image_to_window(game->mlx, game->mlx_win, game->image.player, width * 48, height * 48);
 	}

@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 16:13:26 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/06 18:43:31 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/10 17:54:03 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	main(int argc, char *argv[])
 	read_map(argv[1], game);	
 	if(map_check(game))
 	{
+		//should I read the map here again cause I flooded the original map and replaced everything with Fs??
+		read_map(argv[1], game);
 		open_window(game);
 		load_img(game);
 		iterate_through_map(game);

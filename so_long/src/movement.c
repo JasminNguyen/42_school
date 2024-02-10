@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 17:29:15 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/09 19:25:29 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/10 13:41:29 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,6 @@ void move_player(int keycode, t_game *game)
 		}
 	
     }
-}
-
-void move_player_to_exit(t_game *game)
-{
-	if(game->exit_accessible == 1)
-	{
-		
-	}
 }
 
 

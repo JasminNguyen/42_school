@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:50:27 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/06 18:38:32 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/10 17:53:38 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,10 +154,102 @@ int element_check(t_game *game)
 	return(0);
 }
 
+
+void flood_fill(t_game *game, int x, int y)
+{
+	game->map[y][x] = 'F';
+	
+	if(y > 0 && (game->map[y - 1][x] == '0' || game->map[y - 1][x] == 'C'))//up
+	{
+		if (game->map[y - 1][x] == 'C')
+            game->flooded_collectibles++;
+        if (game->map[y - 1][x] == 'E')
+            game->flooded_exit++;
+        flood_fill(game, x, y);
+	}
+	 if(y < game->map_height -1 && (game->map[y + 1][x] == '0' || game->map[y + 1][x] == 'C'))//down
+	{
+		if (game->map[y + 1][x] == 'C')
+            game->flooded_collectibles++;
+        if (game->map[y + 1][x] == 'E')
+            game->flooded_exit++;
+        flood_fill(game, x, y);
+	}
+	 if(x > 0 && (game->map[y][x - 1] == '0' || game->map[y][x -1] == 'C'))//left
+	{
+		if (game->map[y][x - 1] == 'C')
+            game->flooded_collectibles++;
+        if (game->map[y][x - 1] == 'E')
+            game->flooded_exit++;
+        flood_fill(game, x, y);
+	}
+	 if(x < game->map_height - 1 && (game->map[y][x + 1] == '0' || game->map[y][x + 1] == 'C'))//right
+	{
+		if (game->map[y][x + 1] == 'C')
+            game->flooded_collectibles++;
+        if (game->map[y][x + 1] == 'E')
+            game->flooded_exit++;
+        flood_fill(game, x, y);
+	}
+
+}
+
+
+void find_player(t_game *game)
+{
+    int i;
+    int j;
+
+    j = 0;
+    while (j < game->map_height)
+    {
+        i = 0;
+        while(i < game->map_width)
+        {
+            if(game->map[j][i] == 'P')
+			{
+				game->player_pos_x = i;
+				game->player_pos_y = j;
+			}
+            i++;
+        }
+        j++;
+    }
+}
+
+
+int check_valid_path(t_game *game)
+{
+	find_player(game);
+	int x = game->player_pos_x;
+	int y = game->player_pos_y;
+	printf("x is%d\n", x);
+	printf("y is%d\n", y);
+    // Base case: If player's position is out of bounds or on a wall, return 0
+    if (x < 0 || x >= game->map_width ||
+        y < 0 || y >= game->map_height ||
+        game->map[y][x] == '1') {
+        ft_printf("Player is out of bounds or on a wall\n");
+        return 0;
+    }
+
+    // Flood fill to check for a valid path
+    flood_fill(game, x, y);
+
+    // Check if the flooded exit count is exactly 1 and all collectibles are flooded
+    if (game->flooded_exit == 1 && game->flooded_collectibles == game->collectibles_nbr) {
+        return 1;
+    } else {
+        ft_printf("Not a valid path\n");
+        return 0;
+    }
+
+}
+
 int map_check(t_game *game)
 {
 	
-	if(!(is_rectangular(game)) || !(is_valid_char(game)) || !(is_surrounded_by_walls(game))  || !(element_check(game)))
+	if(!(is_rectangular(game)) || !(is_valid_char(game)) || !(is_surrounded_by_walls(game))  || !(element_check(game)) || !(check_valid_path(game)))
 	{
 		ft_printf("Error\nInvalid map!");
 		return(0);
