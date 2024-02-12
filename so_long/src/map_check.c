@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:50:27 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/10 17:53:38 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:58:30 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,101 +155,216 @@ int element_check(t_game *game)
 }
 
 
-void flood_fill(t_game *game, int x, int y)
-{
-	game->map[y][x] = 'F';
-	
-	if(y > 0 && (game->map[y - 1][x] == '0' || game->map[y - 1][x] == 'C'))//up
-	{
-		if (game->map[y - 1][x] == 'C')
-            game->flooded_collectibles++;
-        if (game->map[y - 1][x] == 'E')
-            game->flooded_exit++;
-        flood_fill(game, x, y);
-	}
-	 if(y < game->map_height -1 && (game->map[y + 1][x] == '0' || game->map[y + 1][x] == 'C'))//down
-	{
-		if (game->map[y + 1][x] == 'C')
-            game->flooded_collectibles++;
-        if (game->map[y + 1][x] == 'E')
-            game->flooded_exit++;
-        flood_fill(game, x, y);
-	}
-	 if(x > 0 && (game->map[y][x - 1] == '0' || game->map[y][x -1] == 'C'))//left
-	{
-		if (game->map[y][x - 1] == 'C')
-            game->flooded_collectibles++;
-        if (game->map[y][x - 1] == 'E')
-            game->flooded_exit++;
-        flood_fill(game, x, y);
-	}
-	 if(x < game->map_height - 1 && (game->map[y][x + 1] == '0' || game->map[y][x + 1] == 'C'))//right
-	{
-		if (game->map[y][x + 1] == 'C')
-            game->flooded_collectibles++;
-        if (game->map[y][x + 1] == 'E')
-            game->flooded_exit++;
-        flood_fill(game, x, y);
-	}
 
-}
+// void	find_player(t_game *game, int i, int *player_pos_x, int *player_pos_y) // function to find the player
+// {
+// 	int	j;
+
+// 	j = 0;
+// /* 	game->flooded_collectibles = 0;
+// 	game->collectibles_nbr = 0; */
+// 	while (game->map[i][j])
+// 	{
+// 		if (game->map[i][j] == 'P')
+// 		{
+// 			*player_pos_y = i;
+// 			*player_pos_x= j;
+// 			break ;
+// 		}
+// 		j++;
+// 	}
+// }
+// void find_exit(t_game *game)
+// {
+//     int i;
+//     int j;
+
+//     j = 0;
+//     while (j < game->map_height)
+//     {
+//         i = 0;
+//         while(i < game->map_width)
+//         {
+//             if(game->map[j][i] == 'E')
+// 			{
+// 				game->exit_pos_x = i;
+// 				game->exit_pos_y = j;
+// 			}
+//             i++;
+//         }
+//         j++;
+//     }
+	
+// }
+// void count_collectibles(t_game *game)
+// {
+// 	int i;
+//     int j;
+// 	int count = 0;
+//     j = 0;
+//     while (j < game->map_height)
+//     {
+//         i = 0;
+//         while(i < game->map_width)
+//         {
+//             if(game->map[j][i] == 'C')
+// 			{
+// 					count++;
+// 			}
+//             i++;
+//         }
+//         j++;
+//     }
+// 	game->collectibles_nbr = count;
+// }
+
+// int	validmove(t_game *game, int **visited, int y, int x)
+// {
+// 	return (game->map[y][x] != '1' && !visited[y][x]); // checks if it is not a wall and if it haven t been alredy visited
+// }
+
+// void	floodfill(t_game *game, int y, int x, int **visited)
+// {
+// 	if (!validmove(game, visited, y, x) || visited[y][x])
+// 		return ;
+// 	if (game->map[y][x] == 'C') // if it is a coin 
+// 		game->flooded_collectibles += 1;
+// 	visited[y][x] = 1; // mark areas as visited
+// 	floodfill(game, y - 1, x, visited); // up
+// 	floodfill(game, y + 1, x, visited); // down
+// 	floodfill(game, y, x - 1, visited); // left
+// 	floodfill(game, y, x + 1, visited); // right
+// }
+
+// int	check_valid_path(t_game *game)
+// {
+// 	int	i;
+// 	int	**visited;
+// 	int player_pos_x;
+// 	int player_pos_y;
+	
+
+// 	visited = ft_calloc(game->map_height, sizeof(int *)); // allocate memory to store visited areas
+// 	i = 0;		
+// 				// I use calloc to prevent uninitialised value error
+// 	while (i < game->map_height)
+// 	{
+// 		visited[i] = ft_calloc(game->map_width, sizeof(int *));
+// 		i++;
+// 	}
+// 	i = 0;
+// 	while (game->map[i])
+// 	{
+// 		find_player(game, i, &player_pos_x, &player_pos_y); // find player position on the map
+// 		i++;
+// 	}
+// 	count_collectibles(game);	
+// 	find_exit(game); // find where exit is located on the map
+// 	floodfill(game, player_pos_y, player_pos_x, visited); // start algorithm
+// 	i = visited[player_pos_y][player_pos_x] && visited[game->exit_pos_y][game->exit_pos_x]; // if the exit area is not visited it means there is no valid path
+// 	//free_visited(visited, game); // free memory
+// 	printf("number of collectibles collected:%d out of %d\n", game->flooded_collectibles, game->collectibles_nbr);
+// 	if (game->flooded_collectibles != game->collectibles_nbr || !i) // if the algorithm could not find the same amount of coins as the map has or i(exit is unreachable) is not true
+// 		return (0);
+// 	return (1);
+// }
 
 
 void find_player(t_game *game)
 {
-    int i;
-    int j;
-
-    j = 0;
-    while (j < game->map_height)
-    {
-        i = 0;
-        while(i < game->map_width)
-        {
-            if(game->map[j][i] == 'P')
+	int i = 0;
+	int j = 0;
+	while(j < game->map_height)
+	{	
+		i = 0;
+		while(i < game->map_width)
+		{
+			if(game->map[j][i] == 'P')
 			{
 				game->player_pos_x = i;
 				game->player_pos_y = j;
+				printf("x:%d\n", game->player_pos_x);
+	printf("y:%d\n", game->player_pos_y);
 			}
-            i++;
-        }
-        j++;
-    }
+			i++;
+		}
+		j++;
+	}
 }
-
-
-int check_valid_path(t_game *game)
+void count_collectibles(t_game *game)
 {
-	find_player(game);
-	int x = game->player_pos_x;
-	int y = game->player_pos_y;
-	printf("x is%d\n", x);
-	printf("y is%d\n", y);
-    // Base case: If player's position is out of bounds or on a wall, return 0
-    if (x < 0 || x >= game->map_width ||
-        y < 0 || y >= game->map_height ||
-        game->map[y][x] == '1') {
-        ft_printf("Player is out of bounds or on a wall\n");
-        return 0;
-    }
-
-    // Flood fill to check for a valid path
-    flood_fill(game, x, y);
-
-    // Check if the flooded exit count is exactly 1 and all collectibles are flooded
-    if (game->flooded_exit == 1 && game->flooded_collectibles == game->collectibles_nbr) {
-        return 1;
-    } else {
-        ft_printf("Not a valid path\n");
-        return 0;
-    }
-
+	int i = 0;
+	int j = 0;
+	while(j < game->map_height)
+	{	
+		i = 0;
+		while(i < game->map_width)
+		{
+			if(game->map[j][i] == 'C')
+			{
+				game->collectibles_nbr++;
+			}
+			i++;
+		}
+		j++;
+	}
 }
+
+void    flood_fill(char **map, int p_x, int p_y, t_game *game)
+{
+	int rows = game->map_height;
+	int cols = game->map_width;
+
+    map[p_y][p_x] = 'F';
+    if (p_y > 0 && (map[p_y - 1][p_x] == '0' || map[p_y - 1][p_x] == 'C' || map[p_y - 1][p_x] == 'E'))
+    {
+        if (map[p_y - 1][p_x] == 'C')
+            game->flooded_collectibles++;
+        if (map[p_y - 1][p_x] == 'E')
+            game->flooded_exit++;
+        flood_fill(map, p_x, p_y - 1, game);
+    }
+    if (p_y < rows - 1 && (map[p_y + 1][p_x] == '0' || map[p_y + 1][p_x] == 'C' || map[p_y + 1][p_x] == 'E'))
+    {
+        if (map[p_y + 1][p_x] == 'C')
+            game->flooded_collectibles++;
+        if (map[p_y + 1][p_x] == 'E')
+            game->flooded_exit++;
+        flood_fill(map, p_x, p_y + 1, game);
+    }
+    if (p_x > 0 && (map[p_y][p_x - 1] == '0' || map[p_y][p_x - 1] == 'C' || map[p_y][p_x - 1] == 'E'))
+    {
+        if (map[p_y][p_x - 1] == 'C')
+            game->flooded_collectibles++;
+        if (map[p_y][p_x - 1] == 'E')
+            game->flooded_exit++;
+        flood_fill(map, p_x - 1, p_y, game);
+    }
+    if (p_x < cols - 1 && (map[p_y][p_x + 1] == '0' || map[p_y][p_x + 1] == 'C' || map[p_y][p_x + 1] == 'E'))
+    {
+        if (map[p_y][p_x + 1] == 'C')
+            game->flooded_collectibles++;
+        if (map[p_y][p_x + 1] == 'E')
+            game->flooded_exit++;
+        flood_fill(map, p_x + 1, p_y, game);
+    }
+
+} 
+
 
 int map_check(t_game *game)
 {
 	
-	if(!(is_rectangular(game)) || !(is_valid_char(game)) || !(is_surrounded_by_walls(game))  || !(element_check(game)) || !(check_valid_path(game)))
+	find_player(game);
+	count_collectibles(game);
+	printf("x:%d\n", game->player_pos_x);
+	printf("y:%d\n", game->player_pos_y);
+	flood_fill(game->map, game->player_pos_x, game->player_pos_y, game);
+	read_map(game->input_file, game);
+	printf("collected collectibles: %d of %d\n", game->flooded_collectibles, game->collectibles_nbr);
+	printf("exit: %d of 1", game->flooded_exit);
+
+	if(!(is_rectangular(game)) || !(is_valid_char(game)) || !(is_surrounded_by_walls(game))  || !(element_check(game)) || (game->flooded_exit != 1) || (game->flooded_collectibles != game->collectibles_nbr))
 	{
 		ft_printf("Error\nInvalid map!");
 		return(0);

@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 16:14:21 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/10 17:45:20 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:41:38 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ typedef struct	s_game {
 	int player_y;
 	int player_pos_x;//for the path check
 	int player_pos_y;//for the path check
+	int exit_pos_x;
+	int exit_pos_y;
 	int exit_x;
 	int exit_y;
 	int fd;
@@ -58,7 +60,7 @@ typedef struct	s_game {
 	int exit_accessible;
 	int flooded_collectibles;
 	int flooded_exit;
-
+	char *input_file;
 }				t_game;
 
 void open_window(t_game *game);
@@ -70,7 +72,9 @@ void free_sprites(t_game *game);
 
 void calculate_map_dimensions(const char *filename, t_game *game);
 void read_map(const char *filename, t_game *game);
+
 void find_player(t_game *game);
+void count_collectibles(t_game *game);
 void	load_img(t_game *game);
 void	iterate_through_map(t_game *game);
 void    put_tile(t_game *game, int width, int height);

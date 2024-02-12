@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:22:20 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/10 17:06:37 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/12 19:01:18 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void    put_tile(t_game *game, int width, int height)//puts the right tile
 	else if (game->map[height][width] == 'C')
 	{
 		mlx_put_image_to_window(game->mlx, game->mlx_win, game->image.collectible, width * 48, height * 48);
-		(game->collectibles_nbr)++;
+		//(game->collectibles_nbr)++;
 	}
 	else if (game->map[height][width] == 'P')
 	{
@@ -98,7 +98,7 @@ void open_exit(t_game *game)
 
 	int i = 0;
 	int j = 0;
-	//game->exit_accessible = 1;
+	
 
 	while(i < game->map_height)
 	{
@@ -114,7 +114,8 @@ void open_exit(t_game *game)
 		}
 		i++;
 	}
-	//printf("collectibles_nbr: %d\n", game->collectibes_nbr);
+	printf("collectibles collected: %d\n", game->collectibles_collected);
+	printf("collectibles number%d\n", game->collectibles_nbr);
 	if (game->collectibles_nbr == game->collectibles_collected)
 	{	
 		game->exit_accessible = 1;
