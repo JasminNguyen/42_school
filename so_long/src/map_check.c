@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:50:27 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/12 18:58:30 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/12 20:30:17 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,73 +14,77 @@
 
 int	is_ber_file(const char *filename)
 {
-	int file_len = ft_strlen(filename);
-	if(file_len >= 4)
+	int	file_len;
+
+	file_len = ft_strlen(filename);
+	if (file_len >= 4)
 	{
-		if(ft_strncmp(filename + file_len - 4, ".ber", 4) == 0)
+		if (ft_strncmp(filename + file_len - 4, ".ber", 4) == 0)
 		{
-			return(1); //valid
+			return (1); //valid
 		}
 	}
-	return(0);
+	return (0);
 }
 
 
-int is_rectangular(t_game *game)
+int		is_rectangular(t_game *game)
 {
-	int colums = 0;
-	int colums_in_first_row = 0;
-	int i = 0;
+	int	colums;
+	int	colums_in_first_row;
+	int	i;
 
+	colums = 0;
+	colums_in_first_row = 0;
+	i = 0;
 
-	
-	while (game->map[0][colums_in_first_row] != '\n' && game->map[0][colums_in_first_row] != '\0')
+	while (game->map[0][colums_in_first_row] != '\n' 
+		&& game->map[0][colums_in_first_row] != '\0')
 	{
 		colums_in_first_row++;
 	}
-	//printf("colums first row:%d\n", colums_in_first_row);
-	
-	while( i < game->map_height)
+	while (i < game->map_height)
 	{
 		colums = 0;
-		while(game->map[i][colums] != '\n' && game->map[i][colums] != '\0')
+		while (game->map[i][colums] != '\n' && game->map[i][colums] != '\0')
 		{
 			colums++;
-			
 		}
-		if(colums != colums_in_first_row)
+		if (colums != colums_in_first_row)
 		{
-			return(0); //invalid
+			return (0); //invalid
 		}
 		i++;
-	}  
-	
+	}
+
 	// Check for extra characters beyond the defined height of the map
-    while (i < game->map_height)
-    {
-        if (game->map[i][0] != '\n')
-        {
-            return (0); // Not rectangular
-        }
-        i++;
-    }
-		
-		// printf("colums in %i row: %d\n", i, colums);
-	return(1);
+	while (i < game->map_height)
+	{
+		if (game->map[i][0] != '\n')
+		{
+			return (0); // Not rectangular
+		}
+		i++;
+	}
+	return (1);
 
 }
 
-int is_valid_char(t_game *game)
+int	is_valid_char(t_game *game)
 {
-	int i = 0;
-	int j = 0;
-	while(i < game->map_height)
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (i < game->map_height)
 	{
 		j = 0;
-		while(j < game->map_width)
+		while (j < game->map_width)
 		{
-			
-			if(!(game->map[i][j] == '0' || game->map[i][j] == '1' || game->map[i][j] == 'P' || game->map[i][j] == 'E' || game->map[i][j] == 'C'))
+			if (!(game->map[i][j] == '0' || game->map[i][j] == '1' || 
+					game->map[i][j] == 'P' || game->map[i][j] == 'E' 
+							|| game->map[i][j] == 'C'))
 			{
 				return (0); //not valid
 			}
@@ -88,219 +92,113 @@ int is_valid_char(t_game *game)
 		}
 		i++;
 	}
-	return(1);
+	return (1);
 }
 
-int is_surrounded_by_walls(t_game *game)
+int	is_surrounded_by_walls(t_game *game)
 {
-	
-	int j = 0;
-	int i = 0;
+	int	j;
+	int	i;
+
+	i = 0;
+	j = 0;
 	while (j < game->map_width)
 	{
-		if((game->map[0][j] != '1') || (game->map[game->map_height - 1][j] != '1'))
+		if ((game->map[0][j] != '1') || 
+				(game->map[game->map_height - 1][j] != '1'))
 		{
-			return(0);
+			return (0);
 		}
 		j++;
 	}
 	while (i < game->map_height)
 	{
-		if(game->map[i][game->map_width -1] != '1' || game->map[i][0] != '1')
+		if (game->map[i][game->map_width -1] != '1' || game->map[i][0] != '1')
 		{
-			return(0);
+			return (0);
 		}
 		i++;
 	}
-
-	return(1);
+	return (1);
 }
 
-int element_check(t_game *game)
+int	element_check(t_game *game)
 {
-	int i = 0;
-	int j = 0;
-	int collectible = 0;
-	int exit = 0;
-	int player = 0;
-	
-	while(i < game->map_height)
+	int	i;
+	int	j;
+	int	collectible;
+	int	exit;
+	int	player;
+
+	i = 0;
+	j = 0;
+	collectible = 0;
+	exit = 0;
+	player = 0;
+
+	while (i < game->map_height)
 	{
 		j = 0;
 		while (j < game->map_width)
 		{
-			if(game->map[i][j] == 'C' )
+			if (game->map[i][j] == 'C' )
 			{
 				collectible++;
 			}
-			else if(game->map[i][j] == 'E' )
+			else if (game->map[i][j] == 'E' )
 			{
 				exit++;
 			}
-			else if(game->map[i][j] == 'P')
+			else if (game->map[i][j] == 'P')
 			{
 				player++;
 			}
 			j++;
 		}
 		i++;
-		
 	}
-	
-	if(exit == 1 && collectible >= 1 && player == 1)
+	if (exit == 1 && collectible >= 1 && player == 1)
 	{
 		return (1);
 	}
-	return(0);
+	return (0);
 }
 
-
-
-// void	find_player(t_game *game, int i, int *player_pos_x, int *player_pos_y) // function to find the player
-// {
-// 	int	j;
-
-// 	j = 0;
-// /* 	game->flooded_collectibles = 0;
-// 	game->collectibles_nbr = 0; */
-// 	while (game->map[i][j])
-// 	{
-// 		if (game->map[i][j] == 'P')
-// 		{
-// 			*player_pos_y = i;
-// 			*player_pos_x= j;
-// 			break ;
-// 		}
-// 		j++;
-// 	}
-// }
-// void find_exit(t_game *game)
-// {
-//     int i;
-//     int j;
-
-//     j = 0;
-//     while (j < game->map_height)
-//     {
-//         i = 0;
-//         while(i < game->map_width)
-//         {
-//             if(game->map[j][i] == 'E')
-// 			{
-// 				game->exit_pos_x = i;
-// 				game->exit_pos_y = j;
-// 			}
-//             i++;
-//         }
-//         j++;
-//     }
-	
-// }
-// void count_collectibles(t_game *game)
-// {
-// 	int i;
-//     int j;
-// 	int count = 0;
-//     j = 0;
-//     while (j < game->map_height)
-//     {
-//         i = 0;
-//         while(i < game->map_width)
-//         {
-//             if(game->map[j][i] == 'C')
-// 			{
-// 					count++;
-// 			}
-//             i++;
-//         }
-//         j++;
-//     }
-// 	game->collectibles_nbr = count;
-// }
-
-// int	validmove(t_game *game, int **visited, int y, int x)
-// {
-// 	return (game->map[y][x] != '1' && !visited[y][x]); // checks if it is not a wall and if it haven t been alredy visited
-// }
-
-// void	floodfill(t_game *game, int y, int x, int **visited)
-// {
-// 	if (!validmove(game, visited, y, x) || visited[y][x])
-// 		return ;
-// 	if (game->map[y][x] == 'C') // if it is a coin 
-// 		game->flooded_collectibles += 1;
-// 	visited[y][x] = 1; // mark areas as visited
-// 	floodfill(game, y - 1, x, visited); // up
-// 	floodfill(game, y + 1, x, visited); // down
-// 	floodfill(game, y, x - 1, visited); // left
-// 	floodfill(game, y, x + 1, visited); // right
-// }
-
-// int	check_valid_path(t_game *game)
-// {
-// 	int	i;
-// 	int	**visited;
-// 	int player_pos_x;
-// 	int player_pos_y;
-	
-
-// 	visited = ft_calloc(game->map_height, sizeof(int *)); // allocate memory to store visited areas
-// 	i = 0;		
-// 				// I use calloc to prevent uninitialised value error
-// 	while (i < game->map_height)
-// 	{
-// 		visited[i] = ft_calloc(game->map_width, sizeof(int *));
-// 		i++;
-// 	}
-// 	i = 0;
-// 	while (game->map[i])
-// 	{
-// 		find_player(game, i, &player_pos_x, &player_pos_y); // find player position on the map
-// 		i++;
-// 	}
-// 	count_collectibles(game);	
-// 	find_exit(game); // find where exit is located on the map
-// 	floodfill(game, player_pos_y, player_pos_x, visited); // start algorithm
-// 	i = visited[player_pos_y][player_pos_x] && visited[game->exit_pos_y][game->exit_pos_x]; // if the exit area is not visited it means there is no valid path
-// 	//free_visited(visited, game); // free memory
-// 	printf("number of collectibles collected:%d out of %d\n", game->flooded_collectibles, game->collectibles_nbr);
-// 	if (game->flooded_collectibles != game->collectibles_nbr || !i) // if the algorithm could not find the same amount of coins as the map has or i(exit is unreachable) is not true
-// 		return (0);
-// 	return (1);
-// }
-
-
-void find_player(t_game *game)
+void	find_player(t_game *game)
 {
-	int i = 0;
-	int j = 0;
-	while(j < game->map_height)
-	{	
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (j < game->map_height)
+	{
 		i = 0;
-		while(i < game->map_width)
+		while (i < game->map_width)
 		{
-			if(game->map[j][i] == 'P')
+			if (game->map[j][i] == 'P')
 			{
 				game->player_pos_x = i;
 				game->player_pos_y = j;
-				printf("x:%d\n", game->player_pos_x);
-	printf("y:%d\n", game->player_pos_y);
 			}
 			i++;
 		}
 		j++;
 	}
 }
-void count_collectibles(t_game *game)
+void	count_collectibles(t_game *game)
 {
-	int i = 0;
-	int j = 0;
-	while(j < game->map_height)
-	{	
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (j < game->map_height)
+	{
 		i = 0;
-		while(i < game->map_width)
+		while (i < game->map_width)
 		{
-			if(game->map[j][i] == 'C')
+			if (game->map[j][i] == 'C')
 			{
 				game->collectibles_nbr++;
 			}

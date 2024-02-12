@@ -6,40 +6,40 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 17:29:15 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/12 18:46:41 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/12 20:20:29 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-void move_player(int keycode, t_game *game)
+void	move_player(int keycode, t_game *game)
 {
-	
+
 	int new_player_position_x = game->player_x;
-    int new_player_position_y = game->player_y;
-	
+	int new_player_position_y = game->player_y;
+
 	if(keycode == 65362 || keycode == 65361 || keycode == 65364 || keycode == 65363)
 	{
-		
-    	if (keycode == 65362) // Up arrow key
-   	 	{
-        	new_player_position_y -= 1;
-    	}
-    	else if (keycode == 65361) // Left arrow key
-    	{
-        	new_player_position_x -= 1;
-   	 	}
-    	else if (keycode == 65364) // Down arrow key
-    	{
-        	new_player_position_y += 1;
-    	}
-    	else if (keycode == 65363) // Right arrow key
-    	{
-        	new_player_position_x += 1;
-    	}
-	
+
+		if (keycode == 65362) // Up arrow key
+		{
+			new_player_position_y -= 1;
+		}
+		else if (keycode == 65361) // Left arrow key
+		{
+			new_player_position_x -= 1;
+		}
+		else if (keycode == 65364) // Down arrow key
+		{
+			new_player_position_y += 1;
+		}
+		else if (keycode == 65363) // Right arrow key
+		{
+			new_player_position_x += 1;
+		}
+
 	}
-	
+
     // Check if the new position is within bounds and not hitting a wall
     if (new_player_position_x >= 0 && new_player_position_x < game->map_width &&
         new_player_position_y >= 0 && new_player_position_y < game->map_height &&
@@ -63,7 +63,6 @@ void move_player(int keycode, t_game *game)
 			ft_printf("Moves: %d\n", game->moves);
 			open_exit(game);
 		}
-	
     }
 }
 
