@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -61,22 +62,22 @@ char    **ft_split(char *str)
 	int words = count_words(str);
 	int i = 0;
 	int j = 0;
-	int index = 0;
+	int index = -1;
 	char **wordarray = (char **)malloc(sizeof(char*) * (words + 1));
 	if(!wordarray || !str)
 	{
 		return (NULL);
 	}
-	while(i < ft_strlen(str))
+	while(i <= ft_strlen(str))
 	{
-		if(str[i] != ' ' && str[i] != '\t' && str[i] != '\n' && index == 0)
+		if(str[i] != ' ' && str[i] != '\t' && str[i] != '\n' && index < 0)
 		{
 			index = i;
 		}
-		else if(((index > 0) && (str[i] == ' ' || str[i] == '\t' || str[i] == '\n')) || (i == ft_strlen(str)))
+		else if(((index >= 0) && (str[i] == ' ' || str[i] == '\t' || str[i] == '\n')) || (i == ft_strlen(str)))
 		{
 			wordarray[j] = fill_word(str, index, i);
-			index = 0;
+			index = -1;
 			j++;
 		}
 		i++;
@@ -86,7 +87,7 @@ char    **ft_split(char *str)
 
 }
 
-int main(void)
+/*  int main(void)
 {
 	int i = 0;
 	char string[] = "Hello my name is Jasmin";
@@ -98,11 +99,4 @@ int main(void)
 		printf("\n");
 		i++;
 	}
-}
-/*
-int main(void)
-{
-	 char string[] = "\t  Hello my name is  ";
-	printf("%d\n", count_words(string));
-}
-*/
+}  */
