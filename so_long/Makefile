@@ -6,7 +6,7 @@
 #    By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/23 15:37:37 by jasnguye          #+#    #+#              #
-#    Updated: 2024/02/06 14:48:03 by jasnguye         ###   ########.fr        #
+#    Updated: 2024/02/13 18:15:32 by jasnguye         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS  =   -Wall -Werror -Wextra -Imlx -g
 MLXFLAGS=   -L ./libraries/mlx -lmlx -lXext -lX11
 LIBS    =    ./libraries/Libft/libft.a
 
-SRCS	=	src/window.c src/images.c src/free.c so_long.c src/read_map.c src/movement.c src/map_check.c
+SRCS	=	src/window.c src/images.c src/free.c so_long.c src/read_map.c src/movement.c src/map_check.c src/map_check2.c src/map_check3.c
 OBJS	=	$(SRCS:.c=.o)
 
 all:		$(NAME)

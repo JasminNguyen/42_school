@@ -6,12 +6,11 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:22:20 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/13 12:09:03 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/13 14:54:00 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
-
 
 void	load_img(t_game *game)
 {
@@ -36,7 +35,6 @@ void	load_img(t_game *game)
 	}
 }
 
-
 void	iterate_through_map(t_game *game)
 {
 	int	width;
@@ -55,7 +53,7 @@ void	iterate_through_map(t_game *game)
 	}
 }
 
-void	put_tile(t_game *game, int width, int height)//puts the right tile
+void	put_tile(t_game *game, int width, int height)
 {
 	if (game->map[height][width] == '1')
 	{
@@ -72,10 +70,18 @@ void	put_tile(t_game *game, int width, int height)//puts the right tile
 		mlx_put_image_to_window(game->mlx, game->mlx_win,
 			game->image.collectible, width * 48, height * 48);
 	}
-	else if (game->map[height][width] == 'P')
+	else if (game->map[height][width] == 'P' || game->map[height][width] == 'E')
+	{
+		put_player_and_exit(game, width, height);
+	}
+}
+
+void	put_player_and_exit(t_game *game, int width, int height)
+{
+	if (game->map[height][width] == 'P')
 	{
 		game->player_y = height;
-		game->player_x = width;//saving the players position??
+		game->player_x = width;
 		mlx_put_image_to_window(game->mlx, game->mlx_win,
 			game->image.player, width * 48, height * 48);
 	}
@@ -84,7 +90,7 @@ void	put_tile(t_game *game, int width, int height)//puts the right tile
 		mlx_put_image_to_window(game->mlx, game->mlx_win,
 			game->image.exit_closed, width * 48, height * 48);
 		game->exit_y = height;
-		game->exit_x = width;//saving the exits position to later change the tile to an open door
+		game->exit_x = width;
 	}
 }
 
@@ -95,7 +101,6 @@ void	open_exit(t_game *game)
 
 	i = 0;
 	j = 0;
-
 	while (i < game->map_height)
 	{
 		while (j < game->map_width)

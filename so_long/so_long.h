@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 16:14:21 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/13 11:42:53 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/13 18:29:01 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,10 @@ typedef struct s_game {
 	int		flooded_collectibles;
 	int		flooded_exit;
 	char	*input_file;
+	int		is_rect_colums;
+	int		is_rect_colums_first_row;
+	int		is_rect_i;
+
 }				t_game;
 
 void	open_window(t_game *game);
@@ -75,10 +79,18 @@ void	count_collectibles(t_game *game);
 void	load_img(t_game *game);
 void	iterate_through_map(t_game *game);
 void	put_tile(t_game *game, int width, int height);
+void	put_player_and_exit(t_game *game, int width, int height);
 int		map_check(t_game *game);
+void	flood_fill(char **map, int p_x, int p_y, t_game *game);
+void	count_collectibles(t_game *game);
+void	find_player(t_game *game);
+int		element_check(t_game *game);
+void	check_path_right_and_left(char **map, int p_x, int p_y, t_game *game);
+void	check_path_up_and_down(char **map, int p_x, int p_y, t_game *game);
+void	count_elements(t_game *game, int *collectible, int *exit, int *player);
 int		is_ber_file(const char *filename);
 
-void	move_player(int keycode, t_game *game);
+void	press_key(int keycode, t_game *game);
 void	open_exit(t_game *game);
 int		check_valid_path(t_game *game);
 

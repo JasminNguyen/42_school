@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 11:04:22 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/12 20:13:20 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/13 13:33:51 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	handle_key_press(int keycode, t_game *game)
 		free_exit(game);
 		exit(0);
 	}
-	move_player(keycode, game);
+	press_key(keycode, game);
 	return (0);
 }
 
