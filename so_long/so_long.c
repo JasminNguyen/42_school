@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 16:13:26 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/12 20:02:23 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/13 11:39:04 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 int	main(int argc, char *argv[])
 {
+	t_game	*game;
+
 	if (argc == 2 && is_ber_file(argv[1]))
 	{
-		t_game *game;
 		game = malloc(sizeof(t_game));
 		game->input_file = argv[1];
 		calculate_map_dimensions(argv[1], game);
