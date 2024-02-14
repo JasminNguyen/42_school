@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 16:13:26 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/13 11:39:04 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/14 13:05:00 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,18 @@ int	main(int argc, char *argv[])
 		game->input_file = argv[1];
 		calculate_map_dimensions(argv[1], game);
 		read_map(game->input_file, game);
+		game->moves = 0;
+		game->collectibles_collected = 0;
 		if (map_check(game))
 		{
+
 			open_window(game);//free the old map?
 			load_img(game);
 			iterate_through_map(game);
 			mlx_loop(game->mlx);
 		}
+		else
+			free_map(game, 1);
 		free(game);
 	}
 	else

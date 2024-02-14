@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:22:20 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/13 14:54:00 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/14 13:20:57 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	open_exit(t_game *game)
 
 	i = 0;
 	j = 0;
+	game->exit_accessible = 0;
 	while (i < game->map_height)
 	{
 		while (j < game->map_width)

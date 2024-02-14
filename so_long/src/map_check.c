@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:50:27 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/13 18:47:34 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/14 13:11:37 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,11 +136,13 @@ int	is_surrounded_by_walls(t_game *game)
 
 int	map_check(t_game *game)
 {
+	game->flooded_collectibles = 0;
+	game->collectibles_nbr = 0;
+	game->flooded_exit = 0; 
 	find_player(game);
 	count_collectibles(game);
-	printf("x:%d\n", game->player_pos_x);
-	printf("y:%d\n", game->player_pos_y);
 	flood_fill(game->map, game->player_pos_x, game->player_pos_y, game);
+	free_map(game, 1);
 	read_map(game->input_file, game);
 	if (!(is_rectangular(game)) || !(is_valid_char(game)) 
 		|| !(is_surrounded_by_walls(game)) || !(element_check(game))
