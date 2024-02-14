@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:50:27 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/14 13:11:37 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/14 14:53:46 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,17 +145,15 @@ int	map_check(t_game *game)
 	free_map(game, 1);
 	read_map(game->input_file, game);
 	if (!(is_rectangular(game)) || !(is_valid_char(game)) 
-		|| !(is_surrounded_by_walls(game)) || !(element_check(game))
+		|| !(is_surrounded_by_walls(game)) || !(element_check(game)) 
 		|| (game->flooded_exit != 1) 
 		|| (game->flooded_collectibles != game->collectibles_nbr))
 	{
 		ft_printf("Error\nInvalid map!\n");
-		if (!(is_rectangular(game)))
-			ft_printf("Map is not rectangular!\n");
+		if (!(is_rectangular(game)) || !(is_surrounded_by_walls(game)))
+			ft_printf("Map is not rectangular or not surrounded by walls!\n");
 		else if (!(is_valid_char(game)))
 			ft_printf("Map contains unknown char!\n");
-		else if (!(is_surrounded_by_walls(game)))
-			ft_printf("Map is not entirely surrounded by walls!\n");
 		else if (!(element_check(game)))
 			ft_printf("Map does not contain all the required elements!\n");
 		else if ((game->flooded_collectibles != game->collectibles_nbr))

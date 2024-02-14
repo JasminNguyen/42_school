@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 16:14:21 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/14 12:36:44 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/14 14:55:23 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ typedef struct s_game {
 	int		map_height;
 	char	**map;
 	char	**map_cpy;
-	int		player_x;//for movement
+	int		player_x;
 	int		player_y;
-	int		player_pos_x;//for the path check
-	int		player_pos_y;//for the path check
+	int		player_pos_x;
+	int		player_pos_y;
 	int		exit_pos_x;
 	int		exit_pos_y;
 	int		exit_x;
@@ -95,5 +95,6 @@ void	press_key(int keycode, t_game *game);
 void	open_exit(t_game *game);
 void	free_map(t_game *game, int flag);
 int		check_valid_path(t_game *game);
+void	print_error_message(t_game *game);
 
 #endif

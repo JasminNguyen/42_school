@@ -6,11 +6,19 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 16:13:26 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/14 13:05:00 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/14 15:00:41 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void	launch_game(t_game *game)
+{
+	open_window(game);
+	load_img(game);
+	iterate_through_map(game);
+	mlx_loop(game->mlx);
+}
 
 int	main(int argc, char *argv[])
 {
@@ -26,11 +34,7 @@ int	main(int argc, char *argv[])
 		game->collectibles_collected = 0;
 		if (map_check(game))
 		{
-
-			open_window(game);//free the old map?
-			load_img(game);
-			iterate_through_map(game);
-			mlx_loop(game->mlx);
+			launch_game(game);
 		}
 		else
 			free_map(game, 1);

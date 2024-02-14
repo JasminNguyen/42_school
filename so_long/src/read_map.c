@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:54:29 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/14 12:34:33 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/14 14:43:14 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	read_map(const char *filename, t_game *game)
 	while (i < game->map_height)
 	{
 		game->map[i] = get_next_line(game->fd);
-		printf("map: %s\n", game->map[i]);
 		i++;
 	}
 	close(game->fd);
