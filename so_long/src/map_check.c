@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:50:27 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/14 14:53:46 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/14 16:28:52 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,32 +27,6 @@ int	is_ber_file(const char *filename)
 	return (0);
 }
 
-/* int	is_rectangular(t_game *game)
-{
-	game->is_rect_colums = 0;
-	game->is_rect_colums_first_row = 0;
-	game->is_rect_i = 0;
-	while (game->map[0][game->is_rect_colums_first_row] != '\n' 
-		&& game->map[0][game->is_rect_colums_first_row] != '\0')
-		game->is_rect_colums_first_row++;
-	while (game->is_rect_i < game->map_height)
-	{
-		game->is_rect_colums = 0;
-		while (game->map[game->is_rect_i][game->is_rect_colums] != '\n' 
-		&& game->map[game->is_rect_i][game->is_rect_colums] != '\0')
-			game->is_rect_colums++;
-		if (game->is_rect_colums != game->is_rect_colums_first_row)
-			return (0); 
-		game->is_rect_i++;
-	}
-	while (game->is_rect_i < game->map_height)
-	{
-		if (game->map[game->is_rect_i][0] != '\n')
-			return (0); 
-		game->is_rect_i++;
-	}
-	return (1);
-} */
 int	is_rectangular(t_game *game)
 {
 	int	colums;
