@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:00:55 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/01/31 17:02:23 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/15 11:37:23 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,18 +61,21 @@ int	ft_printf(const char *s, ...)
 	va_end(ap);
 	return (count);
 }
-int check(int c, char *str, int index)
+
+int	check(int c, char *str, int index)
 {
-        int i = 0;
-        while (i < index)
-        {
-                if (str[i] == c)
-                {
-                        return (0);
-                }
-                i++;
-        }
-        return (1);
+	int	i;
+
+	i = 0;
+	while (i < index)
+	{
+		if (str[i] == c)
+		{
+			return (0);
+		}
+		i++;
+	}
+	return (1);
 }
 /*
 int main(int argc, char *argv[])

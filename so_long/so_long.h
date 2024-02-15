@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 16:14:21 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/14 14:55:23 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/15 11:31:10 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,8 @@ int		handle_key_press(int keycode, t_game *game);
 int		close_window(t_game *game);
 void	free_exit(t_game *game);
 void	free_sprites(t_game *game);
-
 void	calculate_map_dimensions(const char *filename, t_game *game);
 void	read_map(const char *filename, t_game *game);
-
 void	find_player(t_game *game);
 void	count_collectibles(t_game *game);
 void	load_img(t_game *game);
@@ -92,9 +90,11 @@ void	count_elements(t_game *game, int *collectible, int *exit, int *player);
 int		is_ber_file(const char *filename);
 
 void	press_key(int keycode, t_game *game);
+void	which_key(int keycode, int *x, int *y);
 void	open_exit(t_game *game);
 void	free_map(t_game *game, int flag);
 int		check_valid_path(t_game *game);
 void	print_error_message(t_game *game);
-
+void	move_player(t_game *game, int new_player_x, int new_player_y);
+void	count_moves(t_game *game, int x, int y);
 #endif
