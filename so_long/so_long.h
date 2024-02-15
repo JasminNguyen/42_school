@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 16:14:21 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/15 11:31:10 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/15 15:05:39 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,5 @@ int		check_valid_path(t_game *game);
 void	print_error_message(t_game *game);
 void	move_player(t_game *game, int new_player_x, int new_player_y);
 void	count_moves(t_game *game, int x, int y);
+int		check_path(char **map, int p_x, int p_y, t_game *game);
 #endif

@@ -6,32 +6,11 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 17:29:15 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/15 11:32:27 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/15 15:27:22 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
-
-void	move_player(t_game *game, int new_player_x, int new_player_y)
-{
-	if (game->map[new_player_y][new_player_x] != 'E' 
-			|| game->exit_accessible == 1)
-	{
-		if (game->map[new_player_y][new_player_x] == 'C')
-		{
-			(game->collectibles_collected)++;
-			game->map[new_player_y][new_player_x] = '0';
-		}
-		mlx_put_image_to_window(game->mlx, game->mlx_win,
-			game->image.background, game->player_x * 48,
-			game->player_y * 48);
-		game->player_x = new_player_x;
-		game->player_y = new_player_y;
-		mlx_put_image_to_window(game->mlx, game->mlx_win,
-			game->image.player, game->player_x * 48, game->player_y * 48);
-		open_exit(game);
-	}
-}
 
 void	press_key(int keycode, t_game *game)
 {
@@ -70,12 +49,29 @@ void	which_key(int keycode, int *x, int *y)
 
 void	count_moves(t_game *game, int x, int y)
 {
-	if (game->map[y][x] == 'E' 
-		&& game->exit_accessible != 1)
-	{
-		return ;
-	}
 	(game->moves)++;
 	move_player(game, x, y);
-	ft_printf("Moves: %d\n", game->moves);
+	ft_printf("\rMoves: %d", game->moves);
+}
+
+void	move_player(t_game *game, int new_player_x, int new_player_y)
+{
+	if (game->map[new_player_y][new_player_x] == 'C')
+	{
+		(game->collectibles_collected)++;
+		game->map[new_player_y][new_player_x] = '0';
+	}
+	mlx_put_image_to_window(game->mlx, game->mlx_win,
+		game->image.background, game->player_x * 48,
+		game->player_y * 48);
+	game->player_x = new_player_x;
+	game->player_y = new_player_y;
+	mlx_put_image_to_window(game->mlx, game->mlx_win,
+		game->image.player, game->player_x * 48, game->player_y * 48);
+	open_exit(game);
+	if (!game->exit_accessible)
+	{
+		mlx_put_image_to_window(game->mlx, game->mlx_win,
+			game->image.exit_closed, game->exit_x * 48, game->exit_y * 48);
+	}
 }
