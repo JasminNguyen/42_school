@@ -1,34 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 11:35:14 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/20 16:07:35 by jasnguye         ###   ########.fr       */
+/*   Created: 2023/11/25 17:22:19 by jasnguye          #+#    #+#             */
+/*   Updated: 2023/11/27 18:14:28 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-int	main(int argc, char *argv[])
+void	ft_putchar_fd(char c, int fd)
 {
-	t_list	*stack_a;
-	t_list	*stack_b;
-
-	stack_a = NULL;
-	stack_b = NULL;
-	if (argc == 2)
-	{
-		stack_a = parse_string(argv, stack_a);
-	}
-	else
-	{
-		stack_a = parse_arguments(stack_a, argc, argv);
-	}
-	
-		
-
-	
+	write(fd, &c, 1);
 }
+
+/* int main(void)
+{
+	int file_descriptor = 1;
+	char c = 'a';
+	ft_putchar_fd(c, file_descriptor);
+} */

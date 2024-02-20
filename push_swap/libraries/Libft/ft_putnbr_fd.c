@@ -1,34 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 11:35:14 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/20 16:07:35 by jasnguye         ###   ########.fr       */
+/*   Created: 2023/11/27 12:33:32 by jasnguye          #+#    #+#             */
+/*   Updated: 2023/11/27 18:15:52 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-int	main(int argc, char *argv[])
+void	ft_putnbr_fd(int n, int fd)
 {
-	t_list	*stack_a;
-	t_list	*stack_b;
+	char	digit; 
 
-	stack_a = NULL;
-	stack_b = NULL;
-	if (argc == 2)
+	if (n == -2147483648)
 	{
-		stack_a = parse_string(argv, stack_a);
+		write (fd, "-2147483648", 11);
 	}
-	else
+	else 
 	{
-		stack_a = parse_arguments(stack_a, argc, argv);
+		if (n < 0)
+		{
+			write(fd, "-", 1);
+			n = -n;
+		}
+		if (n > 9)
+		{
+			ft_putnbr_fd (n / 10, fd);
+			n %= 10;
+		}
+		digit = n + '0';
+		write(fd, &digit, 1);
 	}
-	
-		
-
-	
 }
+
+/* int main(void)
+{
+	int file_descriptor = 1;
+	int n = 10234;
+	ft_putnbr_fd(n, file_descriptor);
+} */

@@ -1,34 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 11:35:14 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/20 16:07:35 by jasnguye         ###   ########.fr       */
+/*   Created: 2023/11/25 15:17:25 by jasnguye          #+#    #+#             */
+/*   Updated: 2023/11/29 11:07:41 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-int	main(int argc, char *argv[])
+/* void	f_function(unsigned int i, char *c)
 {
-	t_list	*stack_a;
-	t_list	*stack_b;
-
-	stack_a = NULL;
-	stack_b = NULL;
-	if (argc == 2)
+	if (i % 2 == 0 && *c >= 'a' && *c <= 'z')
 	{
-		stack_a = parse_string(argv, stack_a);
+		*c = *c - 32;
 	}
-	else
-	{
-		stack_a = parse_arguments(stack_a, argc, argv);
-	}
-	
-		
+} */
 
-	
+void	ft_striteri(char *s, void (*f_function)(unsigned int, char*))
+{
+	int	i;
+
+	i = 0;
+	while (s[i] != '\0')
+	{
+		(*f_function)(i, &s[i]);
+		i++;
+	}
 }
+
+/* int main(void)
+{
+	char string[] = "abc";
+	printf("%s\n", string);
+	ft_striteri(string, f_function);
+	printf("%s\n", string);
+} */

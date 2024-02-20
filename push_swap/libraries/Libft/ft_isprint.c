@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 11:35:14 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/20 16:07:35 by jasnguye         ###   ########.fr       */
+/*   Created: 2023/11/13 14:45:35 by jasnguye          #+#    #+#             */
+/*   Updated: 2023/11/27 15:11:11 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-int	main(int argc, char *argv[])
+int	ft_isprint(int i)
 {
-	t_list	*stack_a;
-	t_list	*stack_b;
-
-	stack_a = NULL;
-	stack_b = NULL;
-	if (argc == 2)
+	if (i >= 32 && i <= 126)
 	{
-		stack_a = parse_string(argv, stack_a);
+		return (1);
 	}
-	else
-	{
-		stack_a = parse_arguments(stack_a, argc, argv);
-	}
-	
-		
-
-	
+	return (0);
 }
+
+/* int main(void)
+{
+    printf("%d\n", ft_isprint(32));
+} */

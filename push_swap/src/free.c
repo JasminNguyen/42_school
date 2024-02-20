@@ -1,34 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 11:35:14 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/20 16:07:35 by jasnguye         ###   ########.fr       */
+/*   Created: 2024/02/20 16:09:51 by jasnguye          #+#    #+#             */
+/*   Updated: 2024/02/20 16:11:04 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../push_swap.h"
 
-int	main(int argc, char *argv[])
+void free_errors(t_list *stack_a)
 {
-	t_list	*stack_a;
-	t_list	*stack_b;
-
-	stack_a = NULL;
-	stack_b = NULL;
-	if (argc == 2)
-	{
-		stack_a = parse_string(argv, stack_a);
-	}
-	else
-	{
-		stack_a = parse_arguments(stack_a, argc, argv);
-	}
-	
-		
-
 	
 }
