@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tolower.c                                       :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/18 13:59:21 by jasnguye          #+#    #+#             */
-/*   Updated: 2023/11/27 18:56:31 by jasnguye         ###   ########.fr       */
+/*   Created: 2024/02/21 12:10:19 by jasnguye          #+#    #+#             */
+/*   Updated: 2024/02/21 14:24:45 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_tolower(int c)
+t_list	*ft_lstnew(void *content)
 {
-	int	i;
+	t_list	*new;
 
-	if (c >= 65 && c <= 90)
+	new = (t_list *)malloc(sizeof(t_list));
+	if (!new)
 	{
-		i = c + 32;
-		return (i);
+		return (NULL);
 	}
-	else 
-	{
-		return (c);
-	}
+	new->content = content;
+	new->next = NULL;
+	return (new);
 }
-
-/* int main(void)
-{
-	printf("%d\n", ft_tolower(122));
-} */

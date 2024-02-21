@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/27 12:27:46 by jasnguye          #+#    #+#             */
-/*   Updated: 2023/11/27 18:14:55 by jasnguye         ###   ########.fr       */
+/*   Created: 2024/02/21 14:06:13 by jasnguye          #+#    #+#             */
+/*   Updated: 2024/02/21 14:09:09 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putendl_fd(char *s, int fd)
+t_list	*ft_lstlast(t_list *lst)
 {
-	int	i;
-
-	i = 0;
-	while (s[i] != '\0')
+	if (!lst)
 	{
-		write(fd, &s[i], 1);
-		i++;
+		return (NULL);
 	}
-	write(fd, "\n", 1);
+	while (lst->next != NULL)
+	{
+		lst = lst->next;
+	}
+	return (lst);
 }
-
-/* int main(void)
-{
-	int file_descriptor = 1;
-	char *string = "hello hello";
-	ft_putendl_fd(string, file_descriptor);
-} */

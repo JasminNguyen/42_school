@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:12:58 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/20 16:00:05 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/21 11:24:14 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@
 
 typedef struct s_list
 {
-	int						nbr;
+	int						content;
 	int						index;
 	int						push_cost;
 	bool					above_median;
 	bool					cheapest; // vid with woman
-	struct s_stack_node		*target_node;
-	struct s_stack_node		*next;
-	struct s_stack_node		*prev;
+	struct s_list	*target_node;
+	struct s_list	*next;
+	struct s_list	*prev;
 }	t_list;
 
 //parsing functions

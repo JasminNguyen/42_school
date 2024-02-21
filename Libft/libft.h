@@ -6,20 +6,28 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:03:09 by jasnguye          #+#    #+#             */
-/*   Updated: 2023/11/27 19:00:03 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:20:28 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
+
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1
+# endif
 
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <libft.h>
 
+typedef struct s_list
+{
+	void			*content;
+	struct s_list	*next;
+}	t_list;
 
 void	ft_bzero(void *str, size_t n);
 int		ft_isalnum(int c);
@@ -56,14 +64,17 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 
-int	ft_printf(const char *s, ...);
-int	print_s(char specifier, va_list ap);
-int	print_char(int c);
-int	print_string(char *s);
-int	print_digit(long nbr, int base, int boolean);
-int	print_ox(va_list arguments);
-int	print_pointer(unsigned long long int nbr); 
+int		ft_printf(const char *s, ...);
+int		print_s(char specifier, va_list ap);
+int		print_char(int c);
+int		print_string(char *s);
+int		print_digit(long nbr, int base, int boolean);
+int		print_ox(va_list arguments);
+int		print_pointer(unsigned long long int nbr); 
 
-char		*get_next_line(int fd);
+char	*get_next_line(int fd);
+t_list	*ft_lstnew(void *content);
+t_list	*ft_lstlast(t_list *lst);
+void	ft_lstadd_back(t_list **lst, t_list *new);
 
 #endif

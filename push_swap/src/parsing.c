@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 15:17:45 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/20 16:28:30 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:14:18 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ t_list	*parse_string(char *argv[], t_list *stack_a)
 			free_errors(stack_a);
 			free_temp(temp); // is this for every char that I turn into an int?
 		}
-		new = ft_lstnew(ft_atoi(temp[i])); //
-		ft_lstadd_back(&stack_a, new); //
+		new = ft_lstnew(ft_atoi(temp[i])); //neu schreiben (doubly linked list)
+		ft_lstadd_back(&stack_a, new); // neu schreiben
 		i++;
 	}
 	free_temp(temp);
