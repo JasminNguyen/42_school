@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 11:35:14 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/23 15:45:42 by jasnguye         ###   ########.fr       */
+/*   Created: 2023/11/13 14:53:51 by jasnguye          #+#    #+#             */
+/*   Updated: 2024/02/23 16:57:04 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
-int	main(int argc, char *argv[])
-{
-	t_list	*stack_a;
-	t_list	*stack_b;
+#include "../../push_swap.h"
 
-	stack_a = NULL;
-	stack_b = NULL;
-	if (argc == 2)
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i] != '\0')
 	{
-		stack_a = parse_string_to_stack(argv, stack_a);
+		i++;
 	}
-	else
-	{
-		stack_a = parse_arguments_to_stack(stack_a, argc, argv);
-	} 
-	
-	
+	return (i);
 }
+
+/* int main(void)
+{
+    printf("%ld\n", ft_strlen("hellohello"));
+} */

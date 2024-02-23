@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 11:35:14 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/23 15:45:42 by jasnguye         ###   ########.fr       */
+/*   Created: 2024/02/21 14:05:01 by jasnguye          #+#    #+#             */
+/*   Updated: 2024/02/23 15:46:09 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
-int	main(int argc, char *argv[])
-{
-	t_list	*stack_a;
-	t_list	*stack_b;
+#include "../../push_swap.h"
 
-	stack_a = NULL;
-	stack_b = NULL;
-	if (argc == 2)
+void	ft_lstadd_back(t_list **lst, t_list *new)
+{
+	t_list	*last;
+
+	if (!lst || !new)
 	{
-		stack_a = parse_string_to_stack(argv, stack_a);
+		return ;
 	}
-	else
+
+	if (!(*lst))
 	{
-		stack_a = parse_arguments_to_stack(stack_a, argc, argv);
-	} 
-	
-	
+		*lst = new;
+		return ;
+	}
+	last = ft_lstlast(*lst);
+	last->next = new;
 }

@@ -6,11 +6,11 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:04:17 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/20 16:25:00 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/23 16:51:14 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../push_swap.h"
 /* 
 int input_checker(char *argv[])
 {
@@ -78,7 +78,7 @@ int	check_doubles(t_list *stack_a, int nbr)
 	}
 	while (stack_a)
 	{
-		if (stack_a->nbr == nbr)
+		if (stack_a->content == nbr)
 		{
 			return (1);
 		}
