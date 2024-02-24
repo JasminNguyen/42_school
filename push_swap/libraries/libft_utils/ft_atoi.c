@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 19:02:34 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/23 16:55:09 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/24 19:10:32 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@ int	ft_atoi(const char *str)
 		i++;
 	}
 	return (result * sign);
+
+	// int max, int min check
+	//call error function
 }
 /* int main(void)
 {

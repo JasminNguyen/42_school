@@ -6,7 +6,7 @@
 #    By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/23 15:10:59 by jasnguye          #+#    #+#              #
-#    Updated: 2024/02/24 17:05:09 by jasnguye         ###   ########.fr        #
+#    Updated: 2024/02/24 17:54:25 by jasnguye         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ libraries/libft_utils/ft_lstnew.c	\
 libraries/libft_utils/ft_split.c	\
 libraries/libft_utils/ft_atoi.c	\
 libraries/libft_utils/ft_strlen.c	\
+libraries/libft_utils/ft_isdigit.c	\
 src/check_input.c \
 src/parsing.c \
 src/free.c \

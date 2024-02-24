@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:04:17 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/23 16:51:14 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/24 19:07:54 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,8 @@ int	check_valid_argument(char *nbr)
 			return (1);
 		}
 	}
-	return (0);
+	return (0); 
 }
-
 
 int	check_doubles(t_list *stack_a, int nbr)
 {

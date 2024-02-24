@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 11:35:14 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/24 17:35:24 by jasnguye         ###   ########.fr       */
+/*   Created: 2023/11/13 12:46:44 by jasnguye          #+#    #+#             */
+/*   Updated: 2024/02/24 17:55:03 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
-int	main(int argc, char *argv[])
-{
-	t_list	*stack_a;
-	t_list	*stack_b;
+#include "../../push_swap.h"
 
-	stack_a = NULL;
-	stack_b = NULL;
-	if (argc == 2)
+int	ft_isdigit(int i)
+{
+	if (i >= '0' && i <= '9')
 	{
-		stack_a = parse_string_to_stack(argv, stack_a);
+		return (1);
 	}
-	else
-	{
-		stack_a = parse_arguments_to_stack(stack_a, argc, argv);
-	} 
-	
-	
+	return (0);
 }
+
+/* int main(void)
+{
+    printf("%d\n", ft_isdigit(9));
+} */
