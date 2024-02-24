@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:12:58 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/23 16:56:53 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/24 16:29:55 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_list
 char	**ft_split(const char *s, char c);
 int		ft_atoi(const char *str);
 size_t	ft_strlen(const char *s);
-
+int	ft_printf(const char *s, ...);
 //list functions
 t_list	*ft_lstnew(int content);
 t_list	*ft_lstlast(t_list *lst);
@@ -47,4 +47,7 @@ t_list	*parse_arguments_to_stack(t_list *stack_a, int argc, char *argv[]);
 int		check_valid_argument(char *nbr);
 int		check_doubles(t_list *stack_a, int nbr);
 
+//free functions
+void	free_errors(t_list **lst);
+void	free_temp(char **temp);
 #endif

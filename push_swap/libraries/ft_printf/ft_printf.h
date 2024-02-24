@@ -1,45 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 16:09:51 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/24 15:52:36 by jasnguye         ###   ########.fr       */
+/*   Created: 2023/12/04 16:53:32 by jasnguye          #+#    #+#             */
+/*   Updated: 2023/12/07 11:11:24 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-void	free_errors(t_list **lst)
-{
-	t_list	*temp;
+# include <stdarg.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
 
-	if (!lst)
-	{
-		return ;
-	}
-	while (*lst != NULL)
-	{
-		temp = (*lst)->next;
-		(*lst)->content = 0;
-		free(*lst);
-		(*lst) = temp;
-	}
-	ft_printf("Error!\n"); // on the standard error?
-}
+int	ft_printf(const char *s, ...);
+int	print_s(char specifier, va_list ap);
+int	print_char(int c);
+int	print_string(char *s);
+int	print_digit(long nbr, int base, int boolean);
+int	print_ox(va_list arguments);
+int	print_pointer(unsigned long long int nbr); 
 
-
-void	free_temp(char **temp)
-{
-	int	i;
-
-	i = 0;
-	while (temp[i] != NULL)
-	{
-		free(temp[i]);
-		i++;
-	}
-	free(temp);
-}
+#endif

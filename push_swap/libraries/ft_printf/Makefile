@@ -5,48 +5,35 @@
 #                                                     +:+ +:+         +:+      #
 #    By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/02/23 15:10:59 by jasnguye          #+#    #+#              #
-#    Updated: 2024/02/24 17:05:09 by jasnguye         ###   ########.fr        #
+#    Created: 2023/12/04 16:41:18 by jasnguye          #+#    #+#              #
+#    Updated: 2023/12/06 14:05:30 by jasnguye         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = push_swap.c \
-libraries/libft_utils/ft_lstadd_back.c \
-libraries/libft_utils/ft_lstlast.c	\
-libraries/libft_utils/ft_lstnew.c	\
-libraries/libft_utils/ft_split.c	\
-libraries/libft_utils/ft_atoi.c	\
-libraries/libft_utils/ft_strlen.c	\
-src/check_input.c \
-src/parsing.c \
-src/free.c \
-
-
-
+SRCS =	ft_printf.c \
+		helper_functions.c
+		
 
 
 OBJS = $(SRCS:.c=.o)
 CC = cc
-CFLAGS = -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror
 AR = ar rcs
 
-NAME = push_swap
+NAME = libftprintf.a
 
 all: $(NAME)
-
 $(NAME) : $(OBJS)
-	$(MAKE) -C libraries/ft_printf
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) libraries/ft_printf/*.o
+		$(AR) $(NAME) $(OBJS)
 
-clean:
-	rm -f $(OBJS)
-	 $(MAKE) -C libraries/ft_printf clean
+clean : 
+		rm -f $(OBJS)
 
-fclean: clean
-	$(RM) $(NAME)
-	 $(MAKE) -C libraries/ft_printf fclean
+fclean : clean
+		rm -f $(NAME)
 
-re: fclean all
+re : fclean all
 
 .PHONY: all clean fclean re
+
 
