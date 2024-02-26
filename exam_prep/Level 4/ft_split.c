@@ -46,9 +46,9 @@ char	*fill_word(char *str, int start, int end)
 	{
 		return(NULL);
 	}
-	while (start < end)
+	while (start < end) //start < end
 	{
-		word[i] = str[start];
+		word[i] = str[start]; //str[start]
 		start++;
 		i++;
 	}
@@ -68,7 +68,7 @@ char    **ft_split(char *str)
 	{
 		return (NULL);
 	}
-	while(i <= ft_strlen(str))
+	while(i <= ft_strlen(str)) // <=
 	{
 		if(str[i] != ' ' && str[i] != '\t' && str[i] != '\n' && index < 0)
 		{
@@ -76,7 +76,7 @@ char    **ft_split(char *str)
 		}
 		else if(((index >= 0) && (str[i] == ' ' || str[i] == '\t' || str[i] == '\n')) || (i == ft_strlen(str)))
 		{
-			wordarray[j] = fill_word(str, index, i);
+			wordarray[j] = fill_word(str, index, i); //achtung auf reihenfolge
 			index = -1;
 			j++;
 		}
