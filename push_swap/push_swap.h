@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:12:58 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/24 17:54:05 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/26 18:30:52 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <stddef.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <limits.h>
+# include <unistd.h>
 
 typedef struct s_list
 {
@@ -31,23 +33,28 @@ typedef struct s_list
 }	t_list;
 
 //libft functions
-char	**ft_split(const char *s, char c);
-int		ft_atoi(const char *str);
+char	**ft_split(const char *s, char c);//modify to char *str? 
+long	ft_atol(const char *str);
 size_t	ft_strlen(const char *s);
 int		ft_printf(const char *s, ...);
 int		ft_isdigit(int nbr);
+void	*ft_calloc(size_t count, size_t size);
+
 //list functions
 t_list	*ft_lstnew(int content);
 t_list	*ft_lstlast(t_list *lst);
 void	ft_lstadd_back(t_list **lst, t_list *new);
 
 //parsing functions
-t_list	*parse_string_to_stack(char *argv[], t_list *stack_a);
-t_list	*parse_arguments_to_stack(t_list *stack_a, int argc, char *argv[]);
-void	print_stack(t_list *stack_a);
+//t_list	*parse_string_to_stack(char *argv[], t_list *stack_a);
+//t_list	*parse_arguments_to_stack(t_list *stack_a, int argc, char *argv[]);
+void		init_stack_a(t_list **stack_a, char *argv[]);
+void		print_stack(t_list *stack_a);
+
+
 //check functions
-int		check_valid_argument(char *nbr);
-int		check_doubles(t_list *stack_a, int nbr);
+int		error_syntax(char *nbr);
+int		error_duplicate(t_list *stack_a, int nbr);
 
 //free functions
 void	free_errors(t_list **lst);

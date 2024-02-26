@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:09:51 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/24 15:52:36 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/26 17:35:31 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	free_errors(t_list **lst)
 		free(*lst);
 		(*lst) = temp;
 	}
-	ft_printf("Error!\n"); // on the standard error?
+	write(2, "Error!\n", 7); // on the standard error?
 }
 
 

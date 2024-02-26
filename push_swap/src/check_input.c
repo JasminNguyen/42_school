@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:04:17 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/24 19:07:54 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/26 18:07:55 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ int check_for_doubles(char *argv[])
 }
  */
 
-int	check_valid_argument(char *nbr)
+/* int	check_valid_argument(char *nbr)
 {
-	if (!(*nbr == '+' || *nbr == '-' || (*nbr >= '0' && *nbr <= '9')))
+	if (!(*nbr == '+' || *nbr == '-' ||  (*nbr >= '0' && *nbr <= '9')))
 	{
 		return (1);
 	}
@@ -66,10 +66,28 @@ int	check_valid_argument(char *nbr)
 			return (1);
 		}
 	}
-	return (0); 
+	return (0); //valid
+} */
+
+int	error_syntax(char *str_i)
+{
+	if (!(*str_i == '+'
+			|| *str_i == '-'
+			|| (*str_i >= '0' && *str_i <= '9')))
+		return (1); // there is an error
+	if ((*str_i == '+'
+			|| *str_i == '-')
+		&& !(str_i[1] >= '0' && str_i[1] <= '9'))
+		return (1);
+	while (*++str_i)
+	{
+		if (!(*str_i >= '0' && *str_i <= '9'))
+			return (1);
+	}
+	return (0); //no error
 }
 
-int	check_doubles(t_list *stack_a, int nbr)
+int	error_duplicate(t_list *stack_a, int nbr)
 {
 	if (!stack_a)
 	{
@@ -79,11 +97,11 @@ int	check_doubles(t_list *stack_a, int nbr)
 	{
 		if (stack_a->content == nbr)
 		{
-			return (1);
+			return (1); // there is a duplicate
 		}
 		stack_a = stack_a->next;
 	}
-	return (0);
+	return (0); // no duplicate
 }
 
 
