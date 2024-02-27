@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:35:14 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/26 18:17:52 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/27 12:48:47 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ int	main(int argc, char *argv[])
 	}
 	else if(argc == 2)
 	{
-		argv = ft_split(argv[1], ' '); //modifiy?
+		argv = ft_split(argv[1], ' '); //review this one!!
 	}
 	init_stack_a(&stack_a, argv + 1);
 	print_stack(stack_a);
-/* 	if(!stack_is_sorted(stack_a))
+	if(!stack_is_sorted(stack_a))
 	{
 
-	} */
+	}
 }

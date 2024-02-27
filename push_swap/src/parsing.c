@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 15:17:45 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/26 18:30:01 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/27 12:45:05 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ static void	append_node(t_list **stack_a, int nbr)
 	t_list	*new;
 	t_list	*last_node;
 
-	if (!stack_a)
+	if (!stack_a) //there is no stack to append to
 	{
 		return ;
 	}
@@ -110,7 +110,7 @@ static void	append_node(t_list **stack_a, int nbr)
 	}
 	new->content = nbr;
 	new->next = NULL;
-	if (!(*stack_a))
+	if (!(*stack_a))//the existing stack is empty
 	{
 		*stack_a = new;
 		new->prev = NULL; //Set the head node's previous pointer to NULL as it's the first node

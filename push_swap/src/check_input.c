@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:04:17 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/26 18:07:55 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/27 12:49:10 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,11 @@ int	error_duplicate(t_list *stack_a, int nbr)
 		stack_a = stack_a->next;
 	}
 	return (0); // no duplicate
+}
+
+int		stack_is_sorted(t_list *stack_a)
+{
+	
 }
 
 

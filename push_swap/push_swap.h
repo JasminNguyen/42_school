@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:12:58 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/26 18:30:52 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/27 12:47:45 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_list
 }	t_list;
 
 //libft functions
-char	**ft_split(const char *s, char c);//modify to char *str? 
+char	**ft_split(char *s, char c);//review this one again!!!
 long	ft_atol(const char *str);
 size_t	ft_strlen(const char *s);
 int		ft_printf(const char *s, ...);
@@ -50,11 +50,15 @@ void	ft_lstadd_back(t_list **lst, t_list *new);
 //t_list	*parse_arguments_to_stack(t_list *stack_a, int argc, char *argv[]);
 void		init_stack_a(t_list **stack_a, char *argv[]);
 void		print_stack(t_list *stack_a);
+static void	append_node(t_list **stack_a, int nbr);
+
+
 
 
 //check functions
 int		error_syntax(char *nbr);
 int		error_duplicate(t_list *stack_a, int nbr);
+int		stack_is_sorted(t_list *stack_a);
 
 //free functions
 void	free_errors(t_list **lst);
