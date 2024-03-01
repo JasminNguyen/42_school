@@ -72,8 +72,8 @@ void camel_to_snake(char *str)
 	{
 		if(str[j] >= 'A' && str[j] <= 'Z')
 		{
-			result[i] = '_';
-			i++;
+			result[i] = '_'; // put an underscore whenever we encounter an uppercase letter in the original string
+			i++; // jump one further in the result string
 		}
 		result[i] = str[j];
 		i++;
