@@ -52,8 +52,8 @@ void snake_to_camel(char *str)
 	{
 		if(str[j] == '_')
 		{
-			j++;
-			str[j] = str[j] - 32;
+			j++; //jump one further in the original string
+			str[j] = str[j] - 32; // make the current char uppercase
 		}
 		result[i] = str[j];
 	       	i++;	
