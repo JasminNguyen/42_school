@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:04:17 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/27 12:49:10 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/27 14:21:52 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,21 @@ int	error_duplicate(t_list *stack_a, int nbr)
 	return (0); // no duplicate
 }
 
-int		stack_is_sorted(t_list *stack_a)
+bool	stack_is_sorted(t_list *stack_a)
 {
-	
+	if (!stack_a)// checks whether there is a stack to begin with
+	{
+		return (1); //returns true since an empty stack is considered sorted
+	}
+	while (stack_a->next != NULL) // my version
+	{
+		if (stack_a->content > stack_a->next->content)
+		{
+			return (false);
+		}
+		stack_a = stack_a->next;
+	}
+	return (true);
 }
 
 

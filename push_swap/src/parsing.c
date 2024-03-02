@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 15:17:45 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/27 12:45:05 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/27 13:59:19 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,4 +147,5 @@ void	init_stack_a(t_list **stack_a, char *argv[])
 		append_node(stack_a, (int)nbr);
 		i++;
 	}
+	print_stack(*stack_a);
 }

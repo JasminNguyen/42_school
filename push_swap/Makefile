@@ -6,7 +6,7 @@
 #    By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/23 15:10:59 by jasnguye          #+#    #+#              #
-#    Updated: 2024/02/26 18:31:34 by jasnguye         ###   ########.fr        #
+#    Updated: 2024/02/28 11:38:23 by jasnguye         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ SRCS = push_swap.c \
 libraries/libft_utils/ft_lstadd_back.c \
 libraries/libft_utils/ft_lstlast.c	\
 libraries/libft_utils/ft_lstnew.c	\
+libraries/libft_utils/ft_lstsize.c	\
 libraries/libft_utils/ft_split.c	\
 libraries/libft_utils/ft_atol.c	\
 libraries/libft_utils/ft_strlen.c	\
@@ -21,6 +22,8 @@ libraries/libft_utils/ft_isdigit.c	\
 libraries/libft_utils/ft_calloc.c	\
 src/check_input.c \
 src/parsing.c \
+src/sort_three.c \
+src/commands.c \
 src/free.c \
 
 

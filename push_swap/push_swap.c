@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:35:14 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/27 12:48:47 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/02 15:43:16 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,35 @@ int	main(int argc, char *argv[])
 	{
 		return (1);
 	}
-	else if(argc == 2)
+	else if (argc == 2)
 	{
 		argv = ft_split(argv[1], ' '); //review this one!!
 	}
 	init_stack_a(&stack_a, argv + 1);
-	print_stack(stack_a);
-	if(!stack_is_sorted(stack_a))
+	if (!stack_is_sorted(stack_a))
 	{
-
+		printf("stack needs to be sorted\n");
+		if (ft_lstsize(stack_a) == 2)
+		{
+			printf("switch the two\n");
+			printf("last element: %d\n", ft_lstlast(stack_a)->content);
+			sa(&stack_a/* , false */); //-> simple swap of two // do I need a bool here?
+		}
+		else if (ft_lstsize(stack_a) == 3)
+		{
+			printf("sort the three\n");
+			printf("last element: %d\n", ft_lstlast(stack_a)->content);
+			//sort_three(&stack_a);
+		}
+		else
+		{
+			printf("sort bigger stack\n");
+			printf("last element: %d\n", ft_lstlast(stack_a)->content);
+			//sort_bigger_stack(&stack_a, &stack_b); //not implemented yet
+		}
 	}
+	else
+		printf("stack is sorted!");
+	//free_stack(&stack_a); //not implemented yet
+
 }

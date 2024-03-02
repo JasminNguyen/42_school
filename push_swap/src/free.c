@@ -6,31 +6,36 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:09:51 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/26 17:35:31 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/02/27 14:18:55 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void	free_errors(t_list **lst)
+void	free_errors(t_list **stack_a)
 {
 	t_list	*temp;
+	t_list	*current;
 
-	if (!lst)
+	if (!stack_a)
 	{
 		return ;
 	}
-	while (*lst != NULL)
+	current = *stack_a;
+
+	while (current != NULL)
 	{
-		temp = (*lst)->next;
-		(*lst)->content = 0;
-		free(*lst);
-		(*lst) = temp;
+		temp = current->next;
+		current->content = 0;
+		free(current);
+		current	= temp;
 	}
+	*stack_a = NULL;
 	write(2, "Error!\n", 7); // on the standard error?
+	exit(1); //makes the program stop executing the remaining code (afer it finds an error)
 }
 
-
+/* 
 void	free_temp(char **temp)
 {
 	int	i;
@@ -42,4 +47,4 @@ void	free_temp(char **temp)
 		i++;
 	}
 	free(temp);
-}
+} */

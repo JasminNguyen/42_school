@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:12:58 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/27 12:47:45 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/02 15:17:46 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,28 @@ void	*ft_calloc(size_t count, size_t size);
 t_list	*ft_lstnew(int content);
 t_list	*ft_lstlast(t_list *lst);
 void	ft_lstadd_back(t_list **lst, t_list *new);
+int		ft_lstsize(t_list *lst);
 
 //parsing functions
 //t_list	*parse_string_to_stack(char *argv[], t_list *stack_a);
 //t_list	*parse_arguments_to_stack(t_list *stack_a, int argc, char *argv[]);
 void		init_stack_a(t_list **stack_a, char *argv[]);
 void		print_stack(t_list *stack_a);
-static void	append_node(t_list **stack_a, int nbr);
-
-
-
 
 //check functions
 int		error_syntax(char *nbr);
 int		error_duplicate(t_list *stack_a, int nbr);
-int		stack_is_sorted(t_list *stack_a);
+bool	stack_is_sorted(t_list *stack_a);
+
+//sorting functions
+//void	sort_three(t_list **stack_a);
+
+//commands
+void	sa(t_list **stack_a/* , bool boolean */);
+void	sb(t_list **stack_a/* , bool boolean */);
+void	ss(t_list **stack_a, t_list **stack_b); //do I need a bool here?
+void	pa(t_list **stack_a, t_list **stack_b);
+void	pb(t_list **stack_b, t_list **stack_a);
 
 //free functions
 void	free_errors(t_list **lst);
