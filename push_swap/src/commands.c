@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 11:37:50 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/03/02 15:43:49 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/02 17:42:04 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,18 +106,17 @@ void	ra(t_list **stack_a)
 {
 	t_list *last_node;
 
-	last_node = ft_lstlast(stack_a);
+	
 	if(!(*stack_a) || !(*stack_a)->next) //checks if the stack is empty or if there is only one node
 	{
 		return ;
 	}
-	
-
+	last_node = ft_lstlast(stack_a);
+	last_node->next = *stack_a; //next pointer of last node points to the head (that is going to be moved at to end of the stack)
 	*stack_a = (*stack_a)->next;
-	(*stack_a)->prev->prev = ft_lstlast(stack_a);
-	(*stack_a)->prev->next = NULL;
 	(*stack_a)->prev = NULL;
-
+	last_node->next->prev = last_node; // why not (*stack_a)->prev->prev = last_node;
+	last_node->next->next = NULL; // why not (*stack_a)->prev->next = NULL;
 
 }
 
