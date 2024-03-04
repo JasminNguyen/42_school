@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 11:37:50 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/03/02 17:42:04 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/04 15:30:00 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,43 +92,95 @@ void	pa(t_list **stack_a, t_list **stack_b)
 {
 	ft_printf("pa\n");
 	push(stack_a, stack_b);
-	
 }
+
 void	pb(t_list **stack_b, t_list **stack_a)
 {
 	ft_printf("pb\n");
 	push(stack_b, stack_a);
-	
 }
 
 
 void	ra(t_list **stack_a)
 {
-	t_list *last_node;
+	t_list	*last_node;
 
-	
 	if(!(*stack_a) || !(*stack_a)->next) //checks if the stack is empty or if there is only one node
 	{
 		return ;
 	}
-	last_node = ft_lstlast(stack_a);
+	last_node = ft_lstlast(*stack_a);
 	last_node->next = *stack_a; //next pointer of last node points to the head (that is going to be moved at to end of the stack)
 	*stack_a = (*stack_a)->next;
 	(*stack_a)->prev = NULL;
 	last_node->next->prev = last_node; // why not (*stack_a)->prev->prev = last_node;
 	last_node->next->next = NULL; // why not (*stack_a)->prev->next = NULL;
-
+	ft_printf("ra\n");
 }
 
 void	rb(t_list **stack_b)
 {
+	t_list	*last_node;
 
+	if (!(*stack_b) || !(*stack_b)->next)
+	{
+		return ;
+	}
+	last_node = ft_lstlast(*stack_b);
+	last_node->next = *stack_b; 
+	*stack_b = (*stack_b)->next;
+	(*stack_b)->prev = NULL;
+	last_node->next->prev = last_node; 
+	last_node->next->next = NULL;
+	ft_printf("rb\n");
 }
 
 void rr(t_list **stack_a, t_list **stack_b)
 {
-	 
+	ft_printf("rr\n");
+	ra (stack_a);
+	rb (stack_b);
 }
 
+void	rra(t_list **stack_a)
+{
+	t_list	*last_node;
+
+	if (!(*stack_a) || !(*stack_a)->next)
+	{
+		return ;
+	}
+	last_node = ft_lstlast(*stack_a); //find last node
+	last_node->prev->next = NULL; // disconnects the last node from the list
+	last_node->next = *stack_a; //lets the next pointer of the last node point to the head of the stack
+	last_node->prev = NULL; //lets the prev pointer of the new head point to NULL
+	*stack_a = last_node; //sets the last node as the head of the stack
+	last_node->next->prev = last_node; //lets the prev pointer of the old head point to the new head
+	ft_printf("rra\n");
+}
+
+void	rrb(t_list **stack_b)
+{
+	t_list	*last_node;
+
+	if (!(*stack_b) || !(*stack_b)->next)
+	{
+		return ;
+	}
+	last_node = ft_lstlast(*stack_b);
+	last_node->prev->next = NULL;
+	last_node->next = *stack_b;
+	last_node->prev = NULL;
+	*stack_b = last_node;
+	last_node->next->prev = last_node;
+	ft_printf("rrb\n");
+}
+
+void	rrr(t_list **stack_a, t_list **stack_b)
+{
+	rra(stack_a);
+	rrb(stack_b);
+	ft_printf("rrr\n");
+}
 
 

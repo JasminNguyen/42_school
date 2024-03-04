@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:12:58 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/03/02 15:17:46 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/04 14:37:34 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,12 @@ void	sb(t_list **stack_a/* , bool boolean */);
 void	ss(t_list **stack_a, t_list **stack_b); //do I need a bool here?
 void	pa(t_list **stack_a, t_list **stack_b);
 void	pb(t_list **stack_b, t_list **stack_a);
+void	ra(t_list **stack_a);
+void	rb(t_list **stack_b);
+void	rr(t_list **stack_a, t_list **stack_b);
+void	rra(t_list **stack_a);
+void	rrb(t_list **stack_b);
+void	rrr(t_list **stack_a, t_list **stack_b);
 
 //free functions
 void	free_errors(t_list **lst);
