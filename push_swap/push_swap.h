@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:12:58 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/03/04 14:37:34 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/04 15:50:06 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int		error_duplicate(t_list *stack_a, int nbr);
 bool	stack_is_sorted(t_list *stack_a);
 
 //sorting functions
-//void	sort_three(t_list **stack_a);
+void	sort_three(t_list **stack_a);
 
 //commands
 void	sa(t_list **stack_a/* , bool boolean */);
