@@ -77,7 +77,7 @@ char    **ft_split(char *str)
 		else if(((index >= 0) && (str[i] == ' ' || str[i] == '\t' || str[i] == '\n')) || (i == ft_strlen(str)))
 		{
 			wordarray[j] = fill_word(str, index, i); //achtung auf reihenfolge
-			index = -1;
+			index = -1; //don't forget to reset the index to -1
 			j++;
 		}
 		i++;
