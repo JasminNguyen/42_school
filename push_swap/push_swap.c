@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:35:14 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/03/04 15:50:01 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/05 11:15:06 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	main(int argc, char *argv[])
 			printf("sort the three\n");
 			printf("last element: %d\n", ft_lstlast(stack_a)->content);
 			sort_three(&stack_a);
+			print_stack(stack_a);
 		}
 		else
 		{

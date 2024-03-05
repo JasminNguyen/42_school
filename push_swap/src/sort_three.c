@@ -6,45 +6,25 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 17:10:49 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/03/04 17:37:58 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/05 11:13:56 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-
-/* t_list	find_max(t_list **stack_a)
-{
-	t_list	*current_max;
-	long	max;
-
-	max	= LONG_MIN;
-	while (*stack_a != NULL)
-	{
-		if ((*stack_a)->content > max)
-		{
-			max = (*stack_a)->content;
-			current_max = *stack_a;
-		}
-		stack_a = (*stack_a)->next;
-	}
-	return (current_max);
-} */
-
-
 t_list	*find_max(t_list *stack_a)
 {
-	long	max; //To store the biggest value so far
+	long	current_max; //To store the biggest value so far
 	t_list	*max_node; //To store a pointer that points to the biggest number
 
 	if (!stack_a)
 		return (NULL);
-	max = LONG_MIN; //Assign to the biggest value so far, the max long integer
+	current_max = LONG_MIN; //Assign to the biggest value so far, the max long integer
 	while (stack_a != NULL) //Loop until the end of the stack_a is reached
 	{
-		if (stack_a->content > max) //Check if the current node value is smaller than the biggest so far
+		if (stack_a->content > current_max) //Check if the current node value is bigger than the biggest so far
 		{
-			max = stack_a->content; //If so, update the biggest number so far
+			current_max = stack_a->content; //If so, update the biggest number so far
 			max_node = stack_a; //Set the pointer to point to the node with the biggest number so far
 		}
 		stack_a = stack_a->next; //Move to the next node for processing
@@ -55,7 +35,7 @@ void	sort_three(t_list **stack_a)
 {
 	t_list	*biggest_nbr;
 
-	biggest_nbr = find_max(*stack_a); //not implemented yet
+	biggest_nbr = find_max(*stack_a);
 	if (biggest_nbr == *stack_a)// biggest nbr is on the top
 	{
 		ra(stack_a/* , false */);
