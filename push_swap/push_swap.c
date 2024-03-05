@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:35:14 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/03/05 11:15:06 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/05 12:12:44 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,9 @@ int	main(int argc, char *argv[])
 			printf("switch the two\n");
 			printf("last element: %d\n", ft_lstlast(stack_a)->content);
 			sa(&stack_a/* , false */); //-> simple swap of two // do I need a bool here?
+			print_stack(stack_a);
 		}
+		
 		else if (ft_lstsize(stack_a) == 3)
 		{
 			printf("sort the three\n");
@@ -66,11 +68,12 @@ int	main(int argc, char *argv[])
 		{
 			printf("sort bigger stack\n");
 			printf("last element: %d\n", ft_lstlast(stack_a)->content);
-			//sort_bigger_stack(&stack_a, &stack_b); //not implemented yet
+			turk_algorithm(&stack_a, &stack_b); //not implemented yet
 		}
 	}
 	else
 		printf("stack is sorted!");
-	//free_stack(&stack_a); //not implemented yet
+	free_stack(&stack_a);
+	free_array(argv);
 
 }

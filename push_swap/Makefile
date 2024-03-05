@@ -6,7 +6,7 @@
 #    By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/23 15:10:59 by jasnguye          #+#    #+#              #
-#    Updated: 2024/02/28 11:38:23 by jasnguye         ###   ########.fr        #
+#    Updated: 2024/03/05 15:04:56 by jasnguye         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ libraries/libft_utils/ft_calloc.c	\
 src/check_input.c \
 src/parsing.c \
 src/sort_three.c \
+src/turk_algorithm.c \
 src/commands.c \
 src/free.c \
 

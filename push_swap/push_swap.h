@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:12:58 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/03/04 15:50:06 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/05 14:51:25 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,10 @@ bool	stack_is_sorted(t_list *stack_a);
 
 //sorting functions
 void	sort_three(t_list **stack_a);
+void	turk_algorithm(t_list **stack_a, t_list **stack_b);
+
+//utlils functions
+t_list	*find_max(t_list *stack_a);
 
 //commands
 void	sa(t_list **stack_a/* , bool boolean */);
@@ -75,5 +79,7 @@ void	rrr(t_list **stack_a, t_list **stack_b);
 
 //free functions
 void	free_errors(t_list **lst);
-void	free_temp(char **temp);
+void	free_stack(t_list **stack_a);
+void	free_array(char **argv);
+//void	free_temp(char **temp);
 #endif
