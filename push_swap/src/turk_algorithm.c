@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:43:05 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/03/06 18:19:16 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/07 12:31:27 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,16 @@ void	current_position(t_list *stack)
 		i++;
 	}
 }
-/* 
-void	find_target_node_for_a(t_list *stack_a, t_list *stack_b) //my version//not sure if it works correctly
+
+void	find_target_node_for_a(t_list *stack_a, t_list *stack_b) //my version//should be working fine
 {
 	long	current_best_target;
 	t_list	*current_stack_b;
 
-	current_stack_b = stack_b;
 	while (stack_a != NULL)
 	{
 		current_best_target = LONG_MIN;
+		current_stack_b = stack_b;
 		while (current_stack_b != NULL)
 		{
 			if (stack_a->content > current_stack_b->content 
@@ -64,7 +64,7 @@ void	find_target_node_for_a(t_list *stack_a, t_list *stack_b) //my version//not 
 		}
 		stack_a = stack_a->next;
 	}
-} */
+}
 
 void	cost_analysis_for_a(t_list *stack_a, t_list *stack_b) //my version//to be tested //probably correct
 {
@@ -97,7 +97,7 @@ void	cost_analysis_for_a(t_list *stack_a, t_list *stack_b) //my version//to be t
 }
 
 ///////////////////////////
-
+/*
 void	find_target_node_for_a(t_list *stack_a, t_list *stack_b)
 {
 	t_list	*current_b;
@@ -124,7 +124,7 @@ void	find_target_node_for_a(t_list *stack_a, t_list *stack_b)
 			stack_a->target_node = target_node;
 		stack_a = stack_a->next;
 	}
-} 
+} */
 /*
 void	cost_analysis_for_a(t_list *stack_a, t_list *stack_b)
 {
@@ -167,13 +167,12 @@ void	set_cheapest_bool(t_list *stack)
 	cheapest_node->cheapest = true;
 }
 
-void	prep_stack_a_for_push(t_list *stack_a, t_list *stack_b)
+void	analyse_stack_a_for_push(t_list *stack_a, t_list *stack_b)
 {
-	
 	current_position(stack_a);
 	current_position(stack_b);
-	find_target_node_for_a(stack_a, stack_b);///
-	cost_analysis_for_a(stack_a, stack_b);//probably correct
+	find_target_node_for_a(stack_a, stack_b);
+	cost_analysis_for_a(stack_a, stack_b);
 	set_cheapest_bool(stack_a);
 }
 
@@ -261,6 +260,65 @@ void	push_a_to_b(t_list **stack_a, t_list **stack_b)
 	pb(stack_b, stack_a);
 }
 
+void	analyse_stack_b_for_push(t_list *stack_a, t_list *stack_b)
+{
+	current_position(stack_a);
+	current_position(stack_b);
+	find_target_node_for_b(stack_a, stack_b);
+}
+
+t_list	*find_min(t_list *stack)
+{
+	t_list	*min_node;
+	long	current_min;
+
+	if (!stack)
+		return (NULL);
+	current_min = LONG_MAX;
+	while (stack != NULL)
+	{
+		if (stack->content < current_min)
+		{
+			current_min = stack->content;
+			min_node = stack;
+		}
+		stack = stack->next;
+	}
+	return (min_node);
+}
+
+void	find_target_node_for_b(t_list *stack_a, t_list *stack_b) //my version//should be working fine
+{
+	long	current_best_target;
+	t_list	*current_stack_a;
+
+	while (stack_b != NULL)
+	{
+		current_best_target = LONG_MAX;
+		current_stack_a = stack_a;
+		while (current_stack_a != NULL)
+		{
+			if (stack_b->content < current_stack_a->content 
+				&& current_stack_a->content < current_best_target)
+			{
+				current_best_target = current_stack_a->content;
+				stack_b->target_node = current_stack_a;
+			}
+			current_stack_a = current_stack_a->next;
+		}
+		if (current_best_target == LONG_MAX)
+		{
+			stack_b->target_node = find_min(stack_a);
+		}
+		stack_b = stack_b->next;
+	}
+}
+
+void	push_b_to_a(t_list **stack_a, t_list **stack_b)
+{
+
+}
+
 void	turk_algorithm(t_list **stack_a, t_list **stack_b)
 {
 	int	stack_a_length;
@@ -280,8 +338,7 @@ void	turk_algorithm(t_list **stack_a, t_list **stack_b)
 	print_stack(*stack_b);
 	while (stack_a_length > 3)
 	{
-		
-		prep_stack_a_for_push(*stack_a, *stack_b);
+		analyse_stack_a_for_push(*stack_a, *stack_b);
 		push_a_to_b(stack_a, stack_b);
 		stack_a_length--;
 		
@@ -292,8 +349,8 @@ void	turk_algorithm(t_list **stack_a, t_list **stack_b)
 	print_stack(*stack_a);
 	while (stack_b != NULL)
 	{
-		//prepare the stack for push
-		//push
+		analyse_stack_b_for_push(*stack_a, *stack_b);
+		push_b_to_a(stack_a, stack_b);
 	}
 	//...
 }

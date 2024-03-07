@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 17:10:49 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/03/05 11:13:56 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/07 12:25:22 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_list	*find_max(t_list *stack_a)
 	}
 	return (max_node);
 }
+
 void	sort_three(t_list **stack_a)
 {
 	t_list	*biggest_nbr;
