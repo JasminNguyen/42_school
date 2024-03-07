@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 15:17:45 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/03/04 15:42:04 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/07 16:21:41 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ static void	append_node(t_list **stack_a, int nbr)
 	}
 }
 
-void	init_stack_a(t_list **stack_a, char *argv[])
+void	init_stack_a(t_list **stack_a, char *argv[], int argc)
 {
 	long	nbr;
 	int		i;
@@ -133,15 +133,27 @@ void	init_stack_a(t_list **stack_a, char *argv[])
 	{
 		if (error_syntax(argv[i]))
 		{
+			if (argc == 2)
+			{
+				free_array(argv);
+			}
 			free_errors(stack_a);
 		}
 		nbr = ft_atol(argv[i]);
 		if (nbr > INT_MAX || nbr < INT_MIN)
 		{
+			if (argc == 2)
+			{
+				free_array(argv);
+			}
 			free_errors(stack_a);
 		}
-		if (error_duplicate(*stack_a, (int)nbr)) //or (int)nbr?
+		if (error_duplicate(*stack_a, (int)nbr))
 		{
+			if (argc == 2)
+			{
+				free_array(argv);
+			}
 			free_errors(stack_a);
 		}
 		append_node(stack_a, (int)nbr);

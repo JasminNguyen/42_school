@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:35:14 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/03/06 17:40:24 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/07 16:16:53 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	main(int argc, char *argv[])
 	{
 		argv = ft_split(argv[1], ' '); //review this one!!
 	}
-	init_stack_a(&stack_a, argv + 1);
+	init_stack_a(&stack_a, argv + 1, argc);
 	if (!stack_is_sorted(stack_a))
 	{
 		//printf("stack needs to be sorted\n");
@@ -68,12 +68,13 @@ int	main(int argc, char *argv[])
 		{
 			//printf("sort bigger stack\n");
 			//printf("last element: %d\n", ft_lstlast(stack_a)->content);
-			turk_algorithm(&stack_a, &stack_b); //not implemented yet
+			turk_algorithm(&stack_a, &stack_b);
 		}
 	}
 	else
 		printf("stack is sorted!");
 	free_stack(&stack_a);
+	if (argc == 2)
 	free_array(argv);
 
 }

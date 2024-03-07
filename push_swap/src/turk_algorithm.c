@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:43:05 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/03/07 12:31:27 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:57:08 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,7 +215,7 @@ void	reverse_rotation_for_both(t_list *cheapest_node, t_list **stack_a, t_list *
 
 void	prepare_stack_a_for_push(t_list *node_to_be_moved, t_list **stack_a)
 {
-	while (node_to_be_moved != *stack_a)
+	while (node_to_be_moved != *stack_a) //node_to_be_moved = target node
 	{
 		if (node_to_be_moved->above_median == true)
 		{
@@ -230,7 +230,7 @@ void	prepare_stack_a_for_push(t_list *node_to_be_moved, t_list **stack_a)
 
 void	prepare_stack_b_for_push(t_list *node_to_be_moved, t_list **stack_b)
 {
-	while (node_to_be_moved != *stack_b)
+	while (node_to_be_moved != *stack_b) //node_to_be_moved = target node
 	{
 		if (node_to_be_moved->above_median == true)
 		{
@@ -258,13 +258,6 @@ void	push_a_to_b(t_list **stack_a, t_list **stack_b)
 	prepare_stack_a_for_push(cheapest_node, stack_a);
 	prepare_stack_b_for_push(cheapest_node->target_node, stack_b);
 	pb(stack_b, stack_a);
-}
-
-void	analyse_stack_b_for_push(t_list *stack_a, t_list *stack_b)
-{
-	current_position(stack_a);
-	current_position(stack_b);
-	find_target_node_for_b(stack_a, stack_b);
 }
 
 t_list	*find_min(t_list *stack)
@@ -314,15 +307,46 @@ void	find_target_node_for_b(t_list *stack_a, t_list *stack_b) //my version//shou
 	}
 }
 
+void	analyse_stack_b_for_push(t_list *stack_a, t_list *stack_b)
+{
+	current_position(stack_a);
+	current_position(stack_b);
+	find_target_node_for_b(stack_a, stack_b);
+}
+
+
+
 void	push_b_to_a(t_list **stack_a, t_list **stack_b)
 {
+	prepare_stack_a_for_push((*stack_b)->target_node, stack_a);
+	pa(stack_a, stack_b);
+}
 
+void	move_min_on_top(t_list **stack_a) //my version // to be tested
+{
+	t_list *smallest_value = find_min(*stack_a);
+	ft_printf("smallest value: %d\n", smallest_value->content);
+	if (smallest_value == *stack_a)
+	{
+		return ;
+	}
+	while (smallest_value != *stack_a)
+	{
+		if (smallest_value->above_median == true)
+		{
+			ra(stack_a);
+		}
+		else
+		{
+			rra(stack_a);
+		}
+	}
 }
 
 void	turk_algorithm(t_list **stack_a, t_list **stack_b)
 {
 	int	stack_a_length;
-
+	
 	stack_a_length = ft_lstsize(*stack_a);
 	if (stack_a_length > 3 && !(stack_is_sorted(*stack_a)))
 	{
@@ -341,16 +365,29 @@ void	turk_algorithm(t_list **stack_a, t_list **stack_b)
 		analyse_stack_a_for_push(*stack_a, *stack_b);
 		push_a_to_b(stack_a, stack_b);
 		stack_a_length--;
-		
-	}ft_printf("stack a: "); print_stack(*stack_a);
-	ft_printf("stack b: ");	print_stack(*stack_b);
+
+	}
+	ft_printf("stack a: "); 
+	print_stack(*stack_a);
+	ft_printf("stack b: ");
+	print_stack(*stack_b);
 	sort_three(stack_a);
 	ft_printf("sort three\n");
 	print_stack(*stack_a);
-	while (stack_b != NULL)
+	while (*stack_b)
 	{
+		ft_printf("size: %d\n", ft_lstsize(*stack_b));
 		analyse_stack_b_for_push(*stack_a, *stack_b);
 		push_b_to_a(stack_a, stack_b);
 	}
-	//...
+	ft_printf("stack b: ");
+	print_stack(*stack_b); 
+	ft_printf("stack a: ");
+	print_stack(*stack_a); 
+	current_position(*stack_a);
+	move_min_on_top(stack_a);
+	ft_printf("stack b: ");
+	print_stack(*stack_b); 
+	ft_printf("stack a: ");
+	print_stack(*stack_a); 
 }
