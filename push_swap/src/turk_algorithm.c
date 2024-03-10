@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:43:05 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/03/10 14:48:49 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/10 15:53:44 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -381,12 +381,11 @@ void	turk_algorithm(t_list **stack_a, t_list **stack_b)
 	if (stack_a_length > 3 && !(stack_is_sorted(*stack_a)))
 	{
 		pb(stack_b, stack_a);
-	//	stack_a_length--; //
 	}
 	if (stack_a_length > 3 && !(stack_is_sorted(*stack_a)))
 	{
 		pb(stack_b, stack_a); 
-	//	stack_a_length--;//
+		stack_a_length--;//
 	}
 	// ft_printf("stack b: ");
 	// print_stack(*stack_b);
@@ -401,7 +400,7 @@ void	turk_algorithm(t_list **stack_a, t_list **stack_b)
 	// print_stack(*stack_a);
 	// ft_printf("stack b: ");
 	// print_stack(*stack_b);
-	// sort_three(stack_a);
+	sort_three(stack_a);
 	// ft_printf("sort three\n");
 	// print_stack(*stack_a);
 	while (*stack_b)
@@ -409,14 +408,9 @@ void	turk_algorithm(t_list **stack_a, t_list **stack_b)
 		// ft_printf("size: %d\n", ft_lstsize(*stack_b));
 		analyse_stack_b_for_push(*stack_a, *stack_b);
 		push_b_to_a(stack_a, stack_b);
-	}
-	// ft_printf("stack b: ");
-	// print_stack(*stack_b); 
-	// ft_printf("stack a: ");
-	// print_stack(*stack_a); 
-	// current_position(*stack_a);
+	} 
+	//current_position(*stack_a);
 	move_min_on_top(stack_a);
-	// ft_printf("stack b: ");
-	// print_stack(*stack_b); 
+
 
 }

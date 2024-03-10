@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:12:58 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/03/10 15:01:07 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/10 15:18:25 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,8 @@ void	ft_lstadd_back(t_list **lst, t_list *new);
 int		ft_lstsize(t_list *lst);
 
 //parsing functions
-//t_list	*parse_string_to_stack(char *argv[], t_list *stack_a);
-//t_list	*parse_arguments_to_stack(t_list *stack_a, int argc, char *argv[]);
-void		init_stack_a(t_list **stack_a, char *argv[], int argc);
-void		print_stack(t_list *stack_a);
+void	init_stack_a(t_list **stack_a, char *argv[], int argc);
+void	print_stack(t_list *stack_a);
 
 //check functions
 int		error_syntax(char *nbr);
@@ -65,9 +63,9 @@ void	turk_algorithm(t_list **stack_a, t_list **stack_b);
 t_list	*find_max(t_list *stack_a);
 
 //commands
-void	sa(t_list **stack_a/* , bool boolean */);
-void	sb(t_list **stack_a/* , bool boolean */);
-void	ss(t_list **stack_a, t_list **stack_b); //do I need a bool here?
+void	sa(t_list **stack_a);
+void	sb(t_list **stack_a);
+void	ss(t_list **stack_a, t_list **stack_b);
 void	pa(t_list **stack_a, t_list **stack_b);
 void	pb(t_list **stack_b, t_list **stack_a);
 void	ra(t_list **stack_a);
@@ -84,5 +82,4 @@ void	free_errors(t_list **lst);
 void	free_stack(t_list **stack_a);
 void	free_array(char **argv);
 
-//void	free_temp(char **temp);
 #endif

@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:35:14 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/03/10 15:02:22 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/10 15:20:27 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,48 +20,23 @@ int	main(int argc, char *argv[])
 	stack_a = NULL;
 	stack_b = NULL;
 	if (argc == 1 || (argc == 2 && !argv[1][0]))
-	{
 		return (1);
-	}
 	else if (argc == 2)
-	{
-		argv = ft_split(argv[1], ' '); //review this one!!
-	}
-	if(argc == 2)
-	init_stack_a(&stack_a, argv, argc);
+		argv = ft_split(argv[1], ' ');
+	if (argc == 2)
+		init_stack_a(&stack_a, argv, argc);
 	else
-	init_stack_a(&stack_a, argv + 1 , argc);
-	
+		init_stack_a(&stack_a, argv + 1, argc);
 	if (!stack_is_sorted(stack_a))
 	{
-		//printf("stack needs to be sorted\n");
 		if (ft_lstsize(stack_a) == 2)
-		{
-			//printf("switch the two\n");
-			//printf("last element: %d\n", ft_lstlast(stack_a)->content);
-			sa(&stack_a/* , false */); //-> simple swap of two // do I need a bool here?
-			//print_stack(stack_a);
-		}
-		
+			sa(&stack_a);
 		else if (ft_lstsize(stack_a) == 3)
-		{
-			//printf("sort the three\n");
-			//printf("last element: %d\n", ft_lstlast(stack_a)->content);
 			sort_three(&stack_a);
-			//print_stack(stack_a);
-		}
 		else
-		{
-			//printf("sort bigger stack\n");
-			//printf("last element: %d\n", ft_lstlast(stack_a)->content);
 			turk_algorithm(&stack_a, &stack_b);
-		}
 	}
-	/* else
-		printf("stack is sorted!"); */
-	// ft_printf("stack a: ");
-	// print_stack(stack_a);  
 	free_stack(&stack_a);
 	if (argc == 2)
-	free_array(argv);
+		free_array(argv);
 }
