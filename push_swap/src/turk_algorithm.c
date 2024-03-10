@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:43:05 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/03/07 15:57:08 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/10 14:48:49 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	current_position(t_list *stack)
 		i++;
 	}
 }
-
+/* 
 void	find_target_node_for_a(t_list *stack_a, t_list *stack_b) //my version//should be working fine
 {
 	long	current_best_target;
@@ -94,10 +94,10 @@ void	cost_analysis_for_a(t_list *stack_a, t_list *stack_b) //my version//to be t
 		}
 		stack_a = stack_a->next;
 	}
-}
+} */
 
 ///////////////////////////
-/*
+
 void	find_target_node_for_a(t_list *stack_a, t_list *stack_b)
 {
 	t_list	*current_b;
@@ -119,13 +119,16 @@ void	find_target_node_for_a(t_list *stack_a, t_list *stack_b)
 			current_b = current_b->next;
 		}
 		if (best_match_index == LONG_MIN)
+		{
 			stack_a->target_node = find_max(stack_b);
+			//ft_printf("max value: %d\n", stack_a->target_node);
+		}
 		else
 			stack_a->target_node = target_node;
 		stack_a = stack_a->next;
 	}
-} */
-/*
+}
+
 void	cost_analysis_for_a(t_list *stack_a, t_list *stack_b)
 {
 	int	len_a;
@@ -144,16 +147,18 @@ void	cost_analysis_for_a(t_list *stack_a, t_list *stack_b)
 			stack_a->push_cost += len_b - (stack_a->target_node->index);
 		stack_a = stack_a->next;
 	}
-} 
+}
 
-*/
+
 ///////////////////
 
 void	set_cheapest_bool(t_list *stack)
 {
 	long	current_cheapest;
 	t_list	*cheapest_node;
-
+	t_list	*head;
+	
+	head = stack;
 	current_cheapest = LONG_MAX;
 	while (stack != NULL)
 	{
@@ -165,6 +170,15 @@ void	set_cheapest_bool(t_list *stack)
 		stack = stack->next;
 	}
 	cheapest_node->cheapest = true;
+
+	while(head != NULL)
+	{
+		if(head != cheapest_node)
+		{
+			head->cheapest = false;
+		}
+		head = head->next;
+	}
 }
 
 void	analyse_stack_a_for_push(t_list *stack_a, t_list *stack_b)
@@ -325,7 +339,7 @@ void	push_b_to_a(t_list **stack_a, t_list **stack_b)
 void	move_min_on_top(t_list **stack_a) //my version // to be tested
 {
 	t_list *smallest_value = find_min(*stack_a);
-	ft_printf("smallest value: %d\n", smallest_value->content);
+	//ft_printf("smallest value: %d\n", smallest_value->content);
 	if (smallest_value == *stack_a)
 	{
 		return ;
@@ -343,6 +357,22 @@ void	move_min_on_top(t_list **stack_a) //my version // to be tested
 	}
 }
 
+
+//////
+
+// void	move_min_on_top(t_list **stack_a)
+// {
+// 	while ((*stack_a)->content != find_min(*stack_a)->content)
+// 	{
+// 		if (find_min(*stack_a)->above_median)
+// 			ra(stack_a/* , false */);
+// 		else
+// 			rra(stack_a/* , false */);
+// 	}
+// }
+
+/////
+
 void	turk_algorithm(t_list **stack_a, t_list **stack_b)
 {
 	int	stack_a_length;
@@ -351,43 +381,42 @@ void	turk_algorithm(t_list **stack_a, t_list **stack_b)
 	if (stack_a_length > 3 && !(stack_is_sorted(*stack_a)))
 	{
 		pb(stack_b, stack_a);
-		stack_a_length--; //
+	//	stack_a_length--; //
 	}
 	if (stack_a_length > 3 && !(stack_is_sorted(*stack_a)))
 	{
 		pb(stack_b, stack_a); 
-		stack_a_length--;//
+	//	stack_a_length--;//
 	}
-	ft_printf("stack b: ");
-	print_stack(*stack_b);
-	while (stack_a_length > 3)
+	// ft_printf("stack b: ");
+	// print_stack(*stack_b);
+	while (stack_a_length > 3 && !(stack_is_sorted(*stack_a))) //
 	{
 		analyse_stack_a_for_push(*stack_a, *stack_b);
 		push_a_to_b(stack_a, stack_b);
 		stack_a_length--;
 
 	}
-	ft_printf("stack a: "); 
-	print_stack(*stack_a);
-	ft_printf("stack b: ");
-	print_stack(*stack_b);
-	sort_three(stack_a);
-	ft_printf("sort three\n");
-	print_stack(*stack_a);
+	// ft_printf("stack a: "); 
+	// print_stack(*stack_a);
+	// ft_printf("stack b: ");
+	// print_stack(*stack_b);
+	// sort_three(stack_a);
+	// ft_printf("sort three\n");
+	// print_stack(*stack_a);
 	while (*stack_b)
 	{
-		ft_printf("size: %d\n", ft_lstsize(*stack_b));
+		// ft_printf("size: %d\n", ft_lstsize(*stack_b));
 		analyse_stack_b_for_push(*stack_a, *stack_b);
 		push_b_to_a(stack_a, stack_b);
 	}
-	ft_printf("stack b: ");
-	print_stack(*stack_b); 
-	ft_printf("stack a: ");
-	print_stack(*stack_a); 
-	current_position(*stack_a);
+	// ft_printf("stack b: ");
+	// print_stack(*stack_b); 
+	// ft_printf("stack a: ");
+	// print_stack(*stack_a); 
+	// current_position(*stack_a);
 	move_min_on_top(stack_a);
-	ft_printf("stack b: ");
-	print_stack(*stack_b); 
-	ft_printf("stack a: ");
-	print_stack(*stack_a); 
+	// ft_printf("stack b: ");
+	// print_stack(*stack_b); 
+
 }

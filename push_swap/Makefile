@@ -6,7 +6,7 @@
 #    By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/23 15:10:59 by jasnguye          #+#    #+#              #
-#    Updated: 2024/03/05 15:04:56 by jasnguye         ###   ########.fr        #
+#    Updated: 2024/03/08 15:12:52 by jasnguye         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ src/free.c \
 
 OBJS = $(SRCS:.c=.o)
 CC = cc
-CFLAGS = -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror -g
 AR = ar rcs
 
 NAME = push_swap

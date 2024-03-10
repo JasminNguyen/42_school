@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:12:58 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/03/07 16:18:05 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/10 14:26:10 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_list
 	int						index;
 	int						push_cost;
 	bool					above_median;
-	bool					cheapest; // vid with woman
+	bool					cheapest;
 	struct s_list			*target_node;
 	struct s_list			*next;
 	struct s_list			*prev;
@@ -49,7 +49,7 @@ int		ft_lstsize(t_list *lst);
 //parsing functions
 //t_list	*parse_string_to_stack(char *argv[], t_list *stack_a);
 //t_list	*parse_arguments_to_stack(t_list *stack_a, int argc, char *argv[]);
-void		init_stack_a(t_list **stack_a, char *argv[], int argc);
+void		init_stack_a(t_list **stack_a, char *argv[]/* , int argc */);
 void		print_stack(t_list *stack_a);
 
 //check functions
@@ -76,10 +76,13 @@ void	rr(t_list **stack_a, t_list **stack_b);
 void	rra(t_list **stack_a);
 void	rrb(t_list **stack_b);
 void	rrr(t_list **stack_a, t_list **stack_b);
+void	rev_rotate(t_list **stack);
+void	rotate(t_list **stack);
 
 //free functions
 void	free_errors(t_list **lst);
 void	free_stack(t_list **stack_a);
 void	free_array(char **argv);
+
 //void	free_temp(char **temp);
 #endif
