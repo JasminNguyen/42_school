@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:12:58 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/03/10 14:26:10 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/10 15:01:07 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int		ft_lstsize(t_list *lst);
 //parsing functions
 //t_list	*parse_string_to_stack(char *argv[], t_list *stack_a);
 //t_list	*parse_arguments_to_stack(t_list *stack_a, int argc, char *argv[]);
-void		init_stack_a(t_list **stack_a, char *argv[]/* , int argc */);
+void		init_stack_a(t_list **stack_a, char *argv[], int argc);
 void		print_stack(t_list *stack_a);
 
 //check functions
