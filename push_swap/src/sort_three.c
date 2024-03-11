@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 17:10:49 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/03/10 15:44:25 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/11 13:59:54 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 t_list	*find_max(t_list *stack_a)
 {
-	long	current_max; //To store the biggest value so far
-	t_list	*max_node; //To store a pointer that points to the biggest number
+	long	current_max;
+	t_list	*max_node;
 
 	if (!stack_a)
 		return (NULL);
-	current_max = LONG_MIN; //Assign to the biggest value so far, the max long integer
-	while (stack_a != NULL) //Loop until the end of the stack_a is reached
+	current_max = LONG_MIN;
+	while (stack_a != NULL)
 	{
-		if (stack_a->content > current_max) //Check if the current node value is bigger than the biggest so far
+		if (stack_a->content > current_max)
 		{
-			current_max = stack_a->content; //If so, update the biggest number so far
-			max_node = stack_a; //Set the pointer to point to the node with the biggest number so far
+			current_max = stack_a->content;
+			max_node = stack_a;
 		}
-		stack_a = stack_a->next; //Move to the next node for processing
+		stack_a = stack_a->next;
 	}
 	return (max_node);
 }
@@ -37,16 +37,16 @@ void	sort_three(t_list **stack_a)
 	t_list	*biggest_nbr;
 
 	biggest_nbr = find_max(*stack_a);
-	if (biggest_nbr == *stack_a)// biggest nbr is on the top
+	if (biggest_nbr == *stack_a)
 	{
-		ra(stack_a/* , false */);
+		ra(stack_a);
 	}
-	else if ((*stack_a)->next == biggest_nbr) //biggest nbr is in the middle
+	else if ((*stack_a)->next == biggest_nbr)
 	{
-		rra(stack_a/* , false */);
+		rra(stack_a);
 	}
-	if ((*stack_a)->content > (*stack_a)->next->content) //now the biggest nbr is on the bottom, we just have to check wheter the first two are in the right order
+	if ((*stack_a)->content > (*stack_a)->next->content) 
 	{
-		sa(stack_a/* , false */);
+		sa(stack_a);
 	}
 }

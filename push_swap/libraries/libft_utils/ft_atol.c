@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 19:02:34 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/26 17:33:12 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/11 14:59:11 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,5 @@ long	ft_atol(const char *str)
 		result = result * 10 + str[i] - '0';
 		i++;
 	}
-
 	return (result * sign);
-
-	// int max, int min check
-	//call error function
 }
-/* int main(void)
-{
-	const char *str = " +-123";
-	int result = ft_atoi(str);
-	printf("%d\n", result);
-} */

@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:09:51 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/03/05 11:59:28 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/11 14:47:49 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,32 +22,17 @@ void	free_errors(t_list **stack_a)
 		return ;
 	}
 	current = *stack_a;
-
 	while (current != NULL)
 	{
 		temp = current->next;
 		current->content = 0;
 		free(current);
-		current	= temp;
+		current = temp;
 	}
 	*stack_a = NULL;
 	write(2, "Error!\n", 7);
-	exit(1); //makes the program stop executing the remaining code (afer it finds an error)
+	exit(1);
 }
-
-/* 
-void	free_temp(char **temp)
-{
-	int	i;
-
-	i = 0;
-	while (temp[i] != NULL)
-	{
-		free(temp[i]);
-		i++;
-	}
-	free(temp);
-} */
 
 void	free_stack(t_list **stack_a)
 {
@@ -59,22 +44,22 @@ void	free_stack(t_list **stack_a)
 		return ;
 	}
 	current = *stack_a;
-
 	while (current != NULL)
 	{
 		temp = current->next;
 		current->content = 0;
 		free(current);
-		current	= temp;
+		current = temp;
 	}
 	*stack_a = NULL;
-
 }
 
 void	free_array(char **argv)
 {
-	int i = 0;
-	while(argv[i])
+	int	i;
+
+	i = 0;
+	while (argv[i])
 	{
 		free(argv[i]);
 		i++;

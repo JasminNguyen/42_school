@@ -6,75 +6,18 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:04:17 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/27 14:21:52 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/11 14:46:28 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
-/* 
-int input_checker(char *argv[])
-{
-	if (check_underflow_and_overflow(argv) && check_for_doubles(argv) && (check_for_character(argv)))
-	{
-		return (1);
-	}
-}
-//what if I have several numbers
-
-int check_underflow_and_overflow(char *argv[])
-{
-	int i = 0;
-	while(argv[i])
-	{	
-		long nbr = ft_atol(argv[i]);
-		if (nbr < -2147483648 || nbr > 2147483647)
-		{
-			return(0);
-		}
-		i++;
-	}
-	return (1);
-}
-
-int check_for_doubles(char *argv[])
-{
-	int i = 0;
-	
-	while(argv[i])
-	{	
-		long nbr = ft_atol(argv[i]);
-		if(argv[i], argv[i])
-		i++;
-	}
-}
- */
-
-/* int	check_valid_argument(char *nbr)
-{
-	if (!(*nbr == '+' || *nbr == '-' ||  (*nbr >= '0' && *nbr <= '9')))
-	{
-		return (1);
-	}
-	if ((*nbr == '+' || *nbr == '-') && !(nbr[1] >= '0' && nbr[1] <= '9'))
-	{
-		return (1);
-	}
-	while (*++nbr)
-	{
-		if (!(*nbr >= '0' && *nbr <= '9'))
-		{
-			return (1);
-		}
-	}
-	return (0); //valid
-} */
 
 int	error_syntax(char *str_i)
 {
 	if (!(*str_i == '+'
 			|| *str_i == '-'
 			|| (*str_i >= '0' && *str_i <= '9')))
-		return (1); // there is an error
+		return (1);
 	if ((*str_i == '+'
 			|| *str_i == '-')
 		&& !(str_i[1] >= '0' && str_i[1] <= '9'))
@@ -84,7 +27,7 @@ int	error_syntax(char *str_i)
 		if (!(*str_i >= '0' && *str_i <= '9'))
 			return (1);
 	}
-	return (0); //no error
+	return (0);
 }
 
 int	error_duplicate(t_list *stack_a, int nbr)
@@ -97,20 +40,20 @@ int	error_duplicate(t_list *stack_a, int nbr)
 	{
 		if (stack_a->content == nbr)
 		{
-			return (1); // there is a duplicate
+			return (1);
 		}
 		stack_a = stack_a->next;
 	}
-	return (0); // no duplicate
+	return (0);
 }
 
 bool	stack_is_sorted(t_list *stack_a)
 {
-	if (!stack_a)// checks whether there is a stack to begin with
+	if (!stack_a)
 	{
-		return (1); //returns true since an empty stack is considered sorted
+		return (1);
 	}
-	while (stack_a->next != NULL) // my version
+	while (stack_a->next != NULL)
 	{
 		if (stack_a->content > stack_a->next->content)
 		{
@@ -120,5 +63,3 @@ bool	stack_is_sorted(t_list *stack_a)
 	}
 	return (true);
 }
-
-

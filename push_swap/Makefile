@@ -6,7 +6,7 @@
 #    By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/23 15:10:59 by jasnguye          #+#    #+#              #
-#    Updated: 2024/03/08 15:12:52 by jasnguye         ###   ########.fr        #
+#    Updated: 2024/03/11 14:40:09 by jasnguye         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,12 +24,14 @@ src/check_input.c \
 src/parsing.c \
 src/sort_three.c \
 src/turk_algorithm.c \
-src/commands.c \
+src/turk_utils1.c \
+src/turk_utils2.c \
+src/turk_utils3.c \
+src/commands/rev_rotate.c \
+src/commands/push.c \
+src/commands/swap.c \
+src/commands/rotate.c \
 src/free.c \
-
-
-
-
 
 OBJS = $(SRCS:.c=.o)
 CC = cc
