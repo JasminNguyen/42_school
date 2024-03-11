@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:43:05 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/03/11 13:41:06 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/11 16:53:16 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,10 @@ void	turk_algorithm(t_list **stack_a, t_list **stack_b)
 	int	stack_a_length;
 
 	stack_a_length = ft_lstsize(*stack_a);
-	if (stack_a_length > 3 && !(stack_is_sorted(*stack_a)))
+	if (stack_a_length-- > 3 && !(stack_is_sorted(*stack_a)))
 		pb(stack_b, stack_a);
-	if (stack_a_length > 3 && !(stack_is_sorted(*stack_a)))
-	{
+	if (stack_a_length-- > 3 && !(stack_is_sorted(*stack_a)))
 		pb(stack_b, stack_a); 
-		stack_a_length--;
-	}
 	while (stack_a_length > 3 && !(stack_is_sorted(*stack_a)))
 	{
 		analyse_stack_a_for_push(*stack_a, *stack_b);
