@@ -6,8 +6,15 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:37:14 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/03/14 16:59:18 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/15 13:50:27 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include <signal.h>
+#include <unistd.h>
+#include "Libft/libft.h"
+
+int main()
+{
+	ft_printf("hello");
+}

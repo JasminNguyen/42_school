@@ -6,11 +6,11 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 14:45:28 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/01/02 10:55:09 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/15 14:09:52 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
 char	*ft_strchr(const char *s, int c)
 {
@@ -114,7 +114,7 @@ char	*ft_substring(char const *s, unsigned int start, unsigned int len)
 	return (substring);
 }
 
-int	ft_strlen(const char *s)
+int	gft_strlen(const char *s)
 {
 	int	i;
 

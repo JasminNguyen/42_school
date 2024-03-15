@@ -6,11 +6,14 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:37:05 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/03/14 17:14:15 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/15 13:50:29 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+
+#include <signal.h>
+#include <unistd.h>
+#include "Libft/libft.h"
 
 int main(int argc, char *argv[])
 {

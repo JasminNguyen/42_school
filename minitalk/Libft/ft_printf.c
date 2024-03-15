@@ -6,11 +6,11 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:00:55 by jasnguye          #+#    #+#             */
-/*   Updated: 2023/12/12 15:10:43 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/15 14:12:10 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 int	print_s(char specifier, va_list ap)
 {
@@ -61,52 +61,7 @@ int	ft_printf(const char *s, ...)
 	va_end(ap);
 	return (count);
 }
-int check(int c, char *str, int index)
-{
-        int i = 0;
-        while (i < index)
-        {
-                if (str[i] == c)
-                {
-                        return (0);
-                }
-                i++;
-        }
-        return (1);
-}
 
-int main(int argc, char *argv[])
-{
-        int i = 0;
-        int j = 0;
-        int k = 0;
-
-        if (argc == 3)
-        {
-                while(argv[1][i] != '\0')
-                {
-                        i++;
-                }
-                while(argv[2][j] != '\0')
-                {
-                        argv[1][i] = argv[2][j];
-                        i++;
-                        j++;
-                }
-                argv[1][i] = '\0';
-                i--;
-                while (k <= i)
-                {
-                        if (check(argv[1][k], argv[1], k) == 1)
-                        {
-                                write (1, &argv[1][k], 1);
-                        }
-                        k++;
-                }
-        }
-        write (1, "\n", 1);
-}
-   
 /*int	main(void)
 {
 	ft_printf("Hello, %s!\n", "John");

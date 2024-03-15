@@ -6,35 +6,42 @@
 #    By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/14 16:27:44 by jasnguye          #+#    #+#              #
-#    Updated: 2024/03/14 17:40:01 by jasnguye         ###   ########.fr        #
+#    Updated: 2024/03/15 14:34:13 by jasnguye         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = server.c	\
-client.c	\
+SRCS_CLIENT = client.c
+SRCS_SERVER = server.c
 
-LIBS = libraries/Libft/libft.a \
-
-OBJS = $(SRCS:.c=.o)
+OBJS_CLIENT = $(SRCS_CLIENT:.c=.o)
+OBJS_SERVER = $(SRCS_SERVER:.c=.o)
 CC = cc
-CFLAGS = -Wall -Wextra -Werror 
-AR = ar rcs
+CFLAGS = -Wall -Werror -Wextra -Imlx -g
+LIBS = Libft/libft.a
 
-NAME = minitalk
-all:		$(NAME)
+SERVER = server
+CLIENT = client
 
-$(NAME): $(OBJS)
-			make -C ./libraries/Libft
-			$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
-			
+all: $(SERVER) $(CLIENT)
+
+$(SERVER): $(OBJS_SERVER)
+		$(MAKE) -C Libft
+		$(CC) $(CFLAGS) $(OBJS_SERVER) $(LIBS) -o $(SERVER)
+		
+$(CLIENT): $(OBJS_CLIENT)
+		$(MAKE) -C Libft
+		$(CC) $(CFLAGS) $(OBJS_CLIENT) $(LIBS) -o $(CLIENT)
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
 clean:
-	rm -f $(OBJS)
-	make clean -C ./libraries/Libft
+	$(MAKE) clean -C Libft
+	rm -rf $(OBJS_CLIENT) $(OBJS_SERVER)
 
 fclean: clean
-	$(RM) $(NAME)
-	rm -rf $(NAME) $(LIBS)
-
+	rm -rf $(SERVER) $(CLIENT)
+	rm -rf $(LIBS)
+	
 re: fclean all
 
 .PHONY: all clean fclean re

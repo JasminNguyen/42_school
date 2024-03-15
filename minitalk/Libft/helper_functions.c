@@ -6,11 +6,11 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:00:10 by jasnguye          #+#    #+#             */
-/*   Updated: 2023/12/08 14:00:44 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/15 14:06:28 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 int	print_char(int c)
 {
