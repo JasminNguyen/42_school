@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:37:05 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/03/15 13:50:29 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:36:01 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,45 @@
 #include <signal.h>
 #include <unistd.h>
 #include "Libft/libft.h"
+#define LSB 0x01
 
-int main(int argc, char *argv[])
+
+void	signal_handler(int signal_received)
 {
-    pid_t pid_id;
+	static int	bit_position;
+	static int	character;
+	int			bit;	
 
-    (void)argv;
-    if(argc != 1)
-    {
-        ft_printf("Error! Program does not take any arguments\n");
-    }
-    pid_id = getpid();
-    ft_printf("PID: %d\n", pid_id);
+	if (signal_received == SIGUSR1)
+	{
+		bit = (LSB << bit_position);//if character is 1, it remains 1, if it is 0 then it becomes 1, either way as soon as we receive Sigusr1 we make it to 1
+		character = character | bit; //accumulation of bits
+	}
+	bit_position++;
+	if (bit_position == 8)
+	{
+		ft_printf("%c", character);
+		character = 0;
+		bit_position = 0;
+	}
+}
+
+int	main(int argc, char *argv[])
+{
+	pid_t	pid_id;
+
+	(void)argv;
+	if (argc != 1)
+	{
+		ft_printf("Error! Program does not take any arguments. Try: ./server\n");
+	}
+	pid_id = getpid();
+	ft_printf("PID: %d\n", pid_id);
+	while (1)
+	{
+		signal(SIGUSR1, signal_handler);
+		signal(SIGUSR2, signal_handler);
+		pause();
+	}
+	return (0);
 }
