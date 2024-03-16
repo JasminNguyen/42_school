@@ -6,14 +6,13 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:37:14 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/03/15 18:22:30 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/16 13:28:30 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <signal.h>
 #include <unistd.h>
 #include "Libft/libft.h"
-
 
 void	send_message(int pid, char *message)
 {
@@ -29,16 +28,12 @@ void	send_message(int pid, char *message)
 		bit_position = 0;
 		while (bit_position < 8)
 		{
-			bit = (character >> bit_position) & 1; //only if both of them are 1, it's going to be 1
+			bit = (character >> bit_position) & 1;
 			if (bit == 1)
-			{
 				kill(pid, SIGUSR1);
-			}
 			else
-			{
 				kill(pid, SIGUSR2);
-			}
-			usleep(1200); //Make the process sleep for 100 microseconds. This is done to ensure that the server has enough time to handle the signal before the next one is sent. 
+			usleep(1200);
 			bit_position++;
 		}
 		i++;

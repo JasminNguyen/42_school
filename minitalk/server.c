@@ -6,16 +6,14 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:37:05 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/03/15 17:50:23 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/16 13:28:43 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include <signal.h>
 #include <unistd.h>
 #include "Libft/libft.h"
 #define LSB 0x01
-
 
 void	signal_handler(int signal_received)
 {
@@ -25,8 +23,8 @@ void	signal_handler(int signal_received)
 
 	if (signal_received == SIGUSR1)
 	{
-		bit = (LSB << bit_position);//if character is 1, it remains 1, if it is 0 then it becomes 1, either way as soon as we receive Sigusr1 we make it to 1
-		character = character | bit; //accumulation of bits
+		bit = (LSB << bit_position);
+		character = character | bit;
 	}
 	bit_position++;
 	if (bit_position == 8)
