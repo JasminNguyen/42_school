@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:37:14 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/03/16 13:28:30 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/16 15:20:32 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	send_message(int pid, char *message)
 				kill(pid, SIGUSR1);
 			else
 				kill(pid, SIGUSR2);
-			usleep(1200);
+			usleep(1150);
 			bit_position++;
 		}
 		i++;
@@ -52,7 +52,14 @@ int	main(int argc, char *argv[])
 	else
 	{
 		pid = ft_atoi(argv[1]);
-		message = argv[2];
-		send_message(pid, message);
+		if (pid < 0)
+		{
+			ft_printf("Non valid PID.\n");
+		}
+		else
+		{
+			message = argv[2];
+			send_message(pid, message);
+		}
 	}
 }
