@@ -6,11 +6,11 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:00:55 by jasnguye          #+#    #+#             */
-/*   Updated: 2023/12/12 15:10:43 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/15 14:12:10 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 int	print_s(char specifier, va_list ap)
 {
@@ -61,7 +61,7 @@ int	ft_printf(const char *s, ...)
 	va_end(ap);
 	return (count);
 }
-   
+
 /*int	main(void)
 {
 	ft_printf("Hello, %s!\n", "John");

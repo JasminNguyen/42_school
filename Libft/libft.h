@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:03:09 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/21 14:20:28 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/15 14:17:52 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
-# include <libft.h>
+# include "libft.h"
 
 typedef struct s_list
 {
@@ -73,8 +73,12 @@ int		print_ox(va_list arguments);
 int		print_pointer(unsigned long long int nbr); 
 
 char	*get_next_line(int fd);
+int		gft_strlen(const char *s);
+char	*ft_substring(char const *s, unsigned int start, unsigned int len);
+
 t_list	*ft_lstnew(void *content);
 t_list	*ft_lstlast(t_list *lst);
 void	ft_lstadd_back(t_list **lst, t_list *new);
+int		ft_lstsize(t_list *lst);
 
 #endif

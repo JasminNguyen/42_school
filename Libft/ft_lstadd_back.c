@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:05:01 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/21 14:19:51 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/16 13:36:40 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 	{
 		return ;
 	}
-
 	if (!(*lst))
 	{
 		*lst = new;

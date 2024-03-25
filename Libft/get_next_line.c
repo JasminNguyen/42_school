@@ -6,11 +6,11 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 12:33:51 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/01/04 14:16:15 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/15 14:07:02 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
 static char	*set_line(char *line_buffer)
 {
