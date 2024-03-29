@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:03:09 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/15 11:37:54 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/29 19:40:15 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <stdarg.h>
 
 void	ft_bzero(void *str, size_t n);
 int		ft_isalnum(int c);

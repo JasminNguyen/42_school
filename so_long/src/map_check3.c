@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 18:13:08 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/15 12:35:22 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/29 19:38:24 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,9 @@ void	flood_fill(char **map, int p_x, int p_y, t_game *game)
 void	check_path_up_and_down(char **map, int p_x, int p_y, t_game *game)
 {
 	int	rows;
-	int	cols;
+	
 
 	rows = game->map_height;
-	cols = game->map_width;
 	if (p_y > 0 && (map[p_y - 1][p_x] == '0' || 
 		map[p_y - 1][p_x] == 'C' || 
 			map[p_y - 1][p_x] == 'E'))
@@ -67,10 +66,8 @@ void	check_path_up_and_down(char **map, int p_x, int p_y, t_game *game)
 
 void	check_path_right_and_left(char **map, int p_x, int p_y, t_game *game)
 {
-	int	rows;
 	int	cols;
 
-	rows = game->map_height;
 	cols = game->map_width;
 	if (p_x > 0 && (map[p_y][p_x - 1] == '0' 
 		|| map[p_y][p_x - 1] == 'C' || map[p_y][p_x - 1] == 'E'))

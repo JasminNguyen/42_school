@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 16:14:21 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/15 15:05:39 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/29 19:39:02 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <X11/X.h>
 # include <fcntl.h>
 # include <unistd.h>
+# include <stdarg.h>
 
 typedef struct s_image{
 	void	*background;

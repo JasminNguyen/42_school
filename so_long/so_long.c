@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 16:13:26 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/02/15 15:38:57 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/29 19:53:45 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,5 @@ int	main(int argc, char *argv[])
 		else if (!(is_ber_file(argv[1])))
 			ft_printf("Error\nNot a .ber file!");
 	}
+	return(0);
 }
