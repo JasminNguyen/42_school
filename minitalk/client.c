@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:37:14 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/03/16 15:20:32 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/03/16 21:26:23 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	send_message(int pid, char *message)
 				kill(pid, SIGUSR1);
 			else
 				kill(pid, SIGUSR2);
-			usleep(1150);
+			usleep(2000);
 			bit_position++;
 		}
 		i++;
