@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 12:57:17 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/06/04 12:59:49 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/06/16 16:32:25 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,4 @@ typedef struct s_program{
 }   t_program;
 
 
-int ft_atoi(const char *str);
+long ft_atol(const char *str);

@@ -6,21 +6,17 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:23:44 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/06/04 13:45:03 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/06/16 16:26:52 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void initialize_struct(int argc, char *argv[])
-{
-    
-}
-int	ft_atoi(const char *str)
+long	ft_atol(const char *str)
 {
 	int	i;
 	int	sign;
-	int	result;
+	long	result;
 
 	i = 0;
 	sign = 1;
