@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 12:19:15 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/06/16 18:00:36 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/06/17 17:05:22 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,32 +89,75 @@ void initialize_program(char *argv[], t_program *program)
     pthread_mutex_init(&program->eat_lock, NULL);
     pthread_mutex_init(&program->write_lock, NULL);
 
-    //initialize array for philos
+    //initialize array for x philos
     program->philo = malloc(ft_atol(argv[1]) * sizeof(t_philo));
     if (program->philo == NULL) 
     {
         perror("Failed to allocate memory for philosophers");
         exit(1);
     }
+    //allocate memory for forks
+    program->forks = malloc(ft_atol(argv[1]) * sizeof(pthread_mutex_t));
+    if(program->forks == NULL)
+    {
+        perror("Failed to allocate memory for forks!");
+        exit(1);
+    }
+    //initialize each fork 
+    int i = 0;
+    while(i < ft_atol(argv[1]))
+    {
+        pthread_mutex_init(&program->forks[i], NULL);
+        i++;
+    }
 }
 
-void initialize_philos(int argc, char *argv[], t_program *program, t_philo *philo)
+size_t get_current_time_in_ms() 
 {
-    //needs adjusting
-    philo->nbr_of_philos = ft_atol(argv[1]);
-    philo->time_to_die = ft_atol(argv[2]);
-    philo->time_to_eat = ft_atol(argv[3]);
-    philo->time_to_sleep = ft_atol(argv[4]);
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    return (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
+}
 
+void initialize_philos(int argc, char *argv[], t_program *program)
+{
+    int i = 0;
+    int nbr_of_philos = ft_atol(argv[1]);
+    size_t time_to_die  = ft_atol(argv[2]);
+    size_t time_to_eat = ft_atol(argv[3]);
+    size_t time_to_sleep = ft_atol(argv[4]);
+    size_t start_time = get_current_time_in_ms();
+    int nbr_of_times_to_eat;
     if(argc == 6)
     {
-        philo->nbr_of_times_to_eat = ft_atol(argv[5]);
+       nbr_of_times_to_eat = ft_atol(argv[5]);
     }
     else
     { 
-        philo->nbr_of_times_to_eat = -1;
+       nbr_of_times_to_eat = -1;
     }
 
+    while(i < nbr_of_philos)
+    {
+        t_philo *philo = &program->philo[i];
+        philo->id = i + 1;
+        philo->nbr_of_philos = nbr_of_philos;
+        philo->time_to_die = time_to_die;
+        philo->time_to_eat = time_to_eat;
+        philo->time_to_sleep = time_to_sleep;
+        philo->nbr_of_times_to_eat = nbr_of_times_to_eat;
+        philo->dead = &program->dead; 
+        philo->eating = 0;
+        philo->last_meal = 0;
+        philo->meals_eaten = 0;
+        philo->dead_lock = &program->dead_lock;
+        philo->eat_lock = &program->eat_lock;
+        philo->write_lock = &program->write_lock;
+        philo->l_fork = &program->forks[i];
+        philo->r_fork = &program->forks[(i + 1) % nbr_of_philos];
+        philo->start_time = start_time;
+        i++;
+    }
 }
 
 int main(int argc, char *argv[])
@@ -124,13 +167,20 @@ int main(int argc, char *argv[])
         perror("Failed to allocate memory for program");
         return 1;
     }
-    t_philo *philo;
     if (error_check(argc, argv) == 0) 
     {
-         initialize_program(argv, program);
-         initialize_philos(argc, argv, program, philo);
+        initialize_program(argv, program);
+        initialize_philos(argc, argv, program);
         
+        //let's print the first philo
+        t_philo *philo = &program->philo[0];
+        printf("Number of philosophers: %d\n", philo->nbr_of_philos);
+        printf("Time to die: %zu\n", philo->time_to_die);
+        printf("Time to eat: %zu\n", philo->time_to_eat);
+        printf("Time to sleep: %zu\n", philo->time_to_sleep);
+        printf("Amount of meals: %d\n", philo->nbr_of_times_to_eat);
     }
+
    
     return (0);
 }

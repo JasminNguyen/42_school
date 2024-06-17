@@ -6,12 +6,14 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 12:57:17 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/06/16 16:32:25 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/06/17 16:23:33 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <pthread.h>
+#include <sys/time.h>
+#include <stdlib.h>
 
 typedef struct s_philo{
     pthread_t philosopher;
@@ -36,11 +38,12 @@ typedef struct s_philo{
 }   t_philo;
 
 typedef struct s_program{
-    t_philo *philo;
+    t_philo *philo; //array of philos
     int     dead;
     pthread_mutex_t dead_lock;
     pthread_mutex_t eat_lock;
     pthread_mutex_t write_lock;
+    pthread_mutex_t *forks; //array of forks
 }   t_program;
 
 
