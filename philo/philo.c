@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 12:19:15 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/06/17 17:05:22 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:37:46 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,10 +160,43 @@ void initialize_philos(int argc, char *argv[], t_program *program)
     }
 }
 
+/* void *philosopher_routine(void *arguments)
+{
+    
+} */
+
+void create_philosopher_threads(t_program *program)
+{
+    int i = 0;
+    while(i < program->philo[0].nbr_of_philos)
+    {
+        if(pthread_create(&program->philo[i].philosopher, NULL, &philosopher_routine, NULL) != 0)
+        {
+            perror("Failed to create philosopher thread!");
+            exit(1);
+        }
+        i++;
+    }
+}
+
+void join_philosopher_threads(t_program *program)
+{
+    int i = 0;
+    while(i < program->philo[0].nbr_of_philos)
+    {
+        if(pthread_join(program->philo[i].philosopher, NULL) != 0)
+        {
+            perror("Failed to join philosopher thread!");
+            exit(1);
+        }
+        i++;
+    }
+}
 int main(int argc, char *argv[])
 {
     t_program *program = malloc(sizeof(t_program));
-    if (program == NULL) {
+    if (program == NULL) 
+    {
         perror("Failed to allocate memory for program");
         return 1;
     }
@@ -179,7 +212,13 @@ int main(int argc, char *argv[])
         printf("Time to eat: %zu\n", philo->time_to_eat);
         printf("Time to sleep: %zu\n", philo->time_to_sleep);
         printf("Amount of meals: %d\n", philo->nbr_of_times_to_eat);
+
+        create_philosopher_threads(program);
+        join_philosopher_threads(program);
+      
+        
     }
+    
 
    
     return (0);
