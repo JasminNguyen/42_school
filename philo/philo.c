@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 12:19:15 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/06/18 17:37:46 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:59:21 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,14 +160,35 @@ void initialize_philos(int argc, char *argv[], t_program *program)
     }
 }
 
-/* void *philosopher_routine(void *arguments)
+void *monitor_routine(void *pointer)
 {
-    
-} */
 
-void create_philosopher_threads(t_program *program)
+}
+void *philosopher_routine(void *pointer)
+{
+    t_philo *philo = (t_philo *)pointer;
+    if(philo->id % 2 == 0)
+    {
+        usleep(1);//custom function needed???
+    }
+    while(/* not dead and not the nbr of meals reached */)
+    {
+    
+    }
+
+}
+
+void create_threads(t_program *program)
 {
     int i = 0;
+    pthread_t monitor;
+    //create the monitor thread
+    if(pthread_create(&monitor, NULL, &monitor_routine, NULL) != 0)
+    {
+        perror("Failed to create the monitor thread!");
+        exit(1);
+    }
+    //create threads for each philosopher
     while(i < program->philo[0].nbr_of_philos)
     {
         if(pthread_create(&program->philo[i].philosopher, NULL, &philosopher_routine, NULL) != 0)
@@ -213,7 +234,7 @@ int main(int argc, char *argv[])
         printf("Time to sleep: %zu\n", philo->time_to_sleep);
         printf("Amount of meals: %d\n", philo->nbr_of_times_to_eat);
 
-        create_philosopher_threads(program);
+        create_threads(program);
         join_philosopher_threads(program);
       
         

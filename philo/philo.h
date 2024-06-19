@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 12:57:17 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/06/17 16:23:33 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:48:38 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ typedef struct s_philo{
     size_t      time_to_eat;
     size_t      time_to_die;
     size_t      time_to_sleep;
-    
     
     pthread_mutex_t *r_fork;
     pthread_mutex_t *l_fork;
