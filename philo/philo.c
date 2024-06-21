@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 12:19:15 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/06/19 15:59:21 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/06/21 17:00:45 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,33 @@ void *monitor_routine(void *pointer)
 {
 
 }
+
+int is_dead(t_philo *philo)
+{
+    pthread_mutex_lock(philo->dead_lock);
+    int dead_value = *(philo->dead); //dereferce to get the value
+    pthread_mutex_unlock(philo->dead_lock);
+    return(dead_value); 
+}
+
+void print_message(char *message_to_print, t_philo *philo, int philo_id)
+{
+    size_t time;
+    pthread_mutex_lock(philo->write_lock);
+    time = get_current_time() - philo->start_time;
+    if(!is_dead(philo))
+    {
+       printf("%zu %d %s\n", time, philo_id, message_to_print); 
+    }
+    pthread_mutex_unlock(philo->write_lock);
+    
+}
+void sleep_and_think(t_philo *philo)
+{
+    print_message("is sleeping", philo, philo->id);
+    usleep(philo->time_to_sleep);
+    print_message("is thinking", philo, philo->id);
+}
 void *philosopher_routine(void *pointer)
 {
     t_philo *philo = (t_philo *)pointer;
@@ -171,9 +198,10 @@ void *philosopher_routine(void *pointer)
     {
         usleep(1);//custom function needed???
     }
-    while(/* not dead and not the nbr of meals reached */)
+    while(!is_dead(philo) && (philo->nbr_of_times_to_eat == -1 || philo->meals_eaten < philo->nbr_of_times_to_eat))
     {
-    
+        eat(philo);
+        sleep_and_think(philo);
     }
 
 }
