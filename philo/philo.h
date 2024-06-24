@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 12:57:17 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/06/19 15:48:38 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/06/24 14:47:02 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct s_philo{
     pthread_mutex_t *r_fork;
     pthread_mutex_t *l_fork;
     pthread_mutex_t *dead_lock;
-    pthread_mutex_t *eat_lock;
+    pthread_mutex_t *meal_lock;
     pthread_mutex_t *write_lock;
 }   t_philo;
 
@@ -40,7 +40,7 @@ typedef struct s_program{
     t_philo *philo; //array of philos
     int     dead;
     pthread_mutex_t dead_lock;
-    pthread_mutex_t eat_lock;
+    pthread_mutex_t meal_lock;
     pthread_mutex_t write_lock;
     pthread_mutex_t *forks; //array of forks
 }   t_program;

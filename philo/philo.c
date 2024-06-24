@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 12:19:15 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/06/21 17:00:45 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/06/24 15:13:46 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void initialize_program(char *argv[], t_program *program)
     //initialize data in t_program
     program->dead = 0;
     pthread_mutex_init(&program->dead_lock, NULL);
-    pthread_mutex_init(&program->eat_lock, NULL);
+    pthread_mutex_init(&program->meal_lock, NULL);
     pthread_mutex_init(&program->write_lock, NULL);
 
     //initialize array for x philos
@@ -151,7 +151,7 @@ void initialize_philos(int argc, char *argv[], t_program *program)
         philo->last_meal = 0;
         philo->meals_eaten = 0;
         philo->dead_lock = &program->dead_lock;
-        philo->eat_lock = &program->eat_lock;
+        philo->meal_lock = &program->meal_lock;
         philo->write_lock = &program->write_lock;
         philo->l_fork = &program->forks[i];
         philo->r_fork = &program->forks[(i + 1) % nbr_of_philos];
@@ -191,6 +191,53 @@ void sleep_and_think(t_philo *philo)
     usleep(philo->time_to_sleep);
     print_message("is thinking", philo, philo->id);
 }
+
+void eat(t_philo *philo)
+{
+    if(philo->id % 2 == 0) // even philos take first right fork, then left
+    {
+        pthread_mutex_lock(philo->r_fork);
+        print_message("has taken a fork", philo, philo->id);
+      /*   if(philo->nbr_of_philos == 1)
+        {
+            //special case not needed here, right?
+        } */
+        pthread_mutex_lock(philo->l_fork);
+        print_message("has taken a fork", philo, philo->id);
+    }
+    else //odd philos take first left fork, then right
+    {
+        pthread_mutex(philo->l_fork);
+        print_message("has taken a fork", philo, philo->id);
+        if(philo->nbr_of_philos == 1) //special case with one philo
+        {
+            usleep(philo->time_to_die * 1000);
+            pthread_mutex_unlock(philo->l_fork);
+            return; //makes sure there are no further actions, exits the function early to prevent further execution of code
+        }
+        pthread_mutex_lock(philo->r_fork);
+        print_message("has taken a fork", philo, philo->id);
+    }
+    //print eating action
+    philo->eating = 1;
+    print_message("is eating", philo, philo->id);
+
+    //safely update last meal and nbr of meals eaten
+    pthread_mutex_lock(philo->meal_lock);
+    philo->meals_eaten++;
+    philo->last_meal = get_current_time_in_ms();
+    pthread_mutex_unlock(philo->meal_lock);
+
+    //actually simulate eating
+    usleep(philo->time_to_eat * 1000); //turn milliseconds into microseconds
+    //finished eating
+    philo->eating = 0;
+
+    //unlock forks
+    pthread_mutex_unlock(philo->r_fork);
+    pthread_mutex_unlock(philo->l_fork);
+}
+
 void *philosopher_routine(void *pointer)
 {
     t_philo *philo = (t_philo *)pointer;
@@ -241,6 +288,7 @@ void join_philosopher_threads(t_program *program)
         i++;
     }
 }
+
 int main(int argc, char *argv[])
 {
     t_program *program = malloc(sizeof(t_program));
@@ -263,12 +311,7 @@ int main(int argc, char *argv[])
         printf("Amount of meals: %d\n", philo->nbr_of_times_to_eat);
 
         create_threads(program);
-        join_philosopher_threads(program);
-      
-        
+        join_philosopher_threads(program);  
     }
-    
-
-   
     return (0);
 }
