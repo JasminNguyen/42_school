@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 12:57:17 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/06/24 14:47:02 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:29:53 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,28 @@ typedef struct s_program{
     pthread_mutex_t *forks; //array of forks
 }   t_program;
 
-
+//utils functions
 long ft_atol(const char *str);
+int is_numerical(char *argument);
+int check_greater_zero(char *argument);
+int check_input(char *argument);
+int error_check(int argc, char *argv[]);
+
+size_t get_current_time_in_ms();
+void print_message(char *message_to_print, t_philo *philo, int philo_id);
+
+//initialization functions 
+void initialize_program(char *argv[], t_program *program);
+void initialize_philos(int argc, char *argv[], t_program *program);
+
+//monitor_routine functions
+void *monitor_routine(void *pointer);
+int set_dead(t_philo *philo);
+int check_dead(t_philo *philo, size_t time_to_die);
+
+//philo_routine functions
+void *philosopher_routine(void *pointer);
+void eat(t_philo *philo);
+void sleep_and_think(t_philo *philo);
+int is_dead(t_philo *philo);
+
