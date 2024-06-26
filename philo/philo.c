@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 12:19:15 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/06/25 15:26:04 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/06/26 18:28:12 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void create_threads(t_program *program)
     int i = 0;
     pthread_t monitor;
     //create the monitor thread
+    
     if(pthread_create(&monitor, NULL, &monitor_routine, NULL) != 0)
     {
         perror("Failed to create the monitor thread!");
@@ -25,7 +26,7 @@ void create_threads(t_program *program)
     //create threads for each philosopher
     while(i < program->philo[0].nbr_of_philos)
     {
-        if(pthread_create(&program->philo[i].philosopher, NULL, &philosopher_routine, NULL) != 0)
+        if(pthread_create(&program->philo[i].philosopher, NULL, &philosopher_routine, &program->philo[i]) != 0)
         {
             perror("Failed to create philosopher thread!");
             exit(1);
@@ -60,14 +61,14 @@ int main(int argc, char *argv[])
     {
         initialize_program(argv, program);
         initialize_philos(argc, argv, program);
-        
-        //let's print the first philo
+         printf("Program initialization completed.\n");
+      /*   //let's print the first philo
         t_philo *philo = &program->philo[0];
         printf("Number of philosophers: %d\n", philo->nbr_of_philos);
         printf("Time to die: %zu\n", philo->time_to_die);
         printf("Time to eat: %zu\n", philo->time_to_eat);
         printf("Time to sleep: %zu\n", philo->time_to_sleep);
-        printf("Amount of meals: %d\n", philo->nbr_of_times_to_eat);
+        printf("Amount of meals: %d\n", philo->nbr_of_times_to_eat); */
 
         create_threads(program);
         join_philosopher_threads(program);  

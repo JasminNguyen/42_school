@@ -6,11 +6,12 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 12:57:17 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/06/25 15:29:53 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/06/26 15:07:54 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include <unistd.h>
 #include <pthread.h>
 #include <sys/time.h>
 #include <stdlib.h>

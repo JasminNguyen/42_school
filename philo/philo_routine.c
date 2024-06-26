@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 15:25:27 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/06/25 15:26:07 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/06/26 18:26:24 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void eat(t_philo *philo)
     }
     else //odd philos take first left fork, then right
     {
-        pthread_mutex(philo->l_fork);
+        pthread_mutex_lock(philo->l_fork);
         print_message("has taken a fork", philo, philo->id);
         if(philo->nbr_of_philos == 1) //special case with one philo
         {
@@ -78,6 +78,7 @@ void *philosopher_routine(void *pointer)
     t_philo *philo = (t_philo *)pointer;
     if(philo->id % 2 == 0)
     {
+        
         usleep(1);//custom function needed???
     }
     while(is_dead(philo) != 1 && (philo->nbr_of_times_to_eat == -1 || philo->meals_eaten < philo->nbr_of_times_to_eat))
@@ -85,5 +86,5 @@ void *philosopher_routine(void *pointer)
         eat(philo);
         sleep_and_think(philo);
     }
-
+    return(pointer);
 }
