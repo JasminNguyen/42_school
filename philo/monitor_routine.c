@@ -23,9 +23,11 @@ int check_dead(t_philo *philo, size_t time_to_die)
     pthread_mutex_unlock(philo->meal_lock);
     return(dead);
 }
+
 int set_dead(t_philo *philo) //goes through every philo thread and checks for dead philos, sets the dead flag if necessary
 {
     int i = 0;
+    //printf("error: philo[0].nbr_of_philos %d\n", philo[0].nbr_of_philos);
     while(i < philo[0].nbr_of_philos)
     {
         if(check_dead(philo, philo->time_to_die) == 1)
@@ -58,6 +60,9 @@ int set_all_meals_eaten(t_philo *philo)
     }
     if(meals_done == philo->nbr_of_philos)
     {
+        pthread_mutex_lock(philo[0].dead_lock);
+        *philo[0].dead = 1;
+        pthread_mutex_unlock(philo[0].dead_lock);
         return (1);
     }
     else
@@ -72,7 +77,7 @@ void *monitor_routine(void *pointer) //infinite loop (= checks constantly), sets
     t_philo *philo = (t_philo *)pointer;
     while(1)
     {
-        if(set_dead(philo) == 1/*  || set_all_meals_eaten(philo) == 1 */)
+        if(set_dead(philo) == 1 /* || set_all_meals_eaten(philo) == 1 */) //if I leave this in then it segfaults
         {
             break;
         }

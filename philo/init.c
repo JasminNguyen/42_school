@@ -47,10 +47,12 @@ void initialize_philos(int argc, char *argv[], t_program *program)
 {
     int i = 0;
     int nbr_of_philos = ft_atol(argv[1]);
+    printf("nbr of philos is: %d\n", nbr_of_philos);
     size_t time_to_die  = ft_atol(argv[2]);
     size_t time_to_eat = ft_atol(argv[3]);
     size_t time_to_sleep = ft_atol(argv[4]);
     size_t start_time = get_current_time_in_ms();
+    printf("start time:%zu\n", start_time);
     int nbr_of_times_to_eat;
     if(argc == 6)
     {
@@ -63,23 +65,23 @@ void initialize_philos(int argc, char *argv[], t_program *program)
 
     while(i < nbr_of_philos)
     {
-        t_philo *philo = &program->philo[i];
-        philo->id = i + 1;
-        philo->nbr_of_philos = nbr_of_philos;
-        philo->time_to_die = time_to_die;
-        philo->time_to_eat = time_to_eat;
-        philo->time_to_sleep = time_to_sleep;
-        philo->nbr_of_times_to_eat = nbr_of_times_to_eat;
-        philo->dead = &program->dead; 
-        philo->eating = 0;
-        philo->last_meal = 0;
-        philo->meals_eaten = 0;
-        philo->dead_lock = &program->dead_lock;
-        philo->meal_lock = &program->meal_lock;
-        philo->write_lock = &program->write_lock;
-        philo->l_fork = &program->forks[i];
-        philo->r_fork = &program->forks[(i + 1) % nbr_of_philos];
-        philo->start_time = start_time;
+        //t_philo *philo = &program->philo[i];
+        program->philo[i].id = i + 1;
+        program->philo[i].nbr_of_philos = nbr_of_philos;
+        program->philo[i].time_to_die = time_to_die;
+        program->philo[i].time_to_eat = time_to_eat;
+        program->philo[i].time_to_sleep = time_to_sleep;
+        program->philo[i].nbr_of_times_to_eat = nbr_of_times_to_eat;
+        program->philo[i].dead = &program->dead; 
+        program->philo[i].eating = 0;
+        program->philo[i].last_meal = 0;
+        program->philo[i].meals_eaten = 0;
+        program->philo[i].dead_lock = &program->dead_lock;
+        program->philo[i].meal_lock = &program->meal_lock;
+        program->philo[i].write_lock = &program->write_lock;
+        program->philo[i].l_fork = &program->forks[i];
+        program->philo[i].r_fork = &program->forks[(i + 1) % nbr_of_philos];
+        program->philo[i].start_time = start_time;
         i++;
     }
 }

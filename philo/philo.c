@@ -16,13 +16,7 @@ void create_threads(t_program *program)
 {
     int i = 0;
     pthread_t monitor;
-    //create the monitor thread
     
-    if(pthread_create(&monitor, NULL, &monitor_routine, NULL) != 0)
-    {
-        perror("Failed to create the monitor thread!");
-        exit(1);
-    }
     //create threads for each philosopher
     while(i < program->philo[0].nbr_of_philos)
     {
@@ -32,6 +26,18 @@ void create_threads(t_program *program)
             exit(1);
         }
         i++;
+    }
+    //printf("Philos successfully created\n");
+    //create the monitor thread
+    if(pthread_create(&monitor, NULL, &monitor_routine, program) != 0) //passing different args here now
+    {
+        perror("Failed to create the monitor thread!");
+        exit(1);
+    }
+    if(pthread_join(monitor, NULL) != 0)
+    {
+        perror("Failed to join monitor thread!");
+        exit(1);
     }
 }
 

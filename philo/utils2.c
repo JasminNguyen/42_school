@@ -15,7 +15,10 @@
 size_t get_current_time_in_ms() 
 {
     struct timeval tv;
-    gettimeofday(&tv, NULL);
+    if(gettimeofday(&tv, NULL) == -1)
+    {
+        perror("Couldn't get time\n");
+    }
     return (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
 }
 

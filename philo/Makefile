@@ -12,7 +12,7 @@
 
 NAME    =   philo
 CC      =   cc
-CFLAGS  =   -Wall -Werror -Wextra -Imlx -g
+CFLAGS  =   -Wall -Werror -Wextra -Imlx -g -lpthread
 
 SRCS	=	philo.c utils.c \
 			init.c utils2.c \
