@@ -74,10 +74,10 @@ int set_all_meals_eaten(t_philo *philo)
 
 void *monitor_routine(void *pointer) //infinite loop (= checks constantly), sets the dead flag to 1 to get the philo routine to stop 
 {
-    t_philo *philo = (t_philo *)pointer;
+    t_program *program = (t_program *)pointer;
     while(1)
     {
-        if(set_dead(philo) == 1 /* || set_all_meals_eaten(philo) == 1 */) //if I leave this in then it segfaults
+        if(set_dead(program->philo) == 1 /* || set_all_meals_eaten(philo) == 1 */) //if I leave this in then it segfaults
         {
             break;
         }

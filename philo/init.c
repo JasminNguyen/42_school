@@ -47,7 +47,6 @@ void initialize_philos(int argc, char *argv[], t_program *program)
 {
     int i = 0;
     int nbr_of_philos = ft_atol(argv[1]);
-    printf("nbr of philos is: %d\n", nbr_of_philos);
     size_t time_to_die  = ft_atol(argv[2]);
     size_t time_to_eat = ft_atol(argv[3]);
     size_t time_to_sleep = ft_atol(argv[4]);

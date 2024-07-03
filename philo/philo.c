@@ -68,13 +68,13 @@ int main(int argc, char *argv[])
         initialize_program(argv, program);
         initialize_philos(argc, argv, program);
          printf("Program initialization completed.\n");
-      /*   //let's print the first philo
+        //let's print the first philo
         t_philo *philo = &program->philo[0];
         printf("Number of philosophers: %d\n", philo->nbr_of_philos);
         printf("Time to die: %zu\n", philo->time_to_die);
         printf("Time to eat: %zu\n", philo->time_to_eat);
         printf("Time to sleep: %zu\n", philo->time_to_sleep);
-        printf("Amount of meals: %d\n", philo->nbr_of_times_to_eat); */
+        printf("Amount of meals: %d\n", philo->nbr_of_times_to_eat);
 
         create_threads(program);
         join_philosopher_threads(program);  
