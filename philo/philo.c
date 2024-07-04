@@ -20,7 +20,7 @@ void create_threads(t_program *program)
     //create threads for each philosopher
     while(i < program->philo[0].nbr_of_philos)
     {
-        if(pthread_create(&program->philo[i].philosopher, NULL, &philosopher_routine, &program->philo[i]) != 0)
+        if(pthread_create(&program->philo[i].philosopher, NULL, &philosopher_routine, &program->philo[i]) != 0) //passing the philo struct here
         {
             perror("Failed to create philosopher thread!");
             exit(1);
@@ -29,7 +29,7 @@ void create_threads(t_program *program)
     }
     //printf("Philos successfully created\n");
     //create the monitor thread
-    if(pthread_create(&monitor, NULL, &monitor_routine, program) != 0) //passing different args here now
+    if(pthread_create(&monitor, NULL, &monitor_routine, program) != 0) //passing the program struct here
     {
         perror("Failed to create the monitor thread!");
         exit(1);

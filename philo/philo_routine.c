@@ -23,7 +23,7 @@ int is_dead(t_philo *philo)
 void sleep_and_think(t_philo *philo)
 {
     print_message("is sleeping", philo, philo->id);
-    usleep(philo->time_to_sleep);
+    usleep(philo->time_to_sleep * 1000);
     print_message("is thinking", philo, philo->id);
 }
 
@@ -79,9 +79,9 @@ void *philosopher_routine(void *pointer)
     if(philo->id % 2 == 0)
     {
         
-        usleep(1);//custom function needed???
+        usleep(1000);//custom function needed???(1)
     }
-    while(is_dead(philo) != 1 && (philo->nbr_of_times_to_eat == -1 || philo->meals_eaten < philo->nbr_of_times_to_eat))
+    while(is_dead(philo) != 1  && (philo->nbr_of_times_to_eat == -1 || philo->meals_eaten < philo->nbr_of_times_to_eat)) ///
     {
         eat(philo);
         sleep_and_think(philo);

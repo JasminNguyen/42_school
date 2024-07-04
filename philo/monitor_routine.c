@@ -16,6 +16,7 @@ int check_dead(t_philo *philo, size_t time_to_die)
 {
     int dead = 0;
     pthread_mutex_lock(philo->meal_lock);
+
     if(get_current_time_in_ms() - philo->last_meal >= time_to_die && philo->eating == 0)
     {
         dead = 1;
@@ -77,7 +78,7 @@ void *monitor_routine(void *pointer) //infinite loop (= checks constantly), sets
     t_program *program = (t_program *)pointer;
     while(1)
     {
-        if(set_dead(program->philo) == 1 /* || set_all_meals_eaten(philo) == 1 */) //if I leave this in then it segfaults
+        if(set_dead(program->philo) == 1 || set_all_meals_eaten(program->philo) == 1) //if I leave this in then it segfaults
         {
             break;
         }
