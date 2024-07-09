@@ -24,7 +24,8 @@ void sleep_and_think(t_philo *philo)
 {
     print_message("is sleeping", philo, philo->id);
     usleep(philo->time_to_sleep * 1000);
-    print_message("is thinking", philo, philo->id);
+    print_message("is thinking", philo, philo->id); 
+    usleep(1000);
 }
 
 void eat(t_philo *philo)
@@ -70,7 +71,9 @@ void eat(t_philo *philo)
 
     //unlock forks
     pthread_mutex_unlock(philo->r_fork);
+    //printf("right fork unlocked :%i\n", philo->id);
     pthread_mutex_unlock(philo->l_fork);
+    //printf("left fork unlocked :%i\n", philo->id);
 }
 
 void *philosopher_routine(void *pointer)
@@ -81,9 +84,9 @@ void *philosopher_routine(void *pointer)
         
         usleep(1000);//custom function needed???(1)
     }
-    while(is_dead(philo) != 1  && (philo->nbr_of_times_to_eat == -1 || philo->meals_eaten < philo->nbr_of_times_to_eat)) ///
+    while(is_dead(philo) != 1  /* && (philo->nbr_of_times_to_eat == -1 || philo->meals_eaten < philo->nbr_of_times_to_eat) */) ///
     {
-        eat(philo);
+        eat(philo); 
         sleep_and_think(philo);
     }
     return(pointer);

@@ -51,7 +51,6 @@ void initialize_philos(int argc, char *argv[], t_program *program)
     size_t time_to_eat = ft_atol(argv[3]);
     size_t time_to_sleep = ft_atol(argv[4]);
     size_t start_time = get_current_time_in_ms();
-    printf("start time:%zu\n", start_time);
     int nbr_of_times_to_eat;
     if(argc == 6)
     {
@@ -73,7 +72,7 @@ void initialize_philos(int argc, char *argv[], t_program *program)
         program->philo[i].nbr_of_times_to_eat = nbr_of_times_to_eat;
         program->philo[i].dead = &program->dead; 
         program->philo[i].eating = 0;
-        program->philo[i].last_meal = 0;
+        program->philo[i].last_meal = get_current_time_in_ms();
         program->philo[i].meals_eaten = 0;
         program->philo[i].dead_lock = &program->dead_lock;
         program->philo[i].meal_lock = &program->meal_lock;

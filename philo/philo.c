@@ -16,11 +16,16 @@ void create_threads(t_program *program)
 {
     int i = 0;
     pthread_t monitor;
-    
+      //create the monitor thread
+     if(pthread_create(&monitor, NULL, &monitor_routine, program->philo) != 0) //passing the philo struct here
+    {
+        perror("Failed to create the monitor thread!");
+        exit(1);
+    }
     //create threads for each philosopher
     while(i < program->philo[0].nbr_of_philos)
     {
-        if(pthread_create(&program->philo[i].philosopher, NULL, &philosopher_routine, &program->philo[i]) != 0) //passing the philo struct here
+        if(pthread_create(&program->philo[i].philosopher, NULL, &philosopher_routine, &program->philo[i]) != 0) //passing the the individual philo structs here
         {
             perror("Failed to create philosopher thread!");
             exit(1);
@@ -28,12 +33,8 @@ void create_threads(t_program *program)
         i++;
     }
     //printf("Philos successfully created\n");
-    //create the monitor thread
-    if(pthread_create(&monitor, NULL, &monitor_routine, program) != 0) //passing the program struct here
-    {
-        perror("Failed to create the monitor thread!");
-        exit(1);
-    }
+   
+   
     if(pthread_join(monitor, NULL) != 0)
     {
         perror("Failed to join monitor thread!");
@@ -78,6 +79,7 @@ int main(int argc, char *argv[])
 
         create_threads(program);
         join_philosopher_threads(program);  
+        //don't forget to free
     }
     return (0);
 }

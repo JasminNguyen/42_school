@@ -22,6 +22,18 @@ size_t get_current_time_in_ms()
     return (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
 }
 
+int ft_usleep(size_t milliseconds)
+{
+    size_t start;
+
+    start = get_current_time_in_ms();
+    while((get_current_time_in_ms() - start) < milliseconds)
+    {
+        usleep(100);
+    }
+    return(0);
+}
+
 void print_message(char *message_to_print, t_philo *philo, int philo_id)
 {
     size_t time;

@@ -55,6 +55,7 @@ int error_check(int argc, char *argv[]);
 
 size_t get_current_time_in_ms();
 void print_message(char *message_to_print, t_philo *philo, int philo_id);
+//int ft_usleep(size_t milliseconds);
 
 //initialization functions 
 void initialize_program(char *argv[], t_program *program);
