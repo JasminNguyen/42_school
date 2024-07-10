@@ -6,7 +6,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/philo",  // Update with your executable path
-            "args": ["20", "900", "200", "200"],  // Command line arguments to pass to your program
+            "args": ["3", "900", "200", "200"],  // Command line arguments to pass to your program
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

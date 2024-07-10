@@ -43,22 +43,31 @@ int set_dead(t_philo *philo) //goes through every philo thread and checks for de
     }
     return(0);
 }
-
+/* 
 int set_all_meals_eaten(t_philo *philo)
 {
     int i = 0;
+    int j = 0;
     int meals_done = 0;
     while(i < philo[0].nbr_of_philos)
     {    
         pthread_mutex_lock(philo[i].meal_lock);//locked individually now
-        if(philo->nbr_of_times_to_eat <= philo[i].meals_eaten)
+        if(philo->nbr_of_times_to_eat != -1 && philo->nbr_of_times_to_eat <= philo[i].meals_eaten)
         {
-            meals_done += 1;
+            philo[i].meals_eaten++;
         }
         pthread_mutex_unlock(philo[i].meal_lock);//
         i++;
     }
-    if(meals_done == philo->nbr_of_philos)
+    while(j < philo[0].nbr_of_philos)
+    {
+        if(philo[j].meals_eaten >= philo->nbr_of_times_to_eat)
+        {
+            meals_done += 1;
+        }
+        j++;
+    }
+    if(meals_done == philo[0].nbr_of_philos)
     {
         pthread_mutex_lock(philo[0].dead_lock);
         *philo[0].dead = 1;
@@ -70,7 +79,37 @@ int set_all_meals_eaten(t_philo *philo)
         return(0);
     }
 }
+ */
+int set_all_meals_eaten(t_philo *philo)
+{
+    int i = 0;
+    int meals_done = 0;
 
+    // Check each philosopher's meal count
+    while (i < philo[0].nbr_of_philos)
+    {
+        pthread_mutex_lock(philo[i].meal_lock); // Lock each philosopher's meal lock
+        if (philo[i].nbr_of_times_to_eat != -1 && philo[i].meals_eaten >= philo[i].nbr_of_times_to_eat)
+        {
+            meals_done += 1;
+        }
+        pthread_mutex_unlock(philo[i].meal_lock); // Unlock the meal lock
+        i++;
+    }
+
+    // If all philosophers have eaten the required number of meals
+    if (meals_done == philo[0].nbr_of_philos)
+    {
+        pthread_mutex_lock(philo[0].dead_lock); // Lock the dead lock
+        *philo[0].dead = 1;
+        pthread_mutex_unlock(philo[0].dead_lock); // Unlock the dead lock
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
 
 void *monitor_routine(void *pointer) //infinite loop (= checks constantly), sets the dead flag to 1 to get the philo routine to stop 
 {
