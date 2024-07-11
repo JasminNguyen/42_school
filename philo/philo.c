@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
 
         create_threads(program);
         join_philosopher_threads(program);  
-        //don't forget to free
+        free_all(program);
     }
     return (0);
 }

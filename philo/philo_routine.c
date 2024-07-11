@@ -23,9 +23,9 @@ int is_dead(t_philo *philo)
 void sleep_and_think(t_philo *philo)
 {
     print_message("is sleeping", philo, philo->id);
-    usleep(philo->time_to_sleep * 1000);
+    ft_usleep(philo->time_to_sleep);
     print_message("is thinking", philo, philo->id); 
-    usleep(1000);
+    ft_usleep(1);
 }
 
 void eat(t_philo *philo)
@@ -47,7 +47,7 @@ void eat(t_philo *philo)
         print_message("has taken a fork", philo, philo->id);
         if(philo->nbr_of_philos == 1) //special case with one philo
         {
-            usleep(philo->time_to_die * 1000);
+            ft_usleep(philo->time_to_die);
             pthread_mutex_unlock(philo->l_fork);
             return; //makes sure there are no further actions, exits the function early to prevent further execution of code
         }
@@ -65,7 +65,7 @@ void eat(t_philo *philo)
     pthread_mutex_unlock(philo->meal_lock);
 
     //actually simulate eating
-    usleep(philo->time_to_eat * 1000); //turn milliseconds into microseconds
+    ft_usleep(philo->time_to_eat); //turn milliseconds into microseconds
     //finished eating
     philo->eating = 0;
 

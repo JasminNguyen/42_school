@@ -46,3 +46,11 @@ void print_message(char *message_to_print, t_philo *philo, int philo_id)
     pthread_mutex_unlock(philo->write_lock);
     
 }
+
+void free_all(t_program *program)
+{
+    free(program->philo);
+    free(program->forks);
+    free(program);
+
+}
