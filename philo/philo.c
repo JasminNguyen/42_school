@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 12:19:15 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/07/15 16:33:15 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/07/15 16:38:51 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	create_threads(t_program *program)
 	pthread_t	monitor;
 
 	i = 0;
+	//create monitor thread
 	if (pthread_create(&monitor, NULL, &monitor_routine, program->philo) != 0) //passing the philo struct here
 	{
 		perror("Failed to create the monitor thread!");
