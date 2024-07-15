@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 12:28:37 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/07/15 13:50:34 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/07/15 16:34:16 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,17 @@ void	initialize_program(char *argv[], t_program *program)
 	int	i;
 
 	i = 0;
-	program->dead = 0;  //initialize data in t_program
-	pthread_mutex_init(&program->dead_lock, NULL);
+	program->dead = 0;
+	pthread_mutex_init(&program->dead_lock, NULL);//initialize data in t_program
 	pthread_mutex_init(&program->meal_lock, NULL);
 	pthread_mutex_init(&program->write_lock, NULL);
-	program->philo = malloc(ft_atol(argv[1]) * sizeof(t_philo));   //initialize array for x philos
-	if (program->philo == NULL) 
-	{
-		perror("Failed to allocate memory for philosophers");
-		exit(1);
-	}
-	program->forks = malloc(ft_atol(argv[1]) * sizeof(pthread_mutex_t));    //allocate memory for forks
+	program->forks = malloc(ft_atol(argv[1]) * sizeof(pthread_mutex_t));
 	if (program->forks == NULL)
 	{
 		perror("Failed to allocate memory for forks!");
 		exit(1);
 	}
-	while (i < ft_atol(argv[1]))    //initialize each fork 
+	while (i < ft_atol(argv[1]))
 	{
 		pthread_mutex_init(&program->forks[i], NULL);
 		i++;
