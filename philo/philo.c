@@ -6,80 +6,80 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 12:19:15 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/06/26 18:28:12 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/07/15 15:49:30 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void create_threads(t_program *program)
+void	create_threads(t_program *program)
 {
-    int i = 0;
-    pthread_t monitor;
-      //create the monitor thread
-     if(pthread_create(&monitor, NULL, &monitor_routine, program->philo) != 0) //passing the philo struct here
-    {
-        perror("Failed to create the monitor thread!");
-        exit(1);
-    }
+	int			i;
+	pthread_t	monitor;
+
+	i = 0;
+    //create the monitor thread
+	if (pthread_create(&monitor, NULL, &monitor_routine, program->philo) != 0) //passing the philo struct here
+	{
+		perror("Failed to create the monitor thread!");
+		exit(1);
+	}
     //create threads for each philosopher
-    while(i < program->philo[0].nbr_of_philos)
-    {
-        if(pthread_create(&program->philo[i].philosopher, NULL, &philosopher_routine, &program->philo[i]) != 0) //passing the the individual philo structs here
-        {
-            perror("Failed to create philosopher thread!");
-            exit(1);
-        }
-        i++;
-    }
-    //printf("Philos successfully created\n");
-   
-   
-    if(pthread_join(monitor, NULL) != 0)
-    {
-        perror("Failed to join monitor thread!");
-        exit(1);
-    }
+	while (i < program->philo[0].nbr_of_philos)
+	{
+		if (pthread_create(&program->philo[i].philosopher, NULL, &philosopher_routine, &program->philo[i]) != 0) //passing the the individual philo structs here
+		{
+			perror("Failed to create philosopher thread!");
+			exit(1);
+		}
+		i++;
+	}
+	if (pthread_join(monitor, NULL) != 0)
+	{
+		perror("Failed to join monitor thread!");
+		exit(1);
+	}
 }
 
-void join_philosopher_threads(t_program *program)
+void	join_philosopher_threads(t_program *program)
 {
-    int i = 0;
-    while(i < program->philo[0].nbr_of_philos)
-    {
-        if(pthread_join(program->philo[i].philosopher, NULL) != 0)
-        {
-            perror("Failed to join philosopher thread!");
-            exit(1);
-        }
-        i++;
-    }
+	int	i;
+
+	i = 0;
+	while (i < program->philo[0].nbr_of_philos)
+	{
+		if (pthread_join(program->philo[i].philosopher, NULL) != 0)
+		{
+			perror("Failed to join philosopher thread!");
+			exit(1);
+		}
+		i++;
+	}
 }
 
-int main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
-    t_program *program = malloc(sizeof(t_program));
-    if (program == NULL) 
-    {
-        perror("Failed to allocate memory for program");
-        return 1;
-    }
-    if (error_check(argc, argv) == 0) 
-    {
-        initialize_program(argv, program);
-        initialize_philos(argc, argv, program);
-         printf("Program initialization completed.\n");
-        //let's print the first philo
-        t_philo *philo = &program->philo[0];
-        printf("Number of philosophers: %d\n", philo->nbr_of_philos);
-        printf("Time to die: %zu\n", philo->time_to_die);
-        printf("Time to eat: %zu\n", philo->time_to_eat);
-        printf("Time to sleep: %zu\n", philo->time_to_sleep);
-        printf("Amount of meals: %d\n", philo->nbr_of_times_to_eat);
+	t_program	*program;
 
-        create_threads(program);
-        join_philosopher_threads(program);  
-        free_all(program);
-    }
-    return (0);
+	program = malloc(sizeof(t_program));
+	if (program == NULL) 
+	{
+		perror("Failed to allocate memory for program");
+		return (1);
+	}
+	program->philo = malloc(sizeof(t_philo));
+	if (program->philo == NULL) 
+	{
+		perror("Failed to allocate memory for philo");
+		return (1);
+	}
+	if (check_arguments(argc, argv) == 0) 
+	{
+		initialize_program(argv, program);
+		initialize_philos(argv, program, program->philo);
+		create_threads(program);
+		join_philosopher_threads(program);
+		free_all(program);
+	}
+	return (0);
 }

@@ -6,13 +6,13 @@
 #    By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/04 13:01:33 by jasnguye          #+#    #+#              #
-#    Updated: 2024/06/25 15:25:17 by jasnguye         ###   ########.fr        #
+#    Updated: 2024/07/15 12:29:16 by jasnguye         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME    =   philo
 CC      =   cc
-CFLAGS  =   -Wall -Werror -Wextra -Imlx -g -lpthread
+CFLAGS  =   -Wall -Werror -Wextra -Imlx -g
 
 SRCS	=	philo.c utils.c \
 			init.c utils2.c \
