@@ -6,25 +6,45 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:53:00 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/08/16 18:01:19 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/08/19 18:45:12 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "unistd.h"
-
+#include "stdlib.h"
+#include "string.h"
+ #include <sys/wait.h>
+ 
+void error_message(char *string) //my version
+{
+	while(*string)
+	{
+		write(2, string, 1);
+		string++;
+	}
+}
 int cd(char *argv[], int i)
 {
-	int status;
-	///bla bla
+	int status = 0;
+	if(i != 2)
+	{
+		return (error_message("error: cd: bad arguments\n")), 1;
+	}
+	if(chdir(*argv) == -1)
+	{
+		return (error_message("error: cd: cannot change directory to"), error_message(argv[1]), error_message("\n")), 1;
+	}
 
 	return(status);
 }
 
-int set_pipe(int pipes_present, int *fd, int which_end)
+void set_pipe(int pipes_present, int *fd, int which_end)
 {
-	if(pipes_present && dup2(fd[which_end], which_end) == -1 || close(fd[0]) == -1 || close(fd[1]) == -1)
+	if(pipes_present && (dup2(fd[which_end], which_end) == -1 || close(fd[0]) == -1 || close(fd[1]) == -1)) //replaces the std-end with the fd-end from the pipe
 	{
-		//error message
+		error_message("error: fatal2\n");
+		exit(1);
+		
 	}
 }
 int ft_execve(char *argv[], int i, char **envp)
@@ -35,18 +55,18 @@ int ft_execve(char *argv[], int i, char **envp)
 	int pid;
 
 	//check for pipes
-	pipes_present = !strcmp(argv[i], "|") && argv[i];
+	pipes_present = argv[i] && !strcmp(argv[i], "|");
 	
 	//check for cd
-	if(strcmp(argv[i], "cd") == 0 && !pipes_present) //my version
+	if(!strcmp(*argv, "cd") && !pipes_present)
 	{
 		return(cd(argv, i));
 	}
-
 	//create pipes
 	if(pipes_present && pipe(fd) == -1)
 	{
-		//error function
+		error_message("error: fatal1\n");
+		exit(1);
 	}
 
 	pid = fork();
@@ -58,15 +78,15 @@ int ft_execve(char *argv[], int i, char **envp)
 		{
 			return (cd(argv, i));
 		}
-		if(execve(argv, i, envp) == -1) //execute
+		if(execve(*argv, argv, envp) == -1) //execute
 		{
 			//error message
+			error_message("error: cannot execute"), error_message(argv[i]), error_message("\n"), exit(1);
 		}
-		waitpid(pid, &status, 0);//waiting for child to finish
+	}
+	waitpid(pid, &status, 0);//waiting for child to finish
 		set_pipe(pipes_present, fd, 0); //parent reads
 		return(WIFEXITED(status) && WEXITSTATUS(status)); // macros check wheter exited normally and the exit status
-	}
-	
 }
 int main(int argc, char *argv[], char **envp) //my version
 {
@@ -75,7 +95,7 @@ int main(int argc, char *argv[], char **envp) //my version
 
 	while(argv[i])
 	{
-		argv += i;
+		argv += i; //moves the argv pointer to the next command, basically skipping over the already processed commands
 		i = 0;
 		while(argv[i] && strcmp(argv[i], "|") != 0 && strcmp(argv[i], ";") != 0) // only increments when there is no pipe or semicolon
 		{
