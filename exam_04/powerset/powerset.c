@@ -34,8 +34,12 @@ Examples:
 $
 */
 
-# include "stdio.h"
+/* # include "stdio.h"
 # include "stdlib.h"
+
+
+
+
 
 int	main(int argc, char **argv)
 {
@@ -43,16 +47,22 @@ int	main(int argc, char **argv)
 	int first_number = atoi(argv[1]);
 	printf("first number is: %d\n", first_number);
 
-	//put following numbers in array
+	//variables needed
+	int current_sum = 0;
+	int start_index = 0;
+
+	//put following numbers in array and determine array len
 	int array[100];
 	int i = 2;
 	int j = 0;
+	int len = 0;
 	while(i <= argc - 1)
 	{
 		array[j] = atoi(argv[i]);
 		printf("array[%d]: %d\n", j, atoi(argv[i]));
 		i++;
 		j++;
+		len++;
 	}
 	//go through the array
 	j = 0;
@@ -64,3 +74,67 @@ int	main(int argc, char **argv)
 
 }
 
+
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+// Recursive function to find subsets that sum to first_number
+void find_subsets(int first_number, int array[], int len, int current_set[], int current_len, int current_sum, int start_index) 
+{
+    // Base case: If the current sum equals first_number, print the subset
+    if (current_sum == first_number) 
+	{
+		int i = 0;
+        while (i < current_len)
+		{
+			printf("%d ", current_set[i]);  // Print elements of the subset 
+			i++;
+		}
+        printf("$\n");  // End the subset output with a $
+        return;
+    }
+
+    // If we've gone through all elements, return
+    if (start_index == len ) 
+	{
+        return;
+    }
+
+    // Include the current element (array[start_index])
+    current_set[current_len] = array[start_index]; // Add element to the current subset
+    find_subsets(first_number, array, len, current_set, current_len + 1, current_sum + array[start_index], start_index + 1);
+
+    // Exclude the current element and move to the next element
+    find_subsets(first_number, array, len, current_set, current_len, current_sum, start_index + 1);
+}
+
+int main(int argc, char **argv) 
+{
+   
+    // First number (target sum)
+    int first_number = atoi(argv[1]);
+
+    // Array to hold the rest of the numbers
+    int array[100];
+    int len = 0;  // To track the len of the array
+
+	// Populate the array with numbers from argv
+	int i = 2;
+    while (i < argc) 
+	{
+        array[len] = atoi(argv[i]);
+		printf("array[%d]: %d\n", len, atoi(argv[i]));
+        len++;
+		i++;
+    }
+
+    // Array to hold the current subset
+    int current_set[100];
+
+    // Start finding subsets
+    find_subsets(first_number, array, len, current_set, 0, 0, 0); //+ current_len, current_sum, start_index
+
+    return 0;
+}
