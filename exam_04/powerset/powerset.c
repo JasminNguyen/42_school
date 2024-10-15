@@ -83,7 +83,7 @@ int	main(int argc, char **argv)
 // Recursive function to find subsets that sum to first_number
 void find_subsets(int first_number, int array[], int len, int current_set[], int current_len, int current_sum, int start_index) 
 {
-    // Base case: If the current sum equals first_number, print the subset
+    // Base case: If the current sum equals first_number and we have added at least one element to current_set, print the subset
     if (current_sum == first_number && current_len > 0) 
 	{
 		int i = 0;
@@ -134,7 +134,7 @@ int main(int argc, char **argv)
     int current_set[100];
 
     // Start finding subsets
-    find_subsets(first_number, array, len, current_set, 0, 0, 0); //+ current_len, current_sum, start_index
+    find_subsets(first_number, array, len, current_set, 0, 0, 0); //1. first_number, 2. array, 3. len, 4, current_set, 5.current_len, 6.current_sum, 7.start_index
 
     return 0;
 }
