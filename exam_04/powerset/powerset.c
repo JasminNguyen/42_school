@@ -84,7 +84,7 @@ int	main(int argc, char **argv)
 void find_subsets(int first_number, int array[], int len, int current_set[], int current_len, int current_sum, int start_index) 
 {
     // Base case: If the current sum equals first_number, print the subset
-    if (current_sum == first_number) 
+    if (current_sum == first_number && current_len > 0) 
 	{
 		int i = 0;
         while (i < current_len)
