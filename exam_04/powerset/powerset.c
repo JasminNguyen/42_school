@@ -34,107 +34,147 @@ Examples:
 $
 */
 
-/* # include "stdio.h"
-# include "stdlib.h"
-
-
-
-
-
-int	main(int argc, char **argv)
-{
-	//first number
-	int first_number = atoi(argv[1]);
-	printf("first number is: %d\n", first_number);
-
-	//variables needed
-	int current_sum = 0;
-	int start_index = 0;
-
-	//put following numbers in array and determine array len
-	int array[100];
-	int i = 2;
-	int j = 0;
-	int len = 0;
-	while(i <= argc - 1)
-	{
-		array[j] = atoi(argv[i]);
-		printf("array[%d]: %d\n", j, atoi(argv[i]));
-		i++;
-		j++;
-		len++;
-	}
-	//go through the array
-	j = 0;
-	while(!array[j])
-	{
-		
-		j++;
-	}
-
-}
-
-
- */
 
 #include <stdio.h>
 #include <stdlib.h>
 
-// Recursive function to find subsets that sum to first_number
-void find_subsets(int first_number, int array[], int len, int current_set[], int current_len, int current_sum, int start_index) 
+// // Recursive function to find subsets that sum to first_number
+// void find_subsets(int first_number, int array[], int len, int current_set[], int current_len, int current_sum, int start_index) 
+// {
+//     // Base case: If the current sum equals first_number and we have added at least one element to current_set, print the subset
+//     if (current_sum == first_number && current_len > 0) 
+// 	{
+// 		int i = 0;
+//         while (i < current_len)
+// 		{
+// 			printf("%d ", current_set[i]);  // Print elements of the subset 
+// 			i++;
+// 		}
+//         printf("$\n");  // End the subset output with a $
+//         return;
+//     }
+
+//     // If we've gone through all elements, return
+//     if (start_index == len ) 
+// 	{
+//         return;
+//     }
+
+//     // Include the current element (array[start_index])
+//     current_set[current_len] = array[start_index]; // Add element to the current subset
+//     find_subsets(first_number, array, len, current_set, current_len + 1, current_sum + array[start_index], start_index + 1);
+
+//     // Exclude the current element and move to the next element
+//     find_subsets(first_number, array, len, current_set, current_len, current_sum, start_index + 1);
+// }
+
+// int main(int argc, char **argv) 
+// {
+   
+//     // First number (target sum)
+//     int first_number = atoi(argv[1]);
+
+//     // Array to hold the rest of the numbers
+//     int array[100];
+//     int len = 0;  // To track the len of the array
+
+// 	// Populate the array with numbers from argv
+// 	int i = 2;
+//     while (i < argc) 
+// 	{
+//         array[len] = atoi(argv[i]);
+// 		printf("array[%d]: %d\n", len, atoi(argv[i]));
+//         len++;
+// 		i++;
+//     }
+// 	printf("len here is: %d\n", len);
+
+//     // Array to hold the current subset
+//     int current_set[100];
+
+//     // Start finding subsets
+//     find_subsets(first_number, array, len, current_set, 0, 0, 0); //1. first_number, 2. array, 3. len, 4, current_set, 5.current_len, 6.current_sum, 7.start_index
+
+//     return 0;
+// }
+
+
+
+
+
+
+///// with malloc
+void find_set(int first_number, int *array, int len, int *current_set, int current_len, int current_sum, int index)
 {
-    // Base case: If the current sum equals first_number and we have added at least one element to current_set, print the subset
-    if (current_sum == first_number && current_len > 0) 
+	
+	//base case
+	if(first_number == current_sum && current_len > 0)
 	{
 		int i = 0;
-        while (i < current_len)
+		while (i < current_len)
 		{
-			printf("%d ", current_set[i]);  // Print elements of the subset 
+			fprintf(stdout, "%d ", current_set[i]);
 			i++;
 		}
-        printf("$\n");  // End the subset output with a $
-        return;
-    }
-
-    // If we've gone through all elements, return
-    if (start_index == len ) 
+		printf("\n");
+		return;
+	}		
+	if(index == len)
 	{
-        return;
-    }
+		return;
+	}
 
-    // Include the current element (array[start_index])
-    current_set[current_len] = array[start_index]; // Add element to the current subset
-    find_subsets(first_number, array, len, current_set, current_len + 1, current_sum + array[start_index], start_index + 1);
+	//including the following number
+	current_set[current_len] = array[index];
+	find_set(first_number, array, len, current_set, current_len + 1, current_sum + array[index], index + 1);
 
-    // Exclude the current element and move to the next element
-    find_subsets(first_number, array, len, current_set, current_len, current_sum, start_index + 1);
+	//excluding the following number
+	find_set(first_number, array, len, current_set, current_len, current_sum, index + 1);
+
 }
-
-int main(int argc, char **argv) 
+int main(int argc, char *argv[])
 {
-   
-    // First number (target sum)
-    int first_number = atoi(argv[1]);
+	
+	int first_number = atoi(argv[1]);
+	printf("first number: %d\n", first_number);
+	int *array;
 
-    // Array to hold the rest of the numbers
-    int array[100];
-    int len = 0;  // To track the len of the array
 
-	// Populate the array with numbers from argv
+	//determine len of array
+	int len = 0;
 	int i = 2;
-    while (i < argc) 
+	while (i < argc)
 	{
-        array[len] = atoi(argv[i]);
-		printf("array[%d]: %d\n", len, atoi(argv[i]));
-        len++;
+		len++;
 		i++;
-    }
+	}
+	printf("len is: %d\n", len);
+	//allocate memory for array
+	array = malloc(sizeof(int) * len);
+	if(!array)
+	{
+		fprintf(stdout, "memory allocation failed\n");
+		exit(EXIT_FAILURE);
+	}
 
-    // Array to hold the current subset
-    int current_set[100];
+	//populate array
+	i = 0;
+	int j = 2;
+	while (i < len)
+	{
+		array[i] = atoi(argv[j]);
+		fprintf(stdout, "array[%d]: %d\n", i, atoi(argv[j]));
+		j++;
+		i++;
+	}
+	//allocate memory for 2nd array
+	int *current_set = malloc(sizeof(int) *len);
+	if(!current_set)
+	{
+		fprintf(stdout, "memory allocation failed\n");
+		exit(EXIT_FAILURE);
+	}
+	//call function to find sets
+	find_set(first_number, array, len, current_set, 0, 0, 0);
 
-    // Start finding subsets
-    find_subsets(first_number, array, len, current_set, 0, 0, 0); //1. first_number, 2. array, 3. len, 4, current_set, 5.current_len, 6.current_sum, 7.start_index
-
-    return 0;
 }
