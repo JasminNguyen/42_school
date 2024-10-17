@@ -101,7 +101,12 @@ $
 
 
 
+/*we include and exclude the following number
 
+the reason why the program excludes the next number in the second recursive call is 
+because each time a function is called a new frame (with its own copies) is being made
+
+the program includes the next number because the line to include the number is directly above the first recursive call*/
 
 ///// with malloc
 void find_set(int first_number, int *array, int len, int *current_set, int current_len, int current_sum, int index)
