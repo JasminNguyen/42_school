@@ -1,4 +1,4 @@
-#include <unistd.h>
+ #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -63,4 +63,4 @@ int main(int argc, char *argv[])
 	//create result_array
 	int *result_array = malloc(sizeof(int) * len);
 	create_subset(first_number, array, len, result_array, 0, 0, 0);
-}
+} 

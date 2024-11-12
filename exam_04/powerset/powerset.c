@@ -124,7 +124,7 @@ void find_set(int first_number, int *array, int len, int *current_set, int curre
 		printf("\n");
 		return;
 	}		
-	if(index == len)
+	if(index == len) //to make sure we don't go out of bounds
 	{
 		return;
 	}

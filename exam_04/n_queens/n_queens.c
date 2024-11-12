@@ -1,26 +1,81 @@
-/*allowed functions: malloc, calloc, realloc*/
-#include <unistd.h>
+#include <stdlib.h>
 #include <stdio.h>
-int is_valid(int n, int *solutions_array) 
+void check_permutation(int *return_array, int input_len)
 {
-
+    int i = 0;
+    while(i < input_len)
+    {
+        printf("%d ", return_array[i]);
+        i++;
+    }
+    printf("\n");
 }
-int solve_n_queen(int n, int *solutions_array, int column)
+
+int *create_new_array(int *array, int array_index, int len)
 {
-	if()
-	{
-		
-	}
+    int *new_array = malloc(sizeof(int) * len);
+    if(!new_array)
+    {
+        return NULL;
+    }
+    int i = 0;
+    int j = 0;
+    while (i < len)
+    {
+        if(i != array_index)
+        {
+            new_array[j] = array[i];
+            j++;
+        }
+        i++;
+    }
+    return new_array;
+}
+void build_permutations(int *return_array, int *array, int return_array_index, int current_len, int input_len)
+{
+    if(current_len == 1)
+    {
+        return_array[return_array_index] = array[0];
+        check_permutation(return_array, input_len);
+        return;
+    }
+    int array_index = 0;
+    while(array_index < current_len)
+    {
+         return_array[return_array_index] = array[array_index];
+        int *new_array = create_new_array(array, array_index, current_len);
+        if(!new_array)
+        {
+            puts("memory allocation failed");
+            return ;
+        }
+        build_permutations(return_array, new_array, return_array_index + 1, current_len - 1, input_len);
+        array_index++;
+    }
+   
 }
 int main(int argc, char *argv[])
 {
-	int n = atoi(argv[1]);
-	int *solutions_array = malloc(sizeof(int) * n);
-	int i = 0;
-	while(i < n)
-	{
-		solutions_array[i] = -1;
-		i++;
-	}
-	solve_n_queen(n, solutions_array, 0);
+    int n = atoi(argv[1]);
+    int *array = malloc(sizeof(int) * n);
+    if(!array)
+    {
+        puts("memory allocation failed");
+        return -1;
+    }
+    int i = 0;
+    while(i < n)
+    {
+        array[i] = i;
+        i++;
+    }
+    int *return_array = malloc(sizeof(int) * n);
+    if(!return_array)
+    {
+        puts("memory allocation failed");
+        return -1;
+    }
+    int current_len = n;
+    int input_len = n;
+    build_permutations(return_array, array, 0, current_len, input_len);
 }

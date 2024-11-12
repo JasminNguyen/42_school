@@ -97,7 +97,7 @@ void traverse_tree(char *return_string, char *string, int return_string_index)
 {
     char *new_array;
   
-	int len = find_length(string);
+	//int len = find_length(string);
     if(find_length(string) == 1)
     {
         return_string[return_string_index] = string[0];
