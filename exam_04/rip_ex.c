@@ -1,4 +1,4 @@
-#include <stdio.h>
+/* #include <stdio.h>
 int valid_solution(char *string)
 {
 	int i = 0;
@@ -118,4 +118,124 @@ int main(int argc, char *argv[])
 	{
 		remove_parenthesis(string, result_string, to_remove, invalid_left, invalid_right, 0, 0); //int removed, int i
 	}
+} */
+#include <stdio.h>
+#include <unistd.h>
+
+
+
+int valid_solution(char *string)
+{
+	int i = 0;
+	int balance = 0;
+	while(string[i] != '\0')
+	{
+		if(string[i] == '(')
+		{
+			balance++;
+		}
+		else if(string[i] == ')')
+		{
+			balance--;
+		}
+		if(balance < 0)
+		{
+			return (-1);
+		}
+		i++;
+	}
+	if(balance == 0)
+	{
+		return (1);
+	}
+	else
+	{
+		return (-1);
+	}
+}
+
+
+void build_permutations(char *return_string, char *string, int to_remove, int invalid_left, int invalid_right, int removed, int index)
+{
+	if(string[index] == '\0')
+	{
+		if(valid_solution(return_string) == 1 && to_remove == 0)
+		{
+			puts(return_string);
+		}
+		return;
+	}
+
+	//exclude
+	if(string[index] == '(' && to_remove > 0)
+	{
+		return_string[index] = ' ';
+		build_permutations(return_string, string, to_remove - 1, invalid_left - 1, invalid_right, removed + 1, index + 1);
+	}
+	else if(string[index] == ')' && to_remove > 0 )
+	{
+		return_string[index] = ' ';
+		build_permutations(return_string, string, to_remove -1 , invalid_left , invalid_right - 1, removed + 1, index + 1);
+	}
+
+	//include
+	return_string[index] = string[index]; 
+	if(string[index] == '(')
+	{
+		build_permutations(return_string, string, to_remove, invalid_left, invalid_right, removed, index + 1);
+	}
+	else if(string[index] == ')')
+	{
+		build_permutations(return_string, string, to_remove, invalid_left, invalid_right, removed, index + 1);
+	}
+	else 
+	{
+		build_permutations(return_string, string, to_remove, invalid_left, invalid_right, removed, index + 1);
+	}
+
+}
+int main(int argc, char *argv[])
+{
+	char *string = argv[1];
+	int left = 0;
+	int invalid_left = 0;
+	int invalid_right = 0;
+	int i = 0;
+	while(string[i] != '\0')
+	{
+		if(string[i] == '(')
+		{
+			left++;
+		}
+		else if(string[i] == ')')
+		{
+			if(left > 0)
+			{
+				left--;
+			}
+			else
+			{
+				invalid_right++;
+			}
+		}
+		i++;
+	}
+	invalid_left = left;
+
+	printf("invalid left: %d\n", invalid_left);
+	printf("invalid right: %d\n", invalid_right);
+
+	int to_remove = invalid_left + invalid_right;
+
+	char return_string[100];
+	if(to_remove == 0 && valid_solution(string) == 1)
+	{
+		puts(string);
+		puts("no modifications necessary");
+	}
+	else
+	{ 
+		build_permutations(return_string, string, to_remove, invalid_left, invalid_right, 0, 0); //removed and index
+	}
+
 }

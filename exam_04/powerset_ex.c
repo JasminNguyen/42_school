@@ -19,7 +19,7 @@ void create_subset(int first_number, int *array, int len, int *result_array, int
 		fprintf(stdout, "\n");
 		return;
 	}
-	if(current_index == len)
+	if(current_index == len) //making sure I don't go out of bounds
 	{
 		return ;
 	}
