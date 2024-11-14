@@ -6,7 +6,7 @@
 #    By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/13 12:09:03 by jasnguye          #+#    #+#              #
-#    Updated: 2024/11/13 17:40:49 by jasnguye         ###   ########.fr        #
+#    Updated: 2024/11/14 12:01:24 by jasnguye         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -Wall -Werror -Wextra -std=c++98 -g
 
 NAME = phonebook
 
-SRCS	=	PhoneBook.cpp Contact.cpp \
+SRCS	=	main.cpp PhoneBook.cpp Contact.cpp \
 			
 OBJS	=	$(SRCS:.cpp=.o)
 
