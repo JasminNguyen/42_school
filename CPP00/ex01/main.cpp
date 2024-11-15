@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:33:47 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/11/14 18:01:50 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/11/15 14:54:40 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int main()
 	{
 
 	
-		std::cout << "Please enter one of the following commands: ADD, SEARCH or EXIT" << std::endl;	
+		std::cout << "Please enter a command (ADD, SEARCH or EXIT): ";	
 		
 		
 		std::string command;
@@ -45,7 +45,7 @@ int main()
 		}
 		else
 		{
-			std::cout << "Not a valid command. Try again!" << std::endl;
+			std::cout << "Error: Not a valid command. Try again!" << std::endl;
 		}
 	}
 }

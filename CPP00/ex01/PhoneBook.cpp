@@ -6,11 +6,12 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 12:13:59 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/11/14 19:20:36 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/11/15 16:50:07 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
+#include <iomanip>
 #include "PhoneBook.hpp"
 
 // Constructor for PhoneBook
@@ -24,7 +25,7 @@ int numerical(std::string input)
 	int i = 0;
 	while(input[i] != '\0')
 	{
-		if(!(input[i] >= 48 && input[i] <= 57))
+		if(!(isdigit(input[i])))
 		{
 			return -1;
 		}
@@ -32,6 +33,7 @@ int numerical(std::string input)
 	}
 	return 0;
 }
+
 void PhoneBook::addContact()
 {
 	Contact newContact;
@@ -89,10 +91,12 @@ void PhoneBook::addContact()
 	newContact.set_darkest_secret(input);
 
 
-//access the phonebook
-// Store the contact in it at the current index, cycling back to 0 if max is reached
+	//access the phonebook
+	// Store the contact in it at the current index, cycling back to 0 if max is reached
 	_contacts[index] = newContact;
-	index = (index /*+1*/) % 8; // Wraps around to replace the oldest contact after 8 entries //modified!!
+	std::cout << "New Contact added!" << std::endl;
+	// basically increments the index while also ensuring that it wraps around when we reach 8 entries
+	index = (index + 1) % 8; 
 }
 
 
@@ -100,14 +104,87 @@ void PhoneBook::addContact()
 void PhoneBook::displayContacts() const
 {
 
-	std::cout << "    index|   first name|   last name|   nickname|   phone number|   darkest secret|" << std::endl;
-	std::cout << "-----------------------------------------------------------------------------------" << std::endl;
+	std::cout << std::setw(10) << std::right << "index|" << std::setw(10) << std::right << "first name|" << std::setw(10) << std::right << "last name|" << std::setw(10) << std::right << "nickname|" << std::setw(10) << std::right << "phone number|" << std::setw(10) << std::right << "darkest secret|" << std::endl;
+	std::cout << "--------------------------------------------------------------------------" << std::endl;
 	int i = 0;
+	std::string input_first_name;
+	std::string input_last_name;
+	std::string input_nickname;
+	std::string input_phone_number;
+	std::string input_darkest_secret;
+
+
 	while(i < 8)
 	{
-		std::cout << index << "|"<< _contacts[i].get_first_name() << std::endl;
-		
+   		// Start with the original values for the contact
+   		input_first_name = _contacts[i].get_first_name();
+    	input_last_name = _contacts[i].get_last_name();
+		input_nickname = _contacts[i].get_nickname();
+		input_phone_number = _contacts[i].get_phone_number();
+		input_darkest_secret = _contacts[i].get_darkest_secret();
+
+       // Truncate if the length exceeds 10 characters		
+	   if(_contacts[i].get_first_name().length() > 10)
+		{
+			input_first_name = _contacts[i].get_first_name().substr(0,9) + ".";
+		}
+		if(_contacts[i].get_last_name().length() > 10)
+		{
+			input_last_name = _contacts[i].get_last_name().substr(0,9) + ".";
+		}
+		if(_contacts[i].get_nickname().length() > 10)
+		{
+			input_nickname = _contacts[i].get_nickname().substr(0,9) + ".";
+		}
+		if(_contacts[i].get_phone_number().length() > 10)
+		{
+			input_phone_number = _contacts[i].get_phone_number().substr(0,9) + ".";
+		}
+		if(_contacts[i].get_darkest_secret().length() > 10)
+		{
+			input_darkest_secret = _contacts[i].get_darkest_secret().substr(0,9) + ".";
+		}
+
+		std::cout << std::setw(10) << std::right << i << "|"
+		<< std::setw(10) << std::right << input_first_name << "|" 
+		<< std::setw(10) << std::right << input_last_name << "|" 
+		<< std::setw(10) << std::right << input_nickname << "|" 
+		<< std::setw(10) << std::right << input_phone_number << "|" 
+		<< std::setw(10) << std::right << input_darkest_secret << "|" 
+		<< std::endl;
 		i++;
 	}
+	std::cout << "Which contact are you looking for? Please provide the index (0-7): ";
+
+	int input_index;
+	std::cin >> input_index;
+
+	//how do I handle input that is nonnumerical?? avoid infinite loop!!
+
+	if(input_index < 0 || input_index > 7) //handle wrong index
+	{
+		std::cout << "Error: Invalid index. Try again!" << std::endl;
+		std::cin.ignore();
+		return; //go back to main loop
+	}
+	else if(_contacts[input_index].get_first_name().empty()) //handle empty contacts
+	{
+		std::cout << "Error: No contact exists at this index. Try again!" << std::endl;
+		std::cin.ignore();
+		return; //go back to main loop
+	}
+	else
+	{
+		std::cout << "First name: " << _contacts[input_index].get_first_name() << std::endl;
+		std::cout << "last name: " << _contacts[input_index].get_last_name() << std::endl;
+		std::cout << "Nickname: " << _contacts[input_index].get_nickname() << std::endl;
+		std::cout << "Phone number: " << _contacts[input_index].get_phone_number() << std::endl;
+		std::cout << "Darkest secret: " << _contacts[input_index].get_darkest_secret() << std::endl;
+	}
+
+	// Clear the buffer
+	std::cin.ignore();
+
+	
 	
 }
