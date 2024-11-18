@@ -6,7 +6,7 @@
 #    By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/13 12:09:03 by jasnguye          #+#    #+#              #
-#    Updated: 2024/11/14 12:01:24 by jasnguye         ###   ########.fr        #
+#    Updated: 2024/11/18 17:13:08 by jasnguye         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ all:		$(NAME)
 
 $(NAME): $(OBJS)
 			$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
-
+%.o: %.cpp
+	$(CC) $(CFLAGS) -c $< -o $@
 clean:
 			rm -rf $(OBJS)
 			

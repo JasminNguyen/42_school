@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:33:47 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/11/17 14:14:36 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/11/18 17:14:02 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int main()
 {
 	
 	PhoneBook phonebook; // declare an instance outside of the loop to only create ONE!
-	while(1)
+	while(!std::cin.eof()) //if not ctrl + d
 	{
 
 		std::cout << "Please enter a command (ADD, SEARCH or EXIT): ";	
