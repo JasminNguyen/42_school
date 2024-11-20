@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/11/13 12:09:03 by jasnguye          #+#    #+#              #
-#    Updated: 2024/11/18 17:13:08 by jasnguye         ###   ########.fr        #
+#    Created: 2024/11/18 16:08:35 by jasnguye          #+#    #+#              #
+#    Updated: 2024/11/19 17:52:51 by jasnguye         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,9 @@ CC = c++
 CFLAGS = -Wall -Werror -Wextra -std=c++98 -g 
 
 
-NAME = phonebook
+NAME = zombie
 
-SRCS	=	main.cpp PhoneBook.cpp Contact.cpp \
+SRCS	=	main.cpp Zombie.cpp newZombie.cpp randomChump.cpp \
 			
 OBJS	=	$(SRCS:.cpp=.o)
 

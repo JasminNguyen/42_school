@@ -6,19 +6,18 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 12:13:59 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/11/15 16:50:07 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/11/18 17:40:30 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
+#include "PhoneBook.hpp"
 #include <iostream>
 #include <iomanip>
-#include "PhoneBook.hpp"
-
+#include <limits>
+#include <sstream>
 // Constructor for PhoneBook
 PhoneBook::PhoneBook() : index(0) {} // Initializes the index to 0
-
-
-
 
 int numerical(std::string input)
 {
@@ -39,44 +38,66 @@ void PhoneBook::addContact()
 	Contact newContact;
 	std::string input;
 
-	//do I need cin.ignore() here to clear the buffer in case of an int?
-
 	std::cout << "First name: ";
 	getline(std::cin, input);
+	 if (std::cin.eof()) 
+		{
+            std::cout << std::endl << "EOF detected! Exiting..." << std::endl;
+            return;
+        }
 	if(input.empty())
 	{
-		std::cout << "Error: First name cannot be empty!" << std::endl;
+		std::cout << std::endl << "Error: First name cannot be empty!" << std::endl;
+		return;
 	}
 	newContact.set_first_name(input);
 
 
 	std::cout << "Last name: ";
 	getline(std::cin, input);
+	 if (std::cin.eof()) 
+		{
+            std::cout << std::endl << "EOF detected! Exiting..." << std::endl;
+            return;
+        }
 	if(input.empty())
 	{
-		std::cout << "Error: Last name cannot be empty!" << std::endl;
+		std::cout << std::endl << "Error: Last name cannot be empty!" << std::endl;
+		return;
 	}
 	newContact.set_last_name(input);
 
 
 	std::cout << "Nickname: ";
 	getline(std::cin, input);
+	 if (std::cin.eof()) 
+		{
+            std::cout << std::endl << "EOF detected! Exiting..." << std::endl;
+            return;
+        }
 	if(input.empty())
 	{
-		std::cout << "Error: Nickname cannot be empty!" << std::endl;
+		std::cout << std::endl << "Error: Nickname cannot be empty!" << std::endl;
+		return;
 	}
 	newContact.set_nickname(input);
 
 
 	std::cout << "Phone number: ";
 	getline(std::cin, input);
+	 if (std::cin.eof()) 
+		{
+            std::cout << std::endl << "EOF detected! Exiting..." << std::endl;
+            return;
+        }
 	if(input.empty())
 	{
-		std::cout << "Error: Phone number cannot be empty!" << std::endl;
+		std::cout << std::endl << "Error: Phone number cannot be empty!" << std::endl;
+		return;
 	}
 	if(numerical(input) != 0)
 	{
-		std::cout << "Error: Only numerical input!" << std::endl;
+		std::cout << std::endl << "Error: Only numerical input!" << std::endl;
 		return ;
 	}
 	newContact.set_phone_number(input);
@@ -84,9 +105,15 @@ void PhoneBook::addContact()
 
 	std::cout << "Darkest secret: ";
 	getline(std::cin, input);
+	 if (std::cin.eof()) 
+		{
+            std::cout << std::endl << "EOF detected! Exiting..." << std::endl;
+            return;
+        }
 	if(input.empty())
 	{
-		std::cout << "Error: Darkest secret cannot be empty!" << std::endl;
+		std::cout << std::endl << "Error: Darkest secret cannot be empty!" << std::endl;
+		return;
 	}
 	newContact.set_darkest_secret(input);
 
@@ -94,7 +121,7 @@ void PhoneBook::addContact()
 	//access the phonebook
 	// Store the contact in it at the current index, cycling back to 0 if max is reached
 	_contacts[index] = newContact;
-	std::cout << "New Contact added!" << std::endl;
+	std::cout << std::endl << "New Contact added!" << std::endl;
 	// basically increments the index while also ensuring that it wraps around when we reach 8 entries
 	index = (index + 1) % 8; 
 }
@@ -156,35 +183,39 @@ void PhoneBook::displayContacts() const
 	}
 	std::cout << "Which contact are you looking for? Please provide the index (0-7): ";
 
-	int input_index;
-	std::cin >> input_index;
-
-	//how do I handle input that is nonnumerical?? avoid infinite loop!!
-
-	if(input_index < 0 || input_index > 7) //handle wrong index
+	std::string input_string_index;
+	getline(std::cin, input_string_index);
+	if(input_string_index.empty())
 	{
-		std::cout << "Error: Invalid index. Try again!" << std::endl;
-		std::cin.ignore();
+		std::cout << std::endl << "Error: No index provided. Try again!" << std::endl;
+		return;
+	}
+	std::istringstream input_stream(input_string_index); //converting string into integer
+	int input_int;
+	if(!(input_stream >> input_int) || input_int < 0 || input_int > 7) //handle non-numeric input and wrong index
+	{
+		std::cin.clear();
+  		//std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Discard invalid input
+    	std::cout << std::endl << "Error: Invalid index. Try again!" << std::endl;
+
 		return; //go back to main loop
 	}
-	else if(_contacts[input_index].get_first_name().empty()) //handle empty contacts
+	else if(_contacts[input_int].get_first_name().empty()) //handle empty contacts
 	{
-		std::cout << "Error: No contact exists at this index. Try again!" << std::endl;
-		std::cin.ignore();
+		std::cout << std::endl <<  "Error: No contact exists at this index. Try again!" << std::endl;
+		//std::cin.ignore();
 		return; //go back to main loop
 	}
 	else
 	{
-		std::cout << "First name: " << _contacts[input_index].get_first_name() << std::endl;
-		std::cout << "last name: " << _contacts[input_index].get_last_name() << std::endl;
-		std::cout << "Nickname: " << _contacts[input_index].get_nickname() << std::endl;
-		std::cout << "Phone number: " << _contacts[input_index].get_phone_number() << std::endl;
-		std::cout << "Darkest secret: " << _contacts[input_index].get_darkest_secret() << std::endl;
+		std::cout << "First name: " << _contacts[input_int].get_first_name() << std::endl;
+		std::cout << "last name: " << _contacts[input_int].get_last_name() << std::endl;
+		std::cout << "Nickname: " << _contacts[input_int].get_nickname() << std::endl;
+		std::cout << "Phone number: " << _contacts[input_int].get_phone_number() << std::endl;
+		std::cout << "Darkest secret: " << _contacts[input_int].get_darkest_secret() << std::endl;
 	}
 
-	// Clear the buffer
-	std::cin.ignore();
-
-	
+	// Clear the buffer for further input
+	//std::cin.ignore();
 	
 }
