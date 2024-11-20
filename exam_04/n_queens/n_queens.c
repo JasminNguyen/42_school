@@ -3,7 +3,6 @@
 
 int find_collisions(int *return_array, int input_len, int start_y, int end_y, int direction)
 {
-    //printf("return_array: ")
     int current_x = 0;
     int current_y = start_y;
     while(current_x != input_len -1 && current_y != end_y - 1)
@@ -79,7 +78,7 @@ void build_permutations(int *return_array, int *array, int return_array_index, i
     int array_index = 0;
     while(array_index < current_len)
     {
-         return_array[return_array_index] = array[array_index];
+        return_array[return_array_index] = array[array_index];
         int *new_array = create_new_array(array, array_index, current_len);
         if(!new_array)
         {
