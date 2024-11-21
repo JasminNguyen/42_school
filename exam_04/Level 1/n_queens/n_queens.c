@@ -1,23 +1,25 @@
 #include <stdlib.h>
 #include <stdio.h>
-
-int find_collisions(int *return_array, int input_len, int start_y, int end_y, int direction)
+/*moves along the specified direction from the start position to the end position and checks for collisions*/
+int find_collisions(int *return_array, int input_len, int start_y, int end_y, int direction) 
 {
-    //printf("return_array: ")
-    int current_x = 0;
+    int current_x = 0; //makes us start at the start of the return_array
     int current_y = start_y;
     while(current_x != input_len -1 && current_y != end_y - 1)
     { 
-        current_x++;
-        current_y += direction;
-        if(current_y == return_array[current_x])
+        current_x++; //moving one to the right
+        current_y += direction; //moving one up or down depending on the direction given
+        if(current_y == return_array[current_x]) //check for collisions
         {
             return -1;
         }
     }
     return 0;
 }
-void check_permutation(int *return_array, int input_len)
+
+/* goes through the return_array and checks whether there are collisions 
+by calling find_collisions and specifying the direction (1 = up, -1 = down) */
+void check_permutation(int *return_array, int input_len) 
 {
     int x = 0;
     while(x < input_len)
@@ -48,6 +50,8 @@ void check_permutation(int *return_array, int input_len)
     printf("\n");
 }
 
+/* new array is a copy of the original array without the numbers 
+that were already put into the return_array */
 int *create_new_array(int *array, int array_index, int len)
 {
     int *new_array = malloc(sizeof(int) * len);
@@ -79,7 +83,7 @@ void build_permutations(int *return_array, int *array, int return_array_index, i
     int array_index = 0;
     while(array_index < current_len)
     {
-         return_array[return_array_index] = array[array_index];
+        return_array[return_array_index] = array[array_index];
         int *new_array = create_new_array(array, array_index, current_len);
         if(!new_array)
         {
