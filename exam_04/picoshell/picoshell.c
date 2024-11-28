@@ -1,8 +1,41 @@
+/* TASK:
+Allowed functions: close, fork, wait, exit, execvp, dup2, pipe
+--------------------------------------------------------------------------------
+Write the followingfunction
+
+int picoshell(char **cmds[]);
+
+The goal of this function is to execute a pipeline.
+It must execute each commands of cmds and connect the output of one to the input
+of the next command (just like a shell)
+
+Cmds contains a null-terminated list of valid commands.
+Each rows of cmds are an argv array directly useable for a call to execvp.
+The first arguments of each command is the command name or path and can be
+passed directly as the first argument of execvp.
+
+If any error occur, the function must return 1 (you must of course close all the
+open fds before), otherwise the function must wait all child processes and return 0
+
+You will find in this directory a file main.c which contain something to help you
+test your function.
+
+For example this should work:
+$>./picoshell /bin/ls "|" /usr/bin/grep picoshell
+picoshell
+
+$>./picoshell echo 'squalala!' "|" cat "|" sed 's/a/b/g'
+squblblb!
+
+Hints:
+Do not leak file descriptors
+*/
+
+
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <stdio.h>
-#include <sys/wait.h>
 const int RETURN_SUCCESS = 0;
 const int RETURN_FAILURE = 1;
 const int STD_IN = 0;
@@ -16,14 +49,13 @@ int picoshell(char **cmds[])
 	{
 		cmd_count++;
 	}
-
 	int first_child = 0;
 	int last_child = cmd_count - 1;
 	int childprocess_index = 0;
 	int pipe_array[cmd_count - 1][2]; 	// 2D-Array für Pipes: jede Pipe hat zwei Enden
                                  		// pipe_array[i][0] -> Lese-Ende der i-ten Pipe
                                  		// pipe_array[i][1] -> Schreib-Ende der i-ten Pipe
-
+	
 	//creating the pipes before any forking
 	while (childprocess_index < cmd_count - 1)
 	{
