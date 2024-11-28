@@ -10,24 +10,19 @@ const int STD_OUT = 1;
 
 int picoshell(char **cmds[])
 {
-    if(!cmds || !cmds[0])
-    {
-        return RETURN_SUCCESS;
-    }
-
+	//counting number of commands
 	int cmd_count = 0;
 	while(cmds[cmd_count] != NULL)
 	{
 		cmd_count++;
 	}
-	printf("number of commands:%d\n", cmd_count);
 
 	int first_child = 0;
 	int last_child = cmd_count - 1;
 	int childprocess_index = 0;
-	int pipe_array[cmd_count - 1][2]; // 2D-Array für Pipes: jede Pipe hat zwei Enden
-                                 // pipe_array[i][0] -> Lese-Ende der i-ten Pipe
-                                 // pipe_array[i][1] -> Schreib-Ende der i-ten Pipe
+	int pipe_array[cmd_count - 1][2]; 	// 2D-Array für Pipes: jede Pipe hat zwei Enden
+                                 		// pipe_array[i][0] -> Lese-Ende der i-ten Pipe
+                                 		// pipe_array[i][1] -> Schreib-Ende der i-ten Pipe
 
 	//creating the pipes before any forking
 	while (childprocess_index < cmd_count - 1)
@@ -39,7 +34,7 @@ int picoshell(char **cmds[])
 		}
 		childprocess_index++;
 	}
-	
+
 	//going through the commands
 	childprocess_index = 0;
 	while(childprocess_index < cmd_count)
@@ -50,7 +45,8 @@ int picoshell(char **cmds[])
 			perror("fork");
 			return RETURN_FAILURE;
 		}
-		if(pid == 0) //child
+		//child
+		if(pid == 0) 
 		{
 			if(childprocess_index != first_child)
 			{
@@ -68,11 +64,10 @@ int picoshell(char **cmds[])
 					exit (RETURN_FAILURE);
 				}
 			}
-			// Schließe alle unbenutzten Enden
-        	for (int j = 0; j < cmd_count - 1; j++) 
+        	for (int i = 0; i < cmd_count - 1; i++) //closing pipes
 			{
-            	close(pipe_array[j][0]);
-            	close(pipe_array[j][1]);
+            	close(pipe_array[i][0]);
+            	close(pipe_array[i][1]);
         	}
 			execvp(cmds[childprocess_index][0], cmds[childprocess_index]);
 			perror ("execvp");
@@ -81,15 +76,13 @@ int picoshell(char **cmds[])
 		childprocess_index++;
 	}
 
-
-	// Elternprozess: Schließe alle Enden
-	for (int i = 0; i < cmd_count - 1; i++) 
+	// parent
+	for (int i = 0; i < cmd_count - 1; i++) //closing all pipes
 	{
     	close(pipe_array[i][0]);
     	close(pipe_array[i][1]);
 	}
-	// Warten auf Kindprozesse
-	for (int i = 0; i < cmd_count; i++) 
+	for (int i = 0; i < cmd_count; i++) //waiting for child processes
 	{
     	if(wait(NULL) == -1)
 		{
@@ -97,9 +90,7 @@ int picoshell(char **cmds[])
 			return RETURN_FAILURE;
 		}
 	}
-	int return_value = RETURN_SUCCESS;
-	return return_value;
-
+	return 0;
 }
 
 int main(int argc, char **argv)
