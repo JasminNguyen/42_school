@@ -2,8 +2,11 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdio.h>
+#include <sys/wait.h>
 const int RETURN_SUCCESS = 0;
 const int RETURN_FAILURE = 1;
+const int STD_IN = 0;
+const int STD_OUT = 1;
 
 int picoshell(char **cmds[])
 {
@@ -12,46 +15,91 @@ int picoshell(char **cmds[])
         return RETURN_SUCCESS;
     }
 
-    char **first_command = cmds[0];
-	char **second_command = cmds[1];
-	int status;
-	int array[2];
-	if(pipe(array) != 0)
+	int cmd_count = 0;
+	while(cmds[cmd_count] != NULL)
 	{
-		return RETURN_FAILURE;
+		cmd_count++;
 	}
-	printf("before dup2\n");
+	printf("number of commands:%d\n", cmd_count);
 
-	
-	printf("after dup2\n");
-	pid_t child_pid = fork();
-	
-    if(child_pid == 0)//write
-    {	
-		dup2(array[1], 1); //second argument is going to be overwritten by first argument
-		close(array[0]);
-		execvp(first_command[0], first_command);
+	int first_child = 0;
+	int last_child = cmd_count - 1;
+	int childprocess_index = 0;
+	int pipe_array[cmd_count - 1][2]; // 2D-Array für Pipes: jede Pipe hat zwei Enden
+                                 // pipe_array[i][0] -> Lese-Ende der i-ten Pipe
+                                 // pipe_array[i][1] -> Schreib-Ende der i-ten Pipe
 
-    }
-    else
-    {
-		child_pid = fork();
-		if(child_pid == 0) //read
+	//creating the pipes before any forking
+	while (childprocess_index < cmd_count - 1)
+	{
+		if(pipe(pipe_array[childprocess_index]) == -1)
 		{
-			dup2(array[0], 0);
-			close(array[1]);
-			printf("closed write end\n");
-			printf("%s\n", second_command[0]);
-			execvp(second_command[0], second_command);
+			perror("pipe");
+			return RETURN_FAILURE;
 		}
-		printf("before wait\n");
-		wait(&status);
-		printf("after first wait\n");
-		wait(&status);
-		close(array[0]);
-		close(array[1]);
-    }
-	return 0;
+		childprocess_index++;
+	}
+	
+	//going through the commands
+	childprocess_index = 0;
+	while(childprocess_index < cmd_count)
+	{
+		pid_t pid = fork();
+		if( pid == -1)
+		{
+			perror("fork");
+			return RETURN_FAILURE;
+		}
+		if(pid == 0) //child
+		{
+			if(childprocess_index != first_child)
+			{
+				if(dup2(pipe_array[childprocess_index - 1][0], STD_IN) == -1)
+				{
+					perror("dup 2 infile");
+					exit (RETURN_FAILURE);
+				}
+			}
+			if(childprocess_index != last_child)
+			{
+				if(dup2(pipe_array[childprocess_index][1], STD_OUT) == -1)
+				{
+					perror("dup2 outfile");
+					exit (RETURN_FAILURE);
+				}
+			}
+			// Schließe alle unbenutzten Enden
+        	for (int j = 0; j < cmd_count - 1; j++) 
+			{
+            	close(pipe_array[j][0]);
+            	close(pipe_array[j][1]);
+        	}
+			execvp(cmds[childprocess_index][0], cmds[childprocess_index]);
+			perror ("execvp");
+			exit (RETURN_FAILURE);
+		}
+		childprocess_index++;
+	}
+
+
+	// Elternprozess: Schließe alle Enden
+	for (int i = 0; i < cmd_count - 1; i++) 
+	{
+    	close(pipe_array[i][0]);
+    	close(pipe_array[i][1]);
+	}
+	// Warten auf Kindprozesse
+	for (int i = 0; i < cmd_count; i++) 
+	{
+    	if(wait(NULL) == -1)
+		{
+			perror("wait");
+			return RETURN_FAILURE;
+		}
+	}
+	int return_value = RETURN_SUCCESS;
+	return return_value;
+
 }
 
 int main(int argc, char **argv)
@@ -82,3 +130,17 @@ int main(int argc, char **argv)
 	free(cmds);
 	return ret;
 }
+
+
+/* Was ist der Typ von cmds?
+cmds ist ein dreifacher Zeiger (char ***), was bedeutet:
+cmds: Ein Zeiger auf ein Array von char **.
+cmds[i]: Jedes Element des Arrays ist ein char **, also ein Zeiger auf ein Array von Strings (char *).
+cmds[i][j]: Ein String (char *). */
+/* 
+cmds = {
+    {"ls", "-l", "-a", NULL},    // Erster Befehl
+    {"grep", "main", NULL},     // Zweiter Befehl
+    {"wc", "-l", NULL},         // Dritter Befehl
+    NULL                        // Ende des Arrays
+}; */
