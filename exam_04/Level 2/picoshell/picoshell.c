@@ -113,16 +113,26 @@ int picoshell(char ***cmds)
                 exit(-1);
             }
         }
+           // Parent closes pipes for this child immediately
+        if (childprocess_index != first_command) 
+        {
+            close(pipe_array[childprocess_index - 1][0]);
+        }
+        if (childprocess_index != last_command) 
+        {
+            close(pipe_array[childprocess_index][1]);
+        }
+        
         childprocess_index++;
     }
 
     //parent
     //close pipes
-     for(int i = 0; i < number_of_commands - 1; i++) //NUMBER OF COMMANDS - 1
-    {
-        close(pipe_array[i][0]);
-        close(pipe_array[i][1]);
-    }
+    //  for(int i = 0; i < number_of_commands - 1; i++) //NUMBER OF COMMANDS - 1
+    // {
+    //     close(pipe_array[i][0]);
+    //     close(pipe_array[i][1]);
+    // }
      for(int i = 0; i < number_of_commands; i++) //NUMBER OF COMMANDS
     {
         wait(NULL);        
