@@ -49,97 +49,164 @@ cmds = {
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
-int picoshell(char ***cmds)
-{
-    //counting the commands
-    int number_of_commands = 0;
-    while(cmds[number_of_commands]) // DON'T FORGET TO INDEX HERE
-    {
-        number_of_commands++;
-    }
-    printf("number of commands: %d\n", number_of_commands);
-    //creating pipes
-    int i = 0;
-    int pipe_array[number_of_commands - 1][2];
-    while(i < number_of_commands - 1)
-    {
-        if(pipe(pipe_array[i]) == -1)
-        {
-            perror("pipe creation");
-            return -1;
-        }
-        i++;
-    }
-    //going through commands and forking childs for each command
-    int childprocess_index = 0;
-    int first_command = 0;
-    int last_command = number_of_commands - 1;
-    while(childprocess_index < number_of_commands)
-    {
-        pid_t pid = fork();
-        if(pid == -1)
-        {
-            perror("fork");
-            exit (-1);
-        }
-        if(pid == 0) //child
-        {
-            //make sure it's not the first command
-            if(childprocess_index != first_command)
-            {
-                if(dup2(pipe_array[childprocess_index - 1][0], STDIN_FILENO) == -1) //DON'T FORGET TO INDEX THE PIPE BEFORE THE COMMAND (childprocess_index - 1) //second parameter will be overwritten by first
-                {
-                    perror("dup2 infile");
-                    exit (-1);
-                }
-            }
-            //make sure it's not the last command
-            if(childprocess_index != last_command)
-            {
-                if(dup2(pipe_array[childprocess_index][1], STDOUT_FILENO) == -1)
-                {
-                    perror("dup2 outfile");
-                    exit (-1);
-                }
-            }
-            for(int i = 0; i < number_of_commands - 1; i++)
-            {
-                close(pipe_array[i][0]);
-                close(pipe_array[i][1]);
-            }
-            if(execvp(cmds[childprocess_index][0], cmds[childprocess_index]) == -1)
-            {
-                perror("execvp");
-                exit(-1);
-            }
-        }
-           // Parent closes pipes for this child immediately
-        if (childprocess_index != first_command) 
-        {
-            close(pipe_array[childprocess_index - 1][0]);
-        }
-        if (childprocess_index != last_command) 
-        {
-            close(pipe_array[childprocess_index][1]);
-        }
+#include <sys/wait.h>
+
+// int picoshell(char ***cmds)
+// {
+//     //counting the commands
+//     int number_of_commands = 0;
+//     while(cmds[number_of_commands]) // DON'T FORGET TO INDEX HERE
+//     {
+//         number_of_commands++;
+//     }
+//     printf("number of commands: %d\n", number_of_commands);
+//     //creating pipes
+//     int i = 0;
+//     int pipe_array[number_of_commands - 1][2];
+//     while(i < number_of_commands - 1)
+//     {
+//         if(pipe(pipe_array[i]) == -1)
+//         {
+//             perror("pipe creation");
+//             return -1;
+//         }
+//         i++;
+//     }
+//     //going through commands and forking childs for each command
+//     int childprocess_index = 0;
+//     int first_command = 0;
+//     int last_command = number_of_commands - 1;
+//     while(childprocess_index < number_of_commands)
+//     {
+//         pid_t pid = fork();
+//         if(pid == -1)
+//         {
+//             perror("fork");
+//             exit (-1);
+//         }
+//         if(pid == 0) //child
+//         {
+//             //make sure it's not the first command
+//             if(childprocess_index != first_command)
+//             {
+//                 if(dup2(pipe_array[childprocess_index - 1][0], STDIN_FILENO) == -1) //DON'T FORGET TO INDEX THE PIPE BEFORE THE COMMAND (childprocess_index - 1) //second parameter will be overwritten by first
+//                 {
+//                     perror("dup2 infile");
+//                     exit (-1);
+//                 }
+//             }
+//             //make sure it's not the last command
+//             if(childprocess_index != last_command)
+//             {
+//                 if(dup2(pipe_array[childprocess_index][1], STDOUT_FILENO) == -1)
+//                 {
+//                     perror("dup2 outfile");
+//                     exit (-1);
+//                 }
+//             }
+//             for(int i = 0; i < number_of_commands - 1; i++)
+//             {
+//                 close(pipe_array[i][0]);
+//                 close(pipe_array[i][1]);
+//             }
+//             if(execvp(cmds[childprocess_index][0], cmds[childprocess_index]) == -1)
+//             {
+//                 perror("execvp");
+//                 exit(-1);
+//             }
+//         }
+//            // Parent closes pipes for this child immediately
+//         if (childprocess_index != first_command) 
+//         {
+//             close(pipe_array[childprocess_index - 1][0]);
+//         }
+//         if (childprocess_index != last_command) 
+//         {
+//             close(pipe_array[childprocess_index][1]);
+//         }
         
-        childprocess_index++;
-    }
+//         childprocess_index++;
+//     }
 
-    //parent
-    //close pipes
-    //  for(int i = 0; i < number_of_commands - 1; i++) //NUMBER OF COMMANDS - 1
-    // {
-    //     close(pipe_array[i][0]);
-    //     close(pipe_array[i][1]);
-    // }
-     for(int i = 0; i < number_of_commands; i++) //NUMBER OF COMMANDS
-    {
-        wait(NULL);        
-    }
-    return 0;
+//     //parent
+//     //close pipes
+//     //  for(int i = 0; i < number_of_commands - 1; i++) //NUMBER OF COMMANDS - 1
+//     // {
+//     //     close(pipe_array[i][0]);
+//     //     close(pipe_array[i][1]);
+//     // }
+//      for(int i = 0; i < number_of_commands; i++) //NUMBER OF COMMANDS
+//     {
+//         wait(NULL);        
+//     }
+//     return 0;
+// }
+
+
+
+int picoshell(char **cmds[])
+{
+	int fd[2];
+	int i;
+	int prev_fd;
+	pid_t pid;
+
+	i = 0;
+	prev_fd=0;
+
+	//looping through all commands
+	while(cmds[i])
+	{
+		if(cmds[i+1]) //check if there is a next command
+		{
+			if (pipe(fd) == -1)
+			{
+				return (1);
+			}
+		}
+		pid = fork(); //forking
+		if(pid == -1)
+		{
+			return (1);
+		}
+
+		if(pid == 0)//child
+		{
+			if(prev_fd !=0) //if it's not the first command
+			{
+				if(dup2(prev_fd, STDIN_FILENO) == -1)
+					return (1);
+				close(prev_fd); //close prev_fd because it's no longer needed since the pipe is now accessible through STDIN_FILENO (closing here is kind of like freeing a temporary variable)
+			}
+			if(cmds[i+1]) //check if there is a next command
+			{
+				close(fd[0]); //no read end needed
+				if(dup2(fd[1], STDOUT_FILENO) == -1) 
+					return (1);
+				close(fd[1]); //after redirecting stdout the write end can be closed  
+			}
+			if(execvp(cmds[i][0], cmds[i]) == -1)//execute
+			{
+				exit(1);
+			}
+			
+		}
+		else //parent
+		{
+			if(prev_fd !=0)
+				close(prev_fd); 
+			if(cmds[i+1])
+			{
+				close(fd[1]);
+				prev_fd = fd[0]; //holds the read end of the current pipe (fd[0]), which will become the input for the next child process
+			}
+		}
+		i++;
+	}
+	while(wait(NULL) > 0);
+
+	return (0);
 }
-
 
 
 int main(int argc, char **argv)
