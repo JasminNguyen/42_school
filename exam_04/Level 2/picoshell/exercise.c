@@ -39,80 +39,71 @@ Do not leak file descriptors
 
 int picoshell(char **cmds[])
 {
-    //couting commands
-    int nbr_of_commands = 0;
-    while(cmds[nbr_of_commands])
-    {
-        nbr_of_commands++;
-    }
+	int i = 0;
+	pid_t pid;
+	int fd[2];
+	int prev_fd = 0;
 
-    //creating pipes for nbr_of_commands -1
-    int pipe_array[nbr_of_commands -1][2];
-    for(int i = 0; i < nbr_of_commands -1; i++)
-    {
-        if(pipe(pipe_array[i]) == -1)
-        {
-            perror("pipe creation");
-            return -1;
-        }
-    }
+	while(cmds[i])
+	{
+		if(cmds[i + 1])
+		{
+			if(pipe(fd) == -1)
+			{
+				return -1;
+			}
+		}
+		
+		pid = fork();
+		if(pid == -1)
+		{
+			close(fd[0]);
+			close(fd[1]);
+			return -1;
+		}
+		if(pid == 0)
+		{
+			if(prev_fd != 0)
+			{
+				if(dup2(prev_fd, STDIN_FILENO) == -1)
+				{
+					exit(1);
+				}
+				close(prev_fd);
+			}
+			if(cmds[i +1])
+			{
+				close(fd[0]);//
+				if(dup2(fd[1], STDOUT_FILENO) == -1)
+				{
+					exit(1);
+				}
+				close(fd[1]);
+			}
+			if(execvp(cmds[i][0], cmds[i]) == -1)
+			{
+				exit(1);
+			}
+		}
+		else
+		{
+			if(prev_fd != 0)
+			{
+				close(prev_fd);
+			}
+			if(cmds[i + 1])
+			{
+				close(fd[1]);
+				prev_fd = fd[0];
+			}
+		}
+		i++;
+	}
 
-    //looping through all commands and forking
-    int child_process_index = 0;
-    int first_command = 0;
-    int last_command = nbr_of_commands - 1;
-    while(child_process_index < nbr_of_commands)
-    { 
-        //forking 
-        pid_t pid = fork();
-        if(pid == -1)
-        {
-            perror("forking");
-            return -1;
-        }
-        if(pid == 0)
-        {
-            if(child_process_index != first_command)
-            {
-                if(dup2(pipe_array[child_process_index - 1][0], STDIN_FILENO) == -1)
-                {
-                    perror("dup2 infile");
-                    exit(1);
-                }
-            }
-            if(child_process_index != last_command)
-            {
-                if(dup2(pipe_array[child_process_index][1], STDOUT_FILENO) == -1)
-                {
-                    perror("dup2 outfile");
-                    exit(1);
-                }
-            }
-            for(int i = 0; i < nbr_of_commands -1; i++)
-            {
-                close(pipe_array[i][0]);
-                close(pipe_array[i][1]);
-            }
-            if(execvp(cmds[child_process_index][0], cmds[child_process_index]) == -1)
-            {
-                perror("execvp");
-                exit(1);
-            }
+	while(wait(NULL) > 0)
+	;
 
-        }
-        child_process_index++;
-    } 
-    for(int i = 0; i < nbr_of_commands - 1; i++)
-    {
-        close(pipe_array[i][0]);
-        close(pipe_array[i][1]);
-    }
-    for(int i = 0; i < nbr_of_commands; i++)
-    {
-        wait(NULL);
-    }
-
-   return 0;
+    return 0;
 }
 
 

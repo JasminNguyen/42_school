@@ -1,4 +1,6 @@
 #include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 int ft_popen(const char *file, const char *argv[], char type)
 {
@@ -14,7 +16,7 @@ int ft_popen(const char *file, const char *argv[], char type)
         return -1;
     }
 
-    pid_t pid = fork();
+    __pid_t pid = fork();
     if(pid == -1)
     {
         perror("forking");

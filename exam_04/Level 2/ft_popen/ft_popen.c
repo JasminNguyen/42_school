@@ -45,7 +45,7 @@ int ft_popen(const char *file, const char *argv[], char type)
     }
 
     //forking
-    pid_t pid = fork();
+    __pid_t pid = fork();
     if(pid == -1)
     {
         perror("forking");
