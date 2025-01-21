@@ -40,12 +40,13 @@ Do not leak file descriptors
 int picoshell(char **cmds[])
 {
 	int i = 0;
-	pid_t pid;
 	int fd[2];
+	pid_t pid;
 	int prev_fd = 0;
 
 	while(cmds[i])
 	{
+		//piping
 		if(cmds[i + 1])
 		{
 			if(pipe(fd) == -1)
@@ -53,7 +54,7 @@ int picoshell(char **cmds[])
 				return -1;
 			}
 		}
-		
+		//forking
 		pid = fork();
 		if(pid == -1)
 		{
@@ -61,7 +62,7 @@ int picoshell(char **cmds[])
 			close(fd[1]);
 			return -1;
 		}
-		if(pid == 0)
+		if(pid == 0) //child
 		{
 			if(prev_fd != 0)
 			{
@@ -73,7 +74,7 @@ int picoshell(char **cmds[])
 			}
 			if(cmds[i +1])
 			{
-				close(fd[0]);//
+				close(fd[0]);
 				if(dup2(fd[1], STDOUT_FILENO) == -1)
 				{
 					exit(1);
@@ -85,7 +86,7 @@ int picoshell(char **cmds[])
 				exit(1);
 			}
 		}
-		else
+		else //parent
 		{
 			if(prev_fd != 0)
 			{
@@ -99,11 +100,9 @@ int picoshell(char **cmds[])
 		}
 		i++;
 	}
-
 	while(wait(NULL) > 0)
 	;
-
-    return 0;
+	return 0;
 }
 
 

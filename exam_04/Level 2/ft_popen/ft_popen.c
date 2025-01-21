@@ -40,7 +40,6 @@ int ft_popen(const char *file, const char *argv[], char type)
     int fd[2];
     if(pipe(fd) == -1)
     {
-        perror("pipe creation");
         return -1;
     }
 
@@ -48,7 +47,6 @@ int ft_popen(const char *file, const char *argv[], char type)
     __pid_t pid = fork();
     if(pid == -1)
     {
-        perror("forking");
         close(fd[0]);
         close(fd[1]);
         return -1;
@@ -61,7 +59,6 @@ int ft_popen(const char *file, const char *argv[], char type)
             close(fd[0]); //close parents read fd
             if(dup2(fd[1], STDOUT_FILENO) == -1)
             {
-                perror("dup2 outfile");
                 exit(1);
             }
             close(fd[1]); //close redirected write fd
@@ -71,15 +68,13 @@ int ft_popen(const char *file, const char *argv[], char type)
             close(fd[1]); //close parents write fd
             if(dup2(fd[0], STDIN_FILENO) == -1)
             {
-                perror("dup2 infile");
                 exit(1);
             }
             close(fd[0]); //close redirected read fd
         }
         //execute
-        if(execvp(file, argv) == -1)
+        if(execvp(file, (char *const*)argv) == -1)
         {
-            perror("execvp");
             exit(1);
         }
     }
