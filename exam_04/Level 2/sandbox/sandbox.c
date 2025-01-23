@@ -37,170 +37,104 @@ We will test your code with very bad functions.
 #include <string.h>
 #include <errno.h>
 
-// int	g_to; //global variable to find out if there was a timeout
+int	g_to; //global variable to find out if there was a timeout
 
-// void	handle_timeout(int sig) //sets g_to to 1 if we get the SIGALARM signal
-// {
-// 	if (sig == SIGALRM)
-// 		g_to = 1;
-// }
-
-// int	sandbox(void (*f)(void), unsigned int timeout, bool verbose)
-// {
-// 	int pid;
-// 	int status;
-// 	struct sigaction sa_to; //sigaction timeout struct
-
-// 	if ((pid = fork()) == -1) //forking
-// 		return (-1);
-// 	if (pid == 0) //executing the f() in the child process and exiting sucessfully with 0
-// 	{
-// 		f();
-// 		exit(0);
-// 	}
-// 	sa_to.sa_handler = handle_timeout; //uses a part of the sa_to struct "sa_handler" and sets it to our handle_timeout function
-// 	sigaction(SIGALRM, &sa_to, NULL); //like a "listener" listening for the SIGALARM signal and connecting it to our function via a pointer to the struct
-// 	alarm(timeout); //actual timer
-// 	if (waitpid(pid, &status, 0) == -1) //while waiting for the child to finish, we encounter an error
-// 	{
-// 		while (1) //infinite loop
-// 		{
-// 			if (errno == EINTR) //errno saves the error code -> is it an interrupted systemcall?
-// 			{
-// 				if (g_to) //is g_to set to 1 (timeout)
-// 				{
-// 					if (verbose) //is verbose set to true
-// 					{
-//                         printf("Bad function: timed out after %u seconds\n", timeout); //output
-//                     }	
-// 					kill(pid, SIGKILL); //end this child process
-// 					if (waitpid(pid, &status, 0) == -1) //important to wait for the child to end after we called kill
-// 					{
-//                         return (-1); //return -1 for error
-//                     }	
-// 					return (0); //return 0 for bad function
-// 				}
-// 				continue; //continuing to see if g_to will be 1
-// 			}
-// 			else //no interrupted systemcall but error
-// 				return (-1); //return -1 for an error
-// 		}
-// 	}
-// 	if (WIFSIGNALED(status)) //check signals received by child
-// 	{
-// 		int signum = WTERMSIG(status); //gets status 
-// 		if (verbose) //if verbose is set to true
-// 		{
-//             printf("Bad function: %s\n", strsignal(signum)); //output error with signal
-//         }	
-// 		return (0); //return 0 for bad function
-// 	}
-// 	if (WIFEXITED(status)) //check exit status given back by child
-// 	{
-// 		int exit_code = WEXITSTATUS(status); //putting it in a variable
-// 		if (exit_code) //if exit code > 0
-// 		{
-// 			if (verbose) //is verbose set to true
-//             {
-//                 printf("Bad function: exited with code %d\n", exit_code); //output
-//             }
-// 			return (0); //return 0 for bad function
-// 		}
-// 		else
-// 		{
-// 			if (verbose) //is verbose set to true
-//             {
-//                 printf("Nice function!\n");  //output
-//             }
-// 			return (1); //return 1 for nice function
-// 		}
-// 	}
-// 	return (-1); //internal sandbox problem returns -1
-// }
-
-
-
-int sandbox(void(*f)(void), unsigned int timeout, bool verbose)
+void	handle_timeout(int sig) //sets g_to to 1 if we get the SIGALARM signal
 {
-	pid_t pid;
-	int status;
-	int result;
-	int exit_code;
-	int sig;
+	if (sig == SIGALRM)
+		g_to = 1;
+}
 
-	if(!f || timeout == 0 || timeout > 100000000)
-		return -1;
-	pid = fork();
-	if (pid < 0)
+int	sandbox(void (*f)(void), unsigned int timeout, bool verbose)
+{
+	int pid;
+	int status;
+	struct sigaction sa_to; //sigaction timeout struct
+
+	if ((pid = fork()) == -1) //forking
+		return (-1);
+	//child
+	if (pid == 0) //executing the f() in the child process and exiting sucessfully with 0
 	{
-		if (verbose)
-		{
-			printf("Fork failed");
-			printf("Error_code: %d\n", errno);
-		}
-		return -1;
-	}
-	if (pid == 0)
-	{
-		alarm(timeout);
 		f();
 		exit(0);
 	}
-	result = waitpid(pid, &status, 0);
-	if(result < 0)
+	//parent
+	sa_to.sa_handler = handle_timeout; //uses a part of the sa_to struct "sa_handler" and sets it to our handle_timeout function
+	sigaction(SIGALRM, &sa_to, NULL); //like a "listener" listening for the SIGALARM signal and connecting it to our function via a pointer to the struct
+	alarm(timeout); //actual timer
+	if (waitpid(pid, &status, 0) == -1) //while waiting for the child to finish, we encounter an error
 	{
-		if(verbose)
+		while (1) //infinite loop
 		{
-			printf("Waitpid failed");
-			printf("Error_code :%d\n", errno);
-		}
-		return -1;
-	}
-	if(WIFSIGNALED(status))
-	{
-		sig = WTERMSIG(status);
-		if (sig == SIGALRM)
-		{
-			if (verbose)
-				printf("Bad function: timed out after %d seconds\n", timeout); // Timeout message
-			return 0; // Indicate a timeout
-		}
-		if (verbose)
-			printf("Bad function: %s\n", strsignal(sig));
-		return 0;
-	}
-	if (WIFEXITED(status))
-	{
-		exit_code = WEXITSTATUS(status);
-		if (exit_code !=0)
-		{
-			if(verbose)
-				printf("Bad function : exited with code %d\n", exit_code);
-			return 0;
-		}
-		else if (exit_code == 0)
-		{
-			if(verbose)
-				printf("Nice function!\n");
-			return 1;
+			if (errno == EINTR) //errno saves the error code -> is it an interrupted systemcall?
+			{
+				if (g_to) //is g_to set to 1 (timeout)
+				{
+					if (verbose) //is verbose set to true
+					{
+                        printf("Bad function: timed out after %u seconds\n", timeout); //output
+                    }	
+					kill(pid, SIGKILL); //end this child process
+					if (waitpid(pid, &status, 0) == -1) //important to wait for the child to end after we called kill
+					{
+                        return (-1); //return -1 for error
+                    }	
+					return (0); //return 0 for bad function
+				}
+				continue; //continuing to see if g_to will be 1
+			}
+			else //no interrupted systemcall but error
+				return (-1); //return -1 for an error
 		}
 	}
-	if (verbose)
-		printf("Unknown termination\n");
-    return -1;
+	if (WIFSIGNALED(status)) //check signals received by child
+	{
+		int signum = WTERMSIG(status); //gets status 
+		if (verbose) //if verbose is set to true
+		{
+            printf("Bad function: %s\n", strsignal(signum)); //output error with signal
+        }	
+		return (0); //return 0 for bad function
+	}
+	if (WIFEXITED(status)) //check exit status given back by child after exiting
+	{
+		int exit_code = WEXITSTATUS(status); //putting it in a variable
+		if (exit_code) //if we have an exit code
+		{
+			if (verbose) //is verbose set to true
+            {
+                printf("Bad function: exited with code %d\n", exit_code); //output
+            }
+			return (0); //return 0 for bad function
+		}
+		else
+		{
+			if (verbose) //is verbose set to true
+            {
+                printf("Nice function!\n");  //output
+            }
+			return (1); //return 1 for nice function
+		}
+	}
+	return (-1); //internal sandbox problem returns -1
 }
+
+//////////////////////////
+//testing
+
 void nice_function(void) {
-    printf("I am a nice function!\n");
+    //printf("I am a nice function!\n");
 }
 
 void bad_function(void) {
-    printf("I will segfault now.\n");
+    //printf("I will segfault now.\n");
     int *p = NULL;
     *p = 42; // Segfault here
 }
 
 void slow_function(void) {
-    printf("I am a slow function...\n");
+    //printf("I am a slow function...\n");
     sleep(10); // Longer than timeout
 }
 
