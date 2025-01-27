@@ -24,80 +24,73 @@ int main()
 Hints:
 Do not leak file descriptors.
 */
-
-
-#include <stdio.h>
 #include <unistd.h>
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 int ft_popen(const char *file, const char *argv[], char type)
 {
-    if(type != 'r' && type != 'w')
+    if(!file || (type != 'r' && type != 'w'))
     {
         return -1;
     }
-    //create always pipes first
     int fd[2];
+    pid_t pid;
     if(pipe(fd) == -1)
     {
         return -1;
     }
-
-    //forking
-    pid_t pid = fork();
+    pid = fork();
     if(pid == -1)
     {
         close(fd[0]);
         close(fd[1]);
         return -1;
-    }
-   
-    if(pid == 0) //child -bypassing the terminal by redirecting input/output and executing the command
+    } 
+    if(pid == 0)
     {
-        if(type == 'r') //parent reads, child writes
+        if(type == 'r')
         {
-            close(fd[0]); //close parents read fd
+            close(fd[0]);
             if(dup2(fd[1], STDOUT_FILENO) == -1)
             {
-                exit(1);
+                return -1;
             }
-            close(fd[1]); //close redirected write fd
+            close(fd[1]);
         }
-        if(type == 'w')//parent writes, child reads
+        if(type == 'w')
         {
-            close(fd[1]); //close parents write fd
+            close(fd[1]);
             if(dup2(fd[0], STDIN_FILENO) == -1)
             {
-                exit(1);
+                return -1;
             }
-            close(fd[0]); //close redirected read fd
+            close(fd[0]);
         }
-        //execute
         if(execvp(file, (char *const*)argv) == -1)
         {
             exit(1);
         }
     }
-    else //parent
+    if(type == 'r')
     {
-        if(type == 'r')
-        { 
-            close (fd[1]);
-           return fd[0];
-        }
-        if(type == 'w')
-        {
-            close(fd[0]);
-            return fd[1];
-        }
+        close(fd[1]);
+        return(fd[0]);
     }
-    return -1; //no fd returned
+    if(type == 'w')
+    {
+        close(fd[0]);
+        return(fd[1]);
+    }
+    
+    return -1;
+}
+int main(void)
+{
+    int fd = ft_popen("cat", (const char *[]) {"cat", NULL}, 'w');
+    const char *message = "hello\n";
+    write(fd, message, strlen(message));
+    close(fd);
 }
 
-int main()
-{
-    int fd = ft_popen("ls", (const char *[]) {"ls", NULL}, 'r');
-    char *line;
-    while ((line = get_next_line(fd)))
-        ft_putstr(line);
-}

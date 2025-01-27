@@ -13,7 +13,7 @@ int ft_popen(const char *file, const char *argv[], char type)
 	{
 		return -1;
 	}
-	__pid_t pid = fork();
+	pid_t pid = fork();
 	if(pid == -1)
 	{
 		close(fd[0]);
