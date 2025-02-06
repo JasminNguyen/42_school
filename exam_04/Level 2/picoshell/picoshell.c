@@ -167,6 +167,11 @@ int picoshell(char **cmds[])
 		pid = fork(); //forking
 		if(pid == -1)
 		{
+			if(cmds[i +1])
+			{
+				close(fd[0]);
+				close(fd[1]);
+			}
 			return (1);
 		}
 
@@ -175,14 +180,14 @@ int picoshell(char **cmds[])
 			if(prev_fd !=0) //if it's not the first command
 			{
 				if(dup2(prev_fd, STDIN_FILENO) == -1)
-					return (1);
+					exit (1);
 				close(prev_fd); //close prev_fd because it's no longer needed since the pipe is now accessible through STDIN_FILENO (closing here is kind of like freeing a temporary variable)
 			}
 			if(cmds[i+1]) //check if there is a next command
 			{
 				close(fd[0]); //no read end needed
 				if(dup2(fd[1], STDOUT_FILENO) == -1) 
-					return (1);
+					exit (1);
 				close(fd[1]); //after redirecting stdout the write end can be closed  
 			}
 			if(execvp(cmds[i][0], cmds[i]) == -1)//execute
@@ -199,6 +204,11 @@ int picoshell(char **cmds[])
 			{
 				close(fd[1]);
 				prev_fd = fd[0]; //holds the read end of the current pipe (fd[0]), which will become the input for the next child process
+			}
+			else
+			{
+				close(fd[0]);
+				close(fd[1]);
 			}
 		}
 		i++;
@@ -220,7 +230,7 @@ int main(int argc, char **argv)
 			cmd_size++;
 	}
 
-	char ***cmds = calloc(cmd_size + 1, sizeof(char ***));
+	char ***cmds = calloc(cmd_size + 1, sizeof(char **));
 	cmds[0] = argv + 1;
 	int cmds_i = 1;
 	for (int i = 1; i < argc; i++)

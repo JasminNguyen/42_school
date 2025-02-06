@@ -136,56 +136,56 @@ void destroy_tree(node* tree) {
 //     return left;
 // }
 
-
-
-node* parse_number(char **s)
+node *parse_number(char **s)
 {
-    if(isdigit(**s)) //dereference to get to the actual value and check if it's a digit
+    if(isdigit(**s))
     {
-        node n = {.type = VAL, .val = **s - '0', .l = NULL, .r = NULL}; //initialize node n
-        (*s)++; //move forward in string
-        return new_node(n); //create and return new node with node n (allocates memory for it)
+        node n = {.type = VAL, .val = **s - '0', .l = NULL, .r = NULL};
+        (*s)++;
+        return new_node(n);
     }
     else
     {
-        unexpected(**s); //not a digit -> prints error message
+        unexpected(**s);
+        return NULL;
     }
-    return NULL; //in case nothing is true -> signals error
 }
-
-node* parse_factor(char **s)
+node *parse_factor(char **s)
 {
-    if(accept(s, '('))//check for (
+    if(accept(s, '('))
     {
-        node *expr = parse_expr(s); //parse the expression inside the ()
-        if(expect(s, ')') == 0)//we expect a )
+        node *expr = parse_expr(s);
+        if(!expr)
         {
-            destroy_tree(expr); //destroy expression and return NULL if there is no )
+            destroy_tree(expr);
             return NULL;
         }
-        return expr; //return parsed expression
+        if(expect(s, ')') == 0)
+        {
+            destroy_tree(expr);
+            return NULL;
+        }
+        return expr;
     }
-    return parse_number(s); //if no (), return parsed number
-}
+    return parse_number(s);
 
+}
 node *parse_term(char **s)
 {
-    node *left = parse_factor(s);//parses left
-    while(accept(s, '*')) //while loop to get every *
+    node *left = parse_factor(s);
+    while(accept(s, '*'))
     {
-        node *right = parse_factor(s); //parses right
-        if(!right) //if !right we destroy what has already been allocated -> left
+        node *right = parse_factor(s);
+        if(!right)
         {
             destroy_tree(left);
             return NULL;
         }
-        node n = {.type = MULT, .l = left, .r = right}; //tie left and right together with MULT
-        left = new_node(n); //left now points to the "*" (root of the (sub)tree)
+        node n = {.type = MULT, .l = left, .r = right};
+        left = new_node(n);
     }
-    return left; //return left (*)
+    return left;
 }
-
-
 node *parse_expr(char **s)
 {
     node *left = parse_term(s);
