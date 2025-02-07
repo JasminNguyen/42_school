@@ -173,6 +173,8 @@ node *parse_factor(char **s)
 node *parse_term(char **s)
 {
     node *left = parse_factor(s);
+     if (!left) return NULL; // Falls kein gültiger Startwert, sofort abbrechen
+
     while(accept(s, '*'))
     {
         node *right = parse_factor(s);
@@ -183,12 +185,19 @@ node *parse_term(char **s)
         }
         node n = {.type = MULT, .l = left, .r = right};
         left = new_node(n);
+           if (!left) // <- NEU: Prüfe, ob `new_node` fehlschlägt
+        {
+            destroy_tree(right);
+            return NULL;
+        }
     }
     return left;
 }
 node *parse_expr(char **s)
 {
     node *left = parse_term(s);
+     if (!left) return NULL; // Falls kein gültiger Startwert, sofort abbrechen
+
     while(accept(s, '+'))
     {
         node *right = parse_term(s);
@@ -199,6 +208,11 @@ node *parse_expr(char **s)
         }
         node n = {.type = ADD, .l = left, .r = right};
         left = new_node(n);
+           if (!left) // <- NEU: Prüfe, ob `new_node` fehlschlägt
+        {
+            destroy_tree(right);
+            return NULL;
+        }
     }
     return left;
 }
@@ -210,13 +224,15 @@ int main(int ac, char** av)
     }
 
     char *input = av[1];
-    node *tree = parse_expr(&input);
+    node *tree = parse_expr(&input); //passing pointer to input
 
-    if (!tree) {
+    if (!tree) //destroy tree if the node creation does not work
+    {
         destroy_tree(tree);
         return 1;
     }
-    else if (*input) {
+    else if (*input) //check if there are extra characters after parsing
+    {
         unexpected(*input);
         destroy_tree(tree);
         return 1;
