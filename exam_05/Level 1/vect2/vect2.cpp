@@ -8,5 +8,5 @@ std::ostream& operator<<(std::ostream &os, const vect2 &vec)
 
 vect2 operator*(int nbr, const vect2 &vec)
 {
-    return nbr * vec; //no brackets!!!
+    return vec * nbr; //no brackets AAND vec first!!!
 }
