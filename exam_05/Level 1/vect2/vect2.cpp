@@ -2,11 +2,11 @@
 
 std::ostream& operator<<(std::ostream &os, const vect2 &vec)
 {
-    os << "{" << vec[0] << ", " << vec[1] << "}" ;
-    return os;
+	os << "{" << vec[0] << ", " << vec[1] << "}";
+	return os;
 }
 
-vect2 operator*(int nbr, const vect2 &vec)
+vect2 operator*(int nbr, vect2 &vec)
 {
-    return vec * nbr; //no brackets AAND vec first!!!
+	return vec * nbr;
 }

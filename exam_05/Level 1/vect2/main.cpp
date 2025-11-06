@@ -17,7 +17,7 @@ int main()
 
 	std::cout << v4++ << std::endl;	// 2,3 --> incorrect, should be 1,2
 	std::cout << ++v4 << std::endl;	// 3,4
-	std::cout << v4-- << std::endl;	// 2,3
+	std::cout << v4-- << std::endl;	// 2,3 --> incorrect, should be 3,4
 	std::cout << --v4 << std::endl;	// 1,2
 
 	v2+=v3;				// 2,4
