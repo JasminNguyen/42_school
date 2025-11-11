@@ -10,7 +10,7 @@ class set {
 		public:
 			//set() {} -> reference member needs to be initialized immediately -> no default constructor
 			set(searchable_bag &b): bag(b) {}
-			set(searchable_bag &other): bag(other) {}
+			// set(searchable_bag &other): bag(other) {} --> same as constructor so no need for it -> we cannot put const since the bag (int private) is not const
 			// set& operator=(const set &other) -> no need for the assignment operator since we don't assign a new thing, instead we handle the exact same object
 			// {
 			// 	if(this != &other)
@@ -52,5 +52,6 @@ class set {
 				return bag;
 			}
 };
+
 
 #endif
