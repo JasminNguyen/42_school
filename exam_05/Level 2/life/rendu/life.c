@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 	}
 	else
 	{
-		//initialize board
+		// 1. get board mesurements
 		int width = atoi(argv[1]);
 		int height = atoi(argv[2]);
 		int iterations = atoi(argv[3]);
@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 		char board[width][height];
 		char next_board[width][height];
 
-		//initialize cells in board to 0
+		//2. initialize cells in board to 0
 		//x is a column, y is a row
 		for(int y = 0; y < height; y++)
 		{
@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 				next_board[x][y] = 0;
 			}
 		}
-		//set alive cells to 1 in board
+		//2. set alive cells to 1 in board
 		char cmd;
 		
 		int pos_x = 0;
@@ -95,8 +95,7 @@ int main(int argc, char *argv[])
 			}
 		}
 
-		//run simulation iterations and swap after each
-
+		//3. run simulation iterations and swap after each
 		for(int i = 0; i < iterations; i++)
 		{
 			for(int h = 0; h < height; h++)
@@ -106,19 +105,19 @@ int main(int argc, char *argv[])
 
 					//count alive neighbours (within iterations, height and width)
 					int alive_neighbours = 0; 
-					for(int y = -1; y <= 1; y++)
+					for(int y = -1; y <= 1; y++) 
 					{
-						for(int x = -1; x <= 1; x++)
+						for(int x = -1; x <= 1; x++)// we start at -1 to get the neighbour on the left and end at 1 to get the neighbour on the right
 						{
-							if(y == 0 && x == 0)
+							if(y == 0 && x == 0) // skipping the current cell
 							{
 								continue;
 							}
-							int neighbour_x = w + x;
+							int neighbour_x = w + x; // now we got the coordinate of the neighbour cell itself
 							int neighbour_y = h + y;
-							if(within_board(neighbour_x, neighbour_y, width, height))
+							if(within_board(neighbour_x, neighbour_y, width, height)) // and check if its even within the board
 							{
-								if(board[neighbour_x][neighbour_y])
+								if(board[neighbour_x][neighbour_y] == 1) // and if that's the case and it is an alive cell we count it
 								{
 									alive_neighbours++;
 								}
@@ -129,9 +128,9 @@ int main(int argc, char *argv[])
 					}
 
 					//apply rules
-					char alive = board[w][h];
+					char alive = board[w][h]; // alive status
 
-					if (alive) 
+					if (alive) //if current cell is alive
 					{
 						// live cell survives with 2 or 3 neighbours
 						if (alive_neighbours == 2 || alive_neighbours == 3)
@@ -139,7 +138,7 @@ int main(int argc, char *argv[])
 						else
 							next_board[w][h] = 0;
 					} 
-					else 
+					else //if current cell is dead
 					{
 						// dead cell becomes alive with exactly 3 neighbours
 						if (alive_neighbours == 3)
@@ -152,6 +151,8 @@ int main(int argc, char *argv[])
 				}
 
 			}
+
+			// 3.1. outside of the height/width loop (but inside the iteration loop) we copy the board into the next_board
 			for (int h = 0; h < height; h++)
     		{
         		for (int w = 0; w < width; w++)
@@ -161,7 +162,7 @@ int main(int argc, char *argv[])
    			}		
 		}
 		
-		// print final board
+		// 4. print final board
 		for (int h = 0; h < height; h++)
 		{
 			for (int w = 0; w < width; w++)
