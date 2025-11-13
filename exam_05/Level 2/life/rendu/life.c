@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
-
+#include <unistd.h>
+#include <stdlib.h>
 
 bool within_board(int pos_x, int pos_y, int width, int height)
 {
@@ -103,20 +104,74 @@ int main(int argc, char *argv[])
 				for (int w = 0; w < width; w++)
 				{
 
-					int alive_neighbours = 0; //count alive neighbours (within iterations, height and width)
+					//count alive neighbours (within iterations, height and width)
+					int alive_neighbours = 0; 
 					for(int y = -1; y <= 1; y++)
 					{
 						for(int x = -1; x <= 1; x++)
 						{
-							if(y == 0 || x == 0)
+							if(y == 0 && x == 0)
 							{
 								continue;
+							}
+							int neighbour_x = w + x;
+							int neighbour_y = h + y;
+							if(within_board(neighbour_x, neighbour_y, width, height))
+							{
+								if(board[neighbour_x][neighbour_y])
+								{
+									alive_neighbours++;
+								}
+								
 							}
 							
 						}
 					}
+
+					//apply rules
+					char alive = board[w][h];
+
+					if (alive) 
+					{
+						// live cell survives with 2 or 3 neighbours
+						if (alive_neighbours == 2 || alive_neighbours == 3)
+							next_board[w][h] = 1;
+						else
+							next_board[w][h] = 0;
+					} 
+					else 
+					{
+						// dead cell becomes alive with exactly 3 neighbours
+						if (alive_neighbours == 3)
+							next_board[w][h] = 1;
+						else
+							next_board[w][h] = 0;
+					}
+					
+
 				}
+
 			}
+			for (int h = 0; h < height; h++)
+    		{
+        		for (int w = 0; w < width; w++)
+        		{
+            		board[w][h] = next_board[w][h];
+        		}
+   			}		
+		}
+		
+		// print final board
+		for (int h = 0; h < height; h++)
+		{
+			for (int w = 0; w < width; w++)
+			{
+				if (board[w][h] == 1)
+					putchar('O');
+				else
+					putchar(' ');
+			}
+			putchar('\n');
 		}
 		
 	}
