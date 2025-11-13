@@ -94,6 +94,30 @@ int main(int argc, char *argv[])
 			}
 		}
 
+		//run simulation iterations and swap after each
+
+		for(int i = 0; i < iterations; i++)
+		{
+			for(int h = 0; h < height; h++)
+			{
+				for (int w = 0; w < width; w++)
+				{
+
+					int alive_neighbours = 0; //count alive neighbours (within iterations, height and width)
+					for(int y = -1; y <= 1; y++)
+					{
+						for(int x = -1; x <= 1; x++)
+						{
+							if(y == 0 || x == 0)
+							{
+								continue;
+							}
+							
+						}
+					}
+				}
+			}
+		}
 		
 	}
 	return 0;
