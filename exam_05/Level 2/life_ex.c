@@ -1,9 +1,8 @@
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
 #include <unistd.h>
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 
 
 bool within_board(int pos_x, int pos_y, int width, int height)
@@ -15,9 +14,7 @@ bool within_board(int pos_x, int pos_y, int width, int height)
 	return false;
 }
 
-
-
-int main(int argc, char*argv[])
+int main(int argc, char *argv[])
 {
 	if(argc != 4)
 	{
@@ -25,36 +22,32 @@ int main(int argc, char*argv[])
 	}
 	else
 	{
-		//get mesurements of board
 		int width = atoi(argv[1]);
 		int height = atoi(argv[2]);
 		int iterations = atoi(argv[3]);
 		
 		char board[width][height];
 		char next_board[width][height];
-
-		//initialization to 0
-		for(int h = 0; h < height; h++)
+		for(int w = 0; w < width; w++)
 		{
-			for(int w = 0; w < width; w++)
+			for(int h = 0; h < height; h++)
 			{
 				board[w][h] = 0;
 				next_board[w][h] = 0;
 			}
 		}
-
-		//get configuration for board
+		
 		char cmd;
 		int pos_x = 0;
 		int pos_y = 0;
 		bool pen_down = false;
-		
 		while(read(0, &cmd, 1) > 0)
 		{
+			
 			if(cmd == 'w')
 			{
 				pos_y--;
-				if(pen_down && within_board(pos_x, pos_y, width, height) == true)
+				if(pen_down && within_board(pos_x, pos_y, width, height))
 				{
 					board[pos_x][pos_y] = 1;
 				}
@@ -62,7 +55,7 @@ int main(int argc, char*argv[])
 			else if(cmd == 's')
 			{
 				pos_y++;
-				if(pen_down && within_board(pos_x, pos_y, width, height) == true)
+				if(pen_down && within_board(pos_x, pos_y, width, height))
 				{
 					board[pos_x][pos_y] = 1;
 				}
@@ -70,7 +63,7 @@ int main(int argc, char*argv[])
 			else if(cmd == 'a')
 			{
 				pos_x--;
-				if(pen_down && within_board(pos_x, pos_y, width, height) == true)
+				if(pen_down && within_board(pos_x, pos_y, width, height))
 				{
 					board[pos_x][pos_y] = 1;
 				}
@@ -78,7 +71,7 @@ int main(int argc, char*argv[])
 			else if(cmd == 'd')
 			{
 				pos_x++;
-				if(pen_down && within_board(pos_x, pos_y, width, height) == true)
+				if(pen_down && within_board(pos_x, pos_y, width, height))
 				{
 					board[pos_x][pos_y] = 1;
 				}
@@ -88,29 +81,25 @@ int main(int argc, char*argv[])
 				if(!pen_down)
 				{
 					pen_down = true;
-					if(pen_down && within_board(pos_x, pos_y, width, height) == true)
+					if(within_board(pos_x, pos_y, width, height))
 					{
 						board[pos_x][pos_y] = 1;
 					}
 				}
-				else
+				else 
 				{
 					pen_down = false;
 				}
-				
-			}
+			}	
 		}
-
-		//run simulation and swap board after each
+		
 		for(int iter = 0; iter < iterations; iter++)
 		{
-			for(int h = 0; h < height; h++)
+			for(int w = 0; w < width; w++)
 			{
-				for(int w = 0; w < width; w++)
+				for(int h = 0; h < height; h++)
 				{
-					//count alive neighbours for each cell					
 					int alive_neighbours = 0;
-
 					for(int pos_x = -1; pos_x <= 1; pos_x++)
 					{
 						for(int pos_y = -1; pos_y <= 1; pos_y++)
@@ -121,34 +110,21 @@ int main(int argc, char*argv[])
 							{
 								continue;
 							}
-							if(within_board(neighbour_x, neighbour_y, width, height) == true)
+							if(within_board(neighbour_x, neighbour_y, width, height)) //check for out-of-bounds access
 							{
-								if(board[neighbour_x][neighbour_y] == 1)
+								if(board[neighbour_x][neighbour_y] == 1) // and then if it is actually alive!!!
 								{
 									alive_neighbours++;
 								}
-								
 							}
 						}
 					}
-
-					//apply rules to next board
+					
+					
 					char alive = board[w][h];
-
 					if(alive)
 					{
 						if(alive_neighbours == 2 || alive_neighbours == 3)
-						{
-							next_board[w][h] = 1;
-						}
-						else
-						{
-							next_board[w][h] = 0;
-						}
-					}
-					else
-					{
-						if(alive_neighbours == 3)
 						{
 							next_board[w][h] = 1;
 						}
@@ -157,9 +133,20 @@ int main(int argc, char*argv[])
 							next_board[w][h] = 0;
 						}
 					}
+					else
+					{
+						if(alive_neighbours == 3)
+						{
+							next_board[w][h]= 1;
+						}
+						else 
+						{
+							next_board[w][h] = 0;
+						}
+					}
 				}
 			}
-			//swap board to next_board
+			
 			for(int w = 0; w < width; w++)
 			{
 				for(int h = 0; h < height; h++)
@@ -168,26 +155,28 @@ int main(int argc, char*argv[])
 				}
 			}
 		}
-
-		//print final board --> probably needs a change
-			for(int h = 0; h < height; h++)
+		
+		for(int h = 0; h < height; h++) // you can do first width and then height EXCEPT for printing!!
+		{
+			for(int w = 0; w < width; w++)
 			{
-				for(int w = 0; w < width; w++)
+				if(board[w][h] == 1)
 				{
-					if(board[w][h] == 1)
-					{
-						putchar('0');
-					}
-					else
-					{
-						putchar(' ');
-					}
+					putchar('0');
 				}
-				putchar('\n');
+				else 
+				{
+					putchar(' ');
+				}
 			}
-
-
-
+			putchar('\n');
+		}
 	}
 	return 0;
 }
+
+
+
+
+
+
