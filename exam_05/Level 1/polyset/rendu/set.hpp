@@ -47,11 +47,11 @@ class set {
 			{
 				bag.clear();
 			}
-			const searchable_bag& get_bag() const
+			const searchable_bag& get_bag() const // make it const
 			{
 				return bag;
 			}
-			bool has(int val) const
+			bool has(int val) const // DON'T FORGET TO IMPLEMENT THE HAS() const
 			{
 				return bag.has(val);
 			}
