@@ -28,6 +28,7 @@ int main(int argc, char *argv[])
 		
 		char board[width][height];
 		char next_board[width][height];
+		//initialize boards to 0
 		for(int w = 0; w < width; w++)
 		{
 			for(int h = 0; h < height; h++)
@@ -37,8 +38,9 @@ int main(int argc, char *argv[])
 			}
 		}
 		
+		//get configuration
 		char cmd;
-		int pos_x = 0;
+		int pos_x = 0; // always initialize!!!
 		int pos_y = 0;
 		bool pen_down = false;
 		while(read(0, &cmd, 1) > 0)
@@ -92,7 +94,7 @@ int main(int argc, char *argv[])
 				}
 			}	
 		}
-		
+		//run simulation and switch after each iteration
 		for(int iter = 0; iter < iterations; iter++)
 		{
 			for(int w = 0; w < width; w++)
@@ -120,7 +122,7 @@ int main(int argc, char *argv[])
 						}
 					}
 					
-					
+					//apply rules
 					char alive = board[w][h];
 					if(alive)
 					{
@@ -146,7 +148,7 @@ int main(int argc, char *argv[])
 					}
 				}
 			}
-			
+			//switch
 			for(int w = 0; w < width; w++)
 			{
 				for(int h = 0; h < height; h++)

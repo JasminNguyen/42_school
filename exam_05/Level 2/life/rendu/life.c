@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
 		//2. set alive cells to 1 in board
 		char cmd;
 		
-		int pos_x = 0;
+		int pos_x = 0; // always initialize!!!
 		int pos_y = 0;
 		bool pen_down = false;
 
