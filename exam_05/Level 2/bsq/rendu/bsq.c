@@ -1,4 +1,6 @@
-#include <malloc.h>
+#include <stdlib.h>
+#include <stdio.h>
+
 #include "bsq.h"
 
 int is_valid_header(FILE *stream, t_map *map)
@@ -100,13 +102,13 @@ void parse_map(FILE *stream, t_map *map)
 		int nread = getline(&line, &size, stream);
 		if (map->map_x == UNINITIALIZED) // find width of the map (x)
 			map->map_x = nread - 1;  // (nread -1) bc '\n' retained
-		else if (nread == -1 || (nread - 1) != m->map_x || line[nread - 1] != '\n')
+		else if (nread == -1 || (nread - 1) != map->map_x || line[nread - 1] != '\n' || map->map_x < 1)
 		{
 			fprintf(stdout, "Error: invalid map\n");
 			return;
 		}
 		map->arr2d[y] = malloc(sizeof(char) * map->map_x); // allocate memory for width of the map (x)
-		if (!(m->arr2d[y]))
+		if (!(map->arr2d[y]))
 		{
 			fprintf(stdout, "Error: malloc fail\n");
 			return;
