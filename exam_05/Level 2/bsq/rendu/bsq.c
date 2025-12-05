@@ -1,4 +1,6 @@
-#include <malloc.h>
+#include <stdlib.h>
+#include <stdio.h>
+
 #include "bsq.h"
 
 int is_valid_header(FILE *stream, t_map *map)
@@ -89,36 +91,36 @@ void print_map(t_map *map)
 	}
 }
 
-void parse_map(FILE *stream, t_map *m)
+void parse_map(FILE *stream, t_map *map)
 {
 	char *line = NULL; //line buffer (constent read)
 	size_t size = 0; // contains the buffer size
 
 	// extract and validate map body
-	for (int y = 0; y < m->map_y; y++) //loop through height
+	for (int y = 0; y < map->map_y; y++) //loop through height
 	{
 		int nread = getline(&line, &size, stream);
-		if (m->map_x == UNINITIALIZED) // find width of the map (x)
-			m->map_x = nread - 1;  // (nread -1) bc '\n' retained
-		else if (nread == -1 || (nread - 1) != m->map_x || line[nread - 1] != '\n')
+		if (map->map_x == UNINITIALIZED) // find width of the map (x)
+			map->map_x = nread - 1;  // (nread -1) bc '\n' retained
+		else if (nread == -1 || (nread - 1) != map->map_x || line[nread - 1] != '\n' || map->map_x < 1)
 		{
 			fprintf(stdout, "Error: invalid map\n");
 			return;
 		}
-		m->arr2d[y] = malloc(sizeof(char) * m->map_x); // allocate memory for width of the map (x)
-		if (!(m->arr2d[y]))
+		map->arr2d[y] = malloc(sizeof(char) * map->map_x); // allocate memory for width of the map (x)
+		if (!(map->arr2d[y]))
 		{
 			fprintf(stdout, "Error: malloc fail\n");
 			return;
 		}
-		for (int x = 0; x < m->map_x; x++) //loop through width 
+		for (int x = 0; x < map->map_x; x++) //loop through width 
 		{
-			if (!(line[x] == m->empty || line[x] == m->obst )) // check that we only have empties or obstacles
+			if (!(line[x] == map->empty || line[x] == map->obst )) // check for characters that are not part of the specified ones (we can only have empty or obstacles!)
 			{
 				fprintf(stdout, "Error: invalid map\n");
 				return;
 			}
-			m->arr2d[y][x] = line[x]; //populate one line and put it into map
+			map->arr2d[y][x] = line[x]; //populate one line and put it into map
 		}
 		free(line); //free line
 		line = NULL; // set it to NULL so getline does not assume that we want to reuse the line (which is a buffer)
@@ -131,8 +133,8 @@ void parse_map(FILE *stream, t_map *m)
 	}
 
 
-	find_bsq(m);
-	print_map(m);
+	find_bsq(map);
+	print_map(map);
 }
 
 void check_file(FILE* stream)
