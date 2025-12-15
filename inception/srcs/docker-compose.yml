@@ -4,11 +4,14 @@ services:
   container_name: nginx
   ports: 
       - "8081:80"
+  volumes:
+      - ./web:/var/ww/html
 
  wordpress:
   build: requirements/wordpress/.
   container_name: wp-php
-
+  volumes:
+      - ./web:/var/ww/html
 
 
   
