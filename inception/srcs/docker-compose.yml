@@ -5,13 +5,13 @@ services:
   ports: 
       - "8081:80"
   volumes:
-      - ./web:/var/ww/html
+      - ./web:/var/www/html
 
  wordpress:
-  build: requirements/wordpress/.
-  container_name: wp-php
+  build: requirements/wordpress/. # where to find the dockerfile that tells us how the image is build
+  container_name: wordpress # how to name the container
   volumes:
-      - ./web:/var/ww/html
+      - ./web:/var/www/html
 
 
   

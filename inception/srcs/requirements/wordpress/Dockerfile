@@ -1,7 +1,7 @@
-FROM debian:bullseye
+FROM debian:bookworm
 RUN apt-get update \
  && apt-get install -y --no-install-recommends php-fpm \
  && rm -rf /var/lib/apt/lists/*
 RUN mkdir -p /run/php
-COPY www.conf /tec/php/7.4/fpm/pool.d
-CMD ["php-fpm7.4", "-F"]
+COPY www.conf /etc/php/8.2/fpm/pool.d/.
+CMD ["php-fpm8.2", "-F"]
