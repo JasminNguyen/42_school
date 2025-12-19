@@ -10,10 +10,17 @@ services:
       - ./web:/var/www/html
 
  wordpress:
+  depends_on: 
+   - mariadb
   build: requirements/wordpress/. # where to find the dockerfile that tells us how the image is build
   container_name: wordpress # how to name the container
   volumes:
       - ./web:/var/www/html
+      
+ mariadb:
+  build: requirements/mariadb/.
+  container_name: mariadb
+  
 
 
   
