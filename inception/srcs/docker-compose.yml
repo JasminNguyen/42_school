@@ -2,13 +2,15 @@ services:
  nginx:
   depends_on:
    - wordpress
+   - mariadb
   build: requirements/nginx/.
   container_name: nginx
   ports: 
       - "8080:80"
   volumes:
       - ./web:/var/www/html
-
+  networks:
+      inception:
  wordpress:
   depends_on: 
    - mariadb
@@ -16,10 +18,20 @@ services:
   container_name: wordpress # how to name the container
   volumes:
       - ./web:/var/www/html
-      
+  networks:
+      inception:
  mariadb:
   build: requirements/mariadb/.
   container_name: mariadb
+  volumes: 
+      - ./database:/var/lib/mysql
+  networks:
+      inception:
+
+
+networks:
+      inception:
+  
   
 
 

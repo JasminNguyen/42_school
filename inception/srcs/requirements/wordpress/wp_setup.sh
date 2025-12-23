@@ -2,6 +2,11 @@
 cd /var/www/html
 curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 chmod +x wp-cli.phar
+# wait until MariaDB is ready (prevents race on first boot)
+until mysqladmin ping -h mariadb -u wpuser -ppassword --silent; do
+  sleep 1
+done
+
 # 2) avoid failing if WP files are already there 
 if [ ! -f wp-settings.php ]; then
   ./wp-cli.phar core download --allow-root

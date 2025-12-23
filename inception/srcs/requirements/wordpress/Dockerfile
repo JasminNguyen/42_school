@@ -1,6 +1,6 @@
 FROM debian:bookworm
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    php8.2-fpm php-mysqli curl ca-certificates \
+    php8.2-fpm php-mysqli curl ca-certificates mariadb-client \
  && update-ca-certificates \
  && rm -rf /var/lib/apt/lists/*
 RUN mkdir -p /run/php
