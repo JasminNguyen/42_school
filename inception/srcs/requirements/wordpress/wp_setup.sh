@@ -23,9 +23,9 @@ fi
 #    also: don’t reinstall if already installed
 if ! ./wp-cli.phar core is-installed --allow-root; then
   ./wp-cli.phar core install \
-    --url=localhost:8080 \
+    --url=https://jasnguye.42.fr \
     --title=inception \
-    --admin_user=admin \
+    --admin_user=admin \ #admin name should be changed
     --admin_password=admin \
     --admin_email=admin@admin.com \
     --allow-root
@@ -33,4 +33,6 @@ fi
 
 # 5) use exec so php-fpm becomes PID 1
 exec php-fpm8.2 -F
-
+# enforce URL even if DB already existed
+./wp-cli.phar option update siteurl "https://jasnguye.42.fr" --allow-root
+./wp-cli.phar option update home    "https://jasnguye.42.fr" --allow-root

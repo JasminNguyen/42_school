@@ -97,14 +97,19 @@
 #################################
 
 server {
-    listen 80;
-    server_name localhost;
+    listen 443 ssl; #listening on port (inner port) 443, ssl means that nginx expects https traffic (tls)
+    server_name jasnguye.42.fr; #change this to jasnguye.42.fr
 
-    root /var/www/html;
-    index index.html index.php;
+    ssl_certificate     /etc/nginx/ssl/localhost.crt; #path to public certificate for the tls handshake
+    ssl_certificate_key /etc/nginx/ssl/localhost.key; #path to the private key for the tls handshake (secret)
+    ssl_protocols       TLSv1.2 TLSv1.3; #specifies the tls versions
+    
+    root /var/www/html; #document root -> all relative file lookups start here
+    index index.php index.html ; #default files when nginx gets a directory as request
 
-	location / {
-		try_files $uri $uri/ =404;
+	
+	location / { #matches all requests
+    		try_files $uri $uri/ /index.php?$args;
 	}
 
 
