@@ -20,7 +20,7 @@ root@359224851ce0:/# cd /var/www/html && ./wp-cli.phar user list --fields=ID,use
 
 
 Creating a second user (also inside wordpress): 
-root@359224851ce0:/var/www/html# cd /var/www/html && ./wp-cli.phar user create jasnguye2 jasnguye2@example.com --role=author --user_pass="jasnguye2_pw" --allow-root
+root@359224851ce0: cd /var/www/html && ./wp-cli.phar user create jasnguye2 jasnguye2@example.com --role=author --user_pass="jasnguye2_pw" --allow-root
 
 
 
