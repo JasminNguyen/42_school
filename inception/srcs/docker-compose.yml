@@ -8,7 +8,7 @@ services:
   ports: 
       - "443:443"
   volumes:
-      - ./web:/var/www/html
+      - /home/jasnguye/data/wordpress:/var/www/html  # Mount WordPress data here
   networks:
       inception:
  wordpress:
@@ -17,14 +17,14 @@ services:
   build: requirements/wordpress/. # where to find the dockerfile that tells us how the image is build
   container_name: wordpress # how to name the container
   volumes:
-      - ./web:/var/www/html
+      - /home/jasnguye/data/wordpress:/var/www/html  # Mount WordPress data here
   networks:
       inception:
  mariadb:
   build: requirements/mariadb/.
   container_name: mariadb
   volumes: 
-      - ./database:/var/lib/mysql
+      - /home/jasnguye/data/mariadb:/var/lib/mysql  # Mount MariaDB data here
   networks:
       inception:
 
