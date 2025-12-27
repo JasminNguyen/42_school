@@ -13,9 +13,9 @@ if [ ! -f wp-settings.php ]; then
 fi
 if [ ! -f wp-config.php ]; then
   ./wp-cli.phar config create \
-    --dbname=wordpress \
-    --dbuser=wpuser \
-    --dbpass=password \
+    --dbname=$WORDPRESS_DB_NAME \
+    --dbuser=$WORDPRESS_DB_USER \
+    --dbpass=$WORDPRESS_DB_PASSWORD \
     --dbhost=mariadb \
     --allow-root
 fi
@@ -24,16 +24,16 @@ fi
 #pw needed for loggin into wp-admin
 if ! ./wp-cli.phar core is-installed --allow-root; then
   ./wp-cli.phar core install \
-    --url=https://jasnguye.42.fr \
-    --title=inception \
-    --admin_user=jasnguye \
-    --admin_password=jasnguye_pw \
-    --admin_email=jasnguye@email.com \
+    --url=$WORDPRESS_URL \
+    --title=$WORDPRESS_SITE_TITLE \
+    --admin_user=$ADMIN_USER \
+    --admin_password=$ADMIN_PASSWORD \
+    --admin_email=$ADMIN_EMAIL \
     --allow-root
 fi
 
 # 5) use exec so php-fpm becomes PID 1
 exec php-fpm8.2 -F
 # enforce URL even if DB already existed
-./wp-cli.phar option update siteurl "https://jasnguye.42.fr" --allow-root
-./wp-cli.phar option update home    "https://jasnguye.42.fr" --allow-root
+./wp-cli.phar option update siteurl "$WORDPRESS_URL" --allow-root
+./wp-cli.phar option update home    "$WORDPRESS_URL" --allow-root
