@@ -1,0 +1,20 @@
+root@8d8347c89f7f:/# mysql -u wpuser -p -h mariadb wordpress
+Enter password: 'password'
+
+MariaDB [wordpress]> SELECT ID, user_login, user_email FROM wp_users;
++----+------------+--------------------+
+| ID | user_login | user_email         |
++----+------------+--------------------+
+|  1 | jasnguye   | jasnguye@email.com |
++----+------------+--------------------+
+root@359224851ce0:/# cd /var/www/html && ./wp-cli.phar user list --fields=ID,user_login,roles --allow-root
++----+------------+---------------+
+| ID | user_login | roles         |
++----+------------+---------------+
+| 1  | jasnguye   | administrator |
++----+------------+---------------+
+Creating a second user: 
+root@359224851ce0:/var/www/html# cd /var/www/html && ./wp-cli.phar user create jasnguye2 jasnguye2@example.com --role=author --user_pass="jasnguye2_pw" --allow-root
+
+
+

@@ -20,14 +20,15 @@ if [ ! -f wp-config.php ]; then
     --allow-root
 fi
 # 4) fix admin email flag name: --admin_email (underscore)
-#    also: don’t reinstall if already installed
+#    also: don’t reinstall if already installed 
+#pw needed for loggin into wp-admin
 if ! ./wp-cli.phar core is-installed --allow-root; then
   ./wp-cli.phar core install \
     --url=https://jasnguye.42.fr \
     --title=inception \
-    --admin_user=admin \ #admin name should be changed
-    --admin_password=admin \
-    --admin_email=admin@admin.com \
+    --admin_user=jasnguye \
+    --admin_password=jasnguye_pw \
+    --admin_email=jasnguye@email.com \
     --allow-root
 fi
 
