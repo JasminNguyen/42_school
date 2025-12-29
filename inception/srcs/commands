@@ -22,5 +22,13 @@ root@359224851ce0:/# cd /var/www/html && ./wp-cli.phar user list --fields=ID,use
 Creating a second user (also inside wordpress): 
 root@359224851ce0: cd /var/www/html && ./wp-cli.phar user create jasnguye2 jasnguye2@example.com --role=author --user_pass="jasnguye2_pw" --allow-root
 
+proving nginx can only be accessed through port 443:
+curl -k https://jasnguye.42.fr:443 -> works
+curl -k https://jasnguye.42.fr:444 or 80-> does not work  
+also we can have a look into the yml file to prove that we only exposed 443
 
+proving we are using ssl/tls: openssl s_client -connect jasnguye.42.fr:443 -tls1_2
 
+proving I can only access https and not http
+curl -k http://jasnguye.42.fr -> does not work
+(-k flag ignores the SSL certificate validation)

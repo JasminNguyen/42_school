@@ -9,7 +9,7 @@ RUN apt-get update \
     -out /etc/nginx/ssl/localhost.crt \
     -subj "/C=DE/ST=Berlin/L=Berlin/O=42/OU=Inception/CN=jasnguye.42.fr" \
  && rm -rf /var/lib/apt/lists/*
-#I will have to use https://jasnguye.42.fr later
+
 COPY default /etc/nginx/sites-enabled/default
 
 CMD ["nginx", "-g", "daemon off;"]

@@ -11,7 +11,7 @@ services:
   volumes:
       - /home/jasnguye/data/wordpress:/var/www/html  # Mount WordPress data here
   networks:
-      inception:
+      - inception
  wordpress:
   depends_on: 
    - mariadb
@@ -25,7 +25,7 @@ services:
   secrets:
       - db_password
   networks:
-      inception:
+      - inception
  mariadb:
   build: requirements/mariadb/.
   container_name: mariadb
@@ -38,16 +38,19 @@ services:
       - db_password
       - db_root_password
   networks:
-      inception:
+      - inception
 
 secrets:
   db_root_password:
     file: ../secrets/db_root_password.txt  # Secret for the root password
   db_password:
     file: ../secrets/db_password.txt      # Secret for the wpuser password
-    
+#volumes:
+ #wordpress_data:  # Named volume for WordPress data
+ #mariadb_data:    # Named volume for MariaDB data
 networks:
       inception:
+        driver: bridge
   
   
 

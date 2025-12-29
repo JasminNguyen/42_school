@@ -5,11 +5,11 @@ DC := docker compose -f ./srcs/docker-compose.yml
 # Default target
 all: up
 
-# Build the Docker images
+# (Re)Build the Docker images and start
 build:
 	@$(DC) up   -d --build
 
-# Start the services in detached mode
+# Start the services in detached mode (without rebuilding, it assumes images are already built)
 up:
 	@$(DC) up -d
 
