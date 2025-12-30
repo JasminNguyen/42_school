@@ -9,7 +9,7 @@ services:
   ports: 
       - "443:443"
   volumes:
-      - /home/jasnguye/data/wordpress:/var/www/html  # Mount WordPress data here
+      - wordpress_data:/var/www/html  # Mount WordPress data here
   networks:
       - inception
  wordpress:
@@ -19,7 +19,7 @@ services:
   container_name: wordpress # how to name the container
   restart: always
   volumes:
-      - /home/jasnguye/data/wordpress:/var/www/html  # Mount WordPress data here
+      - wordpress_data:/var/www/html  # Mount WordPress data here
   env_file:
       - ./.env
   secrets:
@@ -31,7 +31,7 @@ services:
   container_name: mariadb
   restart: always
   volumes: 
-      - /home/jasnguye/data/mariadb:/var/lib/mysql  # Mount MariaDB data here
+      - mariadb_data:/var/lib/mysql  # Mount MariaDB data here
   env_file:
       - ./.env
   secrets:
@@ -45,9 +45,24 @@ secrets:
     file: ../secrets/db_root_password.txt  # Secret for the root password
   db_password:
     file: ../secrets/db_password.txt      # Secret for the wpuser password
-#volumes:
- #wordpress_data:  # Named volume for WordPress data
- #mariadb_data:    # Named volume for MariaDB data
+
+volumes:
+ wordpress_data: 
+   name: wordpress_data
+   driver: local
+   driver_opts:
+     type: none
+     device: /home/jasnguye/data/wordpress
+     o: bind
+ mariadb_data: 
+   name: mariadb_data
+   driver: local
+   driver_opts:
+     type: none
+     device: /home/jasnguye/data/mariadb
+     o: bind   
+
+
 networks:
       inception:
         driver: bridge

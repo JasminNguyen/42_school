@@ -32,3 +32,9 @@ proving we are using ssl/tls: openssl s_client -connect jasnguye.42.fr:443 -tls1
 proving I can only access https and not http
 curl -k http://jasnguye.42.fr -> does not work
 (-k flag ignores the SSL certificate validation)
+
+proving that the volumes are at /home/login/data: docker inspect wordpress or nginx or mariadb
+wp -> /home/jasnguye/data/wordpress
+nginx -> /home/jasnguye/data/wordpress
+mariadb -> /home/jasnguye/data/mariadb
+
