@@ -38,7 +38,6 @@ All execution takes place inside a virtual machine, as required by the subject.
 
 ## Repository Structure
 
-```text
 .
 ├── Makefile
 ├── DEV_DOC.md
