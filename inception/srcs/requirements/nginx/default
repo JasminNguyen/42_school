@@ -1,0 +1,24 @@
+
+server {
+    listen 443 ssl; #listening on port (inner port) 443, ssl means that nginx expects https traffic (tls)
+    server_name jasnguye.42.fr; #change this to jasnguye.42.fr
+
+    ssl_certificate     /etc/nginx/ssl/localhost.crt; #path to public certificate for the tls handshake
+    ssl_certificate_key /etc/nginx/ssl/localhost.key; #path to the private key for the tls handshake (secret)
+    ssl_protocols       TLSv1.2 TLSv1.3; #specifies the tls versions
+    
+    root /var/www/html; #document root -> all relative file lookups start here
+    index index.php index.html ; #default files when nginx gets a directory as request
+
+	
+	location / { #matches all requests
+    		try_files $uri $uri/ /index.php?$args;
+	}
+
+
+    location ~ \.php$ { #everything ending on .php will be handled here (~ -> regular expression)
+		include fastcgi_params; #loads standard list of variables needed to talk to php-fpm (interpreter)
+		fastcgi_pass wordpress:9000; # fastcgi_pass is a directive (like root or listen) and forwards the request to another process -> in this case to: wordpress (like a hostname):9000(port) (cause nginx can't run php itself -> needs wordpress to do it)
+		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name; #tells us which exacy php file on disk to run
+	}
+}
